@@ -1,13 +1,20 @@
 package ink.pd2.shell.io;
 
+import java.io.PrintStream;
+
 public class ConsoleOutput implements Output {
-    @Override
-    public void write(char c) {
-        System.out.write(c);
+    private final PrintStream stream;
+
+    public ConsoleOutput(PrintStream stream) {
+        this.stream = stream;
     }
 
     @Override
+    public void write(char c) {
+        stream.write(c);
+    }
+    @Override
     public void write(String s) {
-        System.out.print(s);
+        stream.print(s);
     }
 }

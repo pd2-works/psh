@@ -2,11 +2,13 @@ package ink.pd2.shell
 
 import ink.pd2.shell.log.writeLog
 import ink.pd2.shell.plugin.RunCommandListener
-import ink.pd2.shell.ui.Resources
+import ink.pd2.shell.core.Resources
+import ink.pd2.shell.io.Input
+import ink.pd2.shell.io.Output
 
-class Shell {
+class Shell(val input: Input, val output: Output) {
     //Shell信息
-    private var title: String = "Pd2 Shell"
+    var title: String = "Pd2 Shell"
     private var user: String
 
     //Listeners
@@ -27,11 +29,4 @@ class Shell {
         }
     }
 
-    //get & set
-    fun getTitle(): String {
-        return title
-    }
-    fun getUserName(): String {
-        return user
-    }
 }

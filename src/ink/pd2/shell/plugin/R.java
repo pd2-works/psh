@@ -1,6 +1,6 @@
 package ink.pd2.shell.plugin;
 
-import ink.pd2.shell.ui.Resources;
+import ink.pd2.shell.core.Resources;
 
 public class R {
     public static String getString(String key) {

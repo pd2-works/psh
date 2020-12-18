@@ -1,4 +1,4 @@
-package ink.pd2.shell
+package ink.pd2.shell.core
 
 class CommandParameter {
 }

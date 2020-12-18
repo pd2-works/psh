@@ -1,0 +1,12 @@
+[
+  {
+    "class": "ink.pd2.shell.core.CorePlugin",
+    "key": "",
+    "order": 1
+  },
+  {
+    "class": "ink.maxelbk.psh.edge.PshEdgePlugin",
+    "key": "",
+    "order": 1
+  }
+]
