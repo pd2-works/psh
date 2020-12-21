@@ -1,4 +1,4 @@
-package ink.maxelbk.psh.edge.log;
+package ink.maxkelbk.psh.edge;
 
 public class LogTaskManager {
     private Thread thread = new Thread(this::runEvent);

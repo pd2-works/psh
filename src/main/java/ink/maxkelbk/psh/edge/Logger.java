@@ -1,4 +1,4 @@
-package ink.maxelbk.psh.edge.log;
+package ink.maxkelbk.psh.edge;
 
 import ink.maxelbk.psh.edge.StaticKotlinScripts;
 
