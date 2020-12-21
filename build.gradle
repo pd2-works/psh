@@ -3,8 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.10'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'ink.pd2'
+version '0.1'
 
 repositories {
     mavenCentral()
