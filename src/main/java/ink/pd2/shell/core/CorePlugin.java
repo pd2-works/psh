@@ -4,7 +4,7 @@ import ink.pd2.shell.plugin.Plugin;
 
 public class CorePlugin extends Plugin {
     public CorePlugin() {
-        super("Pd2 Shell", "The core commands and options.");
+        super("psh", "Pd2 Shell",13 , "The core commands and options.");
     }
 
     @Override

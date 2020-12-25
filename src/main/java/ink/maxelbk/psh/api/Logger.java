@@ -1,6 +1,4 @@
-package ink.maxelbk.psh.edge;
-
-import ink.maxelbk.psh.edge.StaticKotlinScripts;
+package ink.maxelbk.psh.api;
 
 public class Logger {
     public static void writeLog(String location, String info) {

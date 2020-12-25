@@ -1,4 +1,4 @@
-package ink.maxelbk.psh.edge
+package ink.maxelbk.psh.api
 
 object StaticKotlinScripts {
     object Logger {
