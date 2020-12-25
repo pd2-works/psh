@@ -1,2 +1,5 @@
-# 项目排除路径
+# IDE 及构建工具排除
 /out/
+/.gradle/
+/.idea/
+/build/

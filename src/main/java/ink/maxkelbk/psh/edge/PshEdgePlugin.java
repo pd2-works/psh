@@ -1,4 +1,4 @@
-package ink.maxelbk.psh.edge;
+package ink.maxkelbk.psh.edge;
 
 import ink.pd2.shell.plugin.Plugin;
 
