@@ -4,7 +4,7 @@ import java.util.*
 import kotlin.Exception
 
 fun writeLog(location: String, info: String) {
-    println("[${Date()}][$location] $info")
+//    println("[${Date()}][$location] $info")
 }
 
 fun writeDebugLog(location: String, info: String) {

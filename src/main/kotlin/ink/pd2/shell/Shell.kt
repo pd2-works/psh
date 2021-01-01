@@ -7,26 +7,26 @@ import ink.pd2.shell.io.Input
 import ink.pd2.shell.io.Output
 
 class Shell(val input: Input, val output: Output) {
-    //Shell信息
-    var title: String = "Pd2 Shell"
-    private var user: String
+	//Shell信息
+	var title: String = "Pd2 Shell"
+	private var user: String
 
-    //Listeners
-    private val runCommandListenerList = ArrayList<RunCommandListener>(listOf())
+	//Listeners
+	private val runCommandListenerList = ArrayList<RunCommandListener>(listOf())
 
-    init {
-        writeLog("Shell", Resources.getString("psh.log-init-shell"))
-        user = System.getProperty("user.name")
-        startShell(this)
-    }
+	init {
+		writeLog("Shell", Resources.getString("psh.log-init-shell"))
+		user = System.getProperty("user.name")
+		startShell(this)
+	}
 
-    fun run() {
-        while (true) {
-            //TODO 继续：按键处理和指令执行
-            for (listener in runCommandListenerList) {
+	fun run() {
+		while (true) {
+			//TODO 继续：按键处理和指令执行
+			for (listener in runCommandListenerList) {
 
-            }
-        }
-    }
+			}
+		}
+	}
 
 }

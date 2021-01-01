@@ -17,15 +17,15 @@ var input: Input? = null
 var output: Output? = null
 
 fun mainThread() {
-    writeDebugLog("Main[OBJECT]", "output: $output")
-    output?.write(Resources.getString("psh.shell-greet-text"))
-    //TODO Shell开搞
+	writeDebugLog("Main[OBJECT]", "output: $output")
+	output?.write(Resources.getString("psh.shell-greet-text"))
+	//TODO Shell开搞
 }
 
 fun startShell(shell: Shell) {
-    shells.add(shell)
-    thread {
-        shell.run()
+	shells.add(shell)
+	thread {
+		shell.run()
 
-    }
+	}
 }

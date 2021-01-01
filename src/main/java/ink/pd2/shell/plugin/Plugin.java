@@ -10,7 +10,7 @@ public abstract class Plugin {
     public Plugin(String group, String name, int versionCode) {
         this.resourcesGroup = group;
         this.name = name;
-        description = R.getString("psh.plugin-no-description");
+        description = Resources.getString("psh.plugin-no-description");
         this.versionCode = versionCode;
     }
     public Plugin(String group, String name, int versionCode, String description) {
