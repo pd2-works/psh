@@ -1,10 +1,13 @@
 package ink.pd2.shell
 
+import ink.pd2.shell.core.Command
+import ink.pd2.shell.core.CommandParameter
 import ink.pd2.shell.log.writeLog
 import ink.pd2.shell.plugin.RunCommandListener
 import ink.pd2.shell.core.Resources
 import ink.pd2.shell.io.Input
 import ink.pd2.shell.io.Output
+import ink.pd2.shell.plugin.CommandEvent
 
 class Shell(val input: Input, val output: Output) {
 	//Shell信息
@@ -17,7 +20,7 @@ class Shell(val input: Input, val output: Output) {
 	init {
 		writeLog("Shell", Resources.getString("psh.log-init-shell"))
 		user = System.getProperty("user.name")
-		startShell(this)
+
 	}
 
 	fun run() {
