@@ -6,6 +6,10 @@ import ink.pd2.shell.core.Resources
 import ink.pd2.shell.io.Input
 import ink.pd2.shell.io.Output
 
+/**
+ *
+ */
+
 class Shell(val input: Input, val output: Output) {
 	//Shell信息
 	var title: String = "Pd2 Shell"

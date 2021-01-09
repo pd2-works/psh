@@ -6,7 +6,7 @@ import ink.pd2.shell.log.writeLog
 /**
  * ## Resources | 全局资源
  *
- * 用于集中管理Shell中的全局资源, 目前有监听器/指令/字符串资源可用.
+ * 用于集中管理Shell中的全局资源, 目前有监听器(Listener)/指令(Command)/字符串(String)资源可用.
  *
  * ### 用法
  *
@@ -29,6 +29,7 @@ import ink.pd2.shell.log.writeLog
  * @see ink.pd2.shell.core.ResourceKeyFormatException
  *
  * @author Maxel Black
+ * @since PSH 1.0
  */
 
 object Resources {
@@ -40,10 +41,18 @@ object Resources {
 	 *
 	 * ### 用法
 	 *
+	 * 每个插件都需要指定自身的资源组名称, 可以直接在插件初始化中指定 `resourcesGroup` 变量.
+	 *
+	 * 也可直接添加资源组, 但**不建议这样做**. 若无特殊需求和作用,
+	 * 这样会增加资源管理的繁琐程度, 并降低插件的通用兼容性. 如确实有需求,
+	 * **整个插件初始化过程的最前面**是最佳的添加组方法( `add(groupName)` )调用位置
+	 *
 	 * @see ink.pd2.shell.core.Resources
+	 * @see ink.pd2.shell.plugin.Plugin.resourcesGroup
 	 * @see ink.pd2.shell.core.ResourceKeyFormatException
 	 *
 	 * @author Maxel Black
+	 * @since PSH 1.0
 	 */
 
 	//资源组
@@ -82,11 +91,13 @@ object Resources {
 		writeDebugLog("Resources<String>", "^ $key : ${string != null}")
 		return  string ?: return ""
 	}
+
 	fun putString(key: String, value: String) {
 		//添加字符串
 		strings[key] = value
 		writeLog("Resources<String>", "$key -> \"$value\"")
 	}
+
 	fun removeString(key: String): String? {
 		//移除字符串
 		writeDebugLog("Resources<String>", "- $key : ${strings.containsKey(key)}")
@@ -101,10 +112,12 @@ object Resources {
 		writeDebugLog("Resources<Command>", "^ $key : ${command != null}")
 		return command
 	}
+
 	fun getCommands(): Set<Command> {
 		//获取所有指令
 		return commands.values.toSet()
 	}
+
 	fun getCommands(command: String): List<Command> {
 		//获取同名的所有指令
 		val commands = ArrayList<Command>(listOf())
@@ -122,6 +135,7 @@ object Resources {
 		writeDebugLog("Resources<Listener>", "^ $key : ${listener != null}")
 		return listener
 	}
+
 	fun getListeners(group: String, type: String): List<Listener> {
 		//获取指定组类全部对象
 		val list = ArrayList<Listener>(listOf())
@@ -135,6 +149,7 @@ object Resources {
 		writeDebugLog("Resources<Listener>", "^ $group.$type.* : ${list.isNotEmpty()}")
 		return list
 	}
+
 	fun putListener(key: String, value: Listener) {
 		//判断key是否符合规范 | 添加对象
 		val skey = key.split('.')
@@ -149,6 +164,7 @@ object Resources {
 		}
 		writeLog("Resources<Listener>", "$key -> $value")
 	}
+
 	fun removeListener(key: String): Listener? {
 		//移除对象
 		val listener = listeners.remove(key)
