@@ -28,9 +28,11 @@ $PSH_HOME/psh [-d|--directory <work directory>] [-u|--user <login username>] [-c
   - PSH will quit automatically after the command executing.
 ```
 
-By the way, `$PSH_HOME` is Pd2 Shell's program directory path. You can also add it into the environment variable `$PATH`.
+By the way, `$PSH_HOME` is Pd2 Shell's program directory path. You can also add it into the `$PATH` environment variable.
 
 ## About Contributing Code
+
+We welcome any non-malicious code contributions, but:
 
 - Do **NOT** commit folders like `.gradle`, `.idea` and so on.
 - Please write code comments and docs by hand, **the more the better**.
