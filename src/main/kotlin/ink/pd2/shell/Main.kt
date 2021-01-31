@@ -1,20 +1,37 @@
 package ink.pd2.shell
 
+import ink.pd2.shell.buildin.VariableMarkProvider
+import ink.pd2.shell.core.Mark
 import ink.pd2.shell.core.Resources
-import ink.pd2.shell.io.ConsoleInput
 import ink.pd2.shell.io.Input
 import ink.pd2.shell.io.Output
 import ink.pd2.shell.log.writeDebugLog
-import ink.pd2.shell.log.writeLog
 import java.util.LinkedList
 import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
 //Shell列表
 private val shells = LinkedList<Shell>(listOf())
 
-//IO流
+//I/O流
 var input: Input? = null
 var output: Output? = null
+
+//默认的print方法
+fun print(s: String) {
+	output?.print(Mark.update(s))
+}
+fun println(s: String) {
+	output?.println(Mark.update(s))
+}
+
+//环境变量修改
+fun addVariable(key: String, value: String) {
+	VariableMarkProvider.variables[key] = value
+}
+fun removeVariable(key: String) {
+	VariableMarkProvider.variables.remove(key)
+}
 
 /**
  * ## mainThread() | 主线程方法
@@ -34,7 +51,7 @@ var output: Output? = null
 
 fun mainThread() {
 	writeDebugLog("Main[OBJECT]", "output: $output")
-	output?.write(Resources.getString("psh.shell-greet-text"))
+	output?.print(Resources.getString("psh.shell-greet-text"))
 	//TODO Shell开搞
 }
 
@@ -56,4 +73,9 @@ fun startShell(shell: Shell) {
 	thread {
 		shell.run()
 	}
+}
+
+fun exit(status: Int, reason: String) {
+	kotlin.io.println("${Resources.getString("psh.exit")}: $reason")
+	exitProcess(status)
 }

@@ -3,3 +3,6 @@
 /.gradle/
 /.idea/
 /build/
+
+# 测试文件排除
+run.sh

@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'ink.pd2'
-version '1.0.0-a13'
+version '1.0.0-a102'
 
 repositories {
     mavenCentral()
@@ -14,8 +14,25 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    compile group: 'org.jline', name: 'jline', version: '3.19.0'
+    compile group: 'org.fusesource.jansi', name: 'jansi', version: '2.2.0'
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    from {
+        (configurations.runtimeClasspath).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    archivesBaseName = 'psh'
+    manifest {
+        attributes(
+                "Manifest-Version": 1.0,
+                'Main-Class': 'ink.pd2.shell.RunKt'
+        )
+    }
 }

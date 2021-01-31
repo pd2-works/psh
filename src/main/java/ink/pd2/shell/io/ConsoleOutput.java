@@ -1,20 +1,23 @@
 package ink.pd2.shell.io;
 
-import java.io.PrintStream;
+import org.fusesource.jansi.AnsiConsole;
+import org.fusesource.jansi.AnsiPrintStream;
 
-public class ConsoleOutput implements Output {
-	private final PrintStream stream;
+public class ConsoleOutput extends Output {
+	private final AnsiPrintStream stream = AnsiConsole.out();
 
-	public ConsoleOutput(PrintStream stream) {
-		this.stream = stream;
+	@Override
+	public void print(char c) {
+		stream.print(c);
 	}
 
 	@Override
-	public void write(char c) {
-		stream.write(c);
-	}
-	@Override
-	public void write(String s) {
+	public void print(String s) {
 		stream.print(s);
+	}
+
+	@Override
+	public void println(String s) {
+		stream.println(s);
 	}
 }

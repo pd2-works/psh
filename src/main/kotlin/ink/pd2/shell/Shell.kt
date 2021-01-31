@@ -14,9 +14,13 @@ class Shell(val input: Input, val output: Output) {
 	//Shell信息
 	var title: String = "Pd2 Shell"
 	private var user: String
+	fun getCurrentUser(): String {
+		return user
+	}
 
 	//Listeners
-	private val commandRunningListeners = Resources.getListeners("psh", "command-running")
+	private val commandRunningListeners =
+		Resources.getListeners("psh", "command-running")
 
 	init {
 		writeLog("Shell", Resources.getString("psh.log-init-shell"))
@@ -25,10 +29,8 @@ class Shell(val input: Input, val output: Output) {
 
 	fun run() {
 		while (true) {
-			//TODO 继续：按键处理和指令执行
-			for (listener in commandRunningListeners) {
+			//TODO 继续：指令处理和执行
 
-			}
 		}
 	}
 
