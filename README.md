@@ -1,10 +1,14 @@
 # Pd2 Shell
 
+*English* | [简体中文](README_zh-cn.md)
+
 A shell-like toolbox based on Java &amp; Kotlin.
 
 ...Maybe it is just a real shell? (run
 
 ## How to Use
+
+
 
 PSH is in early development, now it doesn't have any functions.
 
@@ -24,7 +28,7 @@ $PSH_HOME/psh [-d|--directory <work directory>] [-u|--user <login username>] [-c
   - If it isn't the current user, you may need a password.
   
   <command>
-  - Specify the command to execute directly after PSH's initialization.\
+  - Specify the command to execute directly after PSH's initialization.
   - PSH will quit automatically after the command executing.
 ```
 
