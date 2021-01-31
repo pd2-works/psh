@@ -28,7 +28,7 @@ $PSH_HOME/psh [-d|--directory <work directory>] [-u|--user <login username>] [-c
   - If it isn't the current user, you may need a password.
   
   <command>
-  - Specify the command to execute directly after PSH's initialization.\
+  - Specify the command to execute directly after PSH's initialization.
   - PSH will quit automatically after the command executing.
 ```
 
