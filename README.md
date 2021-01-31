@@ -1,10 +1,14 @@
 # Pd2 Shell
 
+*English* | [简体中文](README_zh-cn.md)
+
 A shell-like toolbox based on Java &amp; Kotlin.
 
 ...Maybe it is just a real shell? (run
 
 ## How to Use
+
+
 
 PSH is in early development, now it doesn't have any functions.
 
