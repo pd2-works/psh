@@ -127,6 +127,14 @@ object Resources {
 		return commands
 	}
 
+	fun putCommand(group: String, vararg c: Command) {
+		if (!Groups.contains(group))
+			throw ResourceKeyFormatException("Group name does NOT exist.")
+		for (i in c) {
+			commands["$group:${i.name}"] = i
+		}
+	}
+
 	//监听器
 	private val listeners = HashMap<String, Listener>(mapOf())
 	fun getListener(key: String): Listener? {

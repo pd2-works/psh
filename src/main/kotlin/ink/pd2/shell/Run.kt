@@ -9,6 +9,7 @@ fun main(args: Array<String>) {
 	writeDebugLog("PreInit", "Initialization started.")
 
 	Initializer.initResources() //初始化资源
+	Initializer.initMarks() //初始化默认标记
 	Initializer.initTheme() //初始化主题
 
 	//设置I/O流
@@ -20,4 +21,6 @@ fun main(args: Array<String>) {
 	writeDebugLog("PreInit", "Initialization finished.")
 
 	mainThread()
+
+	println("\\& &color:red[[E] There is a error.]& \\&")
 }

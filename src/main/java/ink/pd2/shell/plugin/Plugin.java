@@ -45,4 +45,9 @@ public abstract class Plugin {
         this.description = description;
     }
 
+    //API方法
+    public void addCommand(Command c) {
+        //TODO 验证指令格式
+        ink.pd2.shell.core.Resources.INSTANCE.putCommand(resourcesGroup, c);
+    }
 }
