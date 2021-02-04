@@ -37,13 +37,13 @@ fun removeVariable(key: String) {
 }
 
 /**
- * ## mainThread() | 主线程方法
+ * ## mainProcess() | 主进程
  *
- * Pd2 Shell 的主线程起始点.
+ * Pd2 Shell 的主进程起始点.
  *
  * ### 用法
  *
- * 主线程由 main() 方法自动执行, 若无特别需要, 切记:
+ * 主进程由 main() 方法自动执行, 若无特别需要, 切记:
  *
  * 请勿尝试调用此方法!
  *
@@ -52,7 +52,7 @@ fun removeVariable(key: String) {
  * 请勿尝试调用此方法!!!
  */
 
-fun mainThread() {
+fun mainProcess() {
 	writeDebugLog("Main[OBJECT]", "output: $output")
 	output?.print(Resources.getString("psh.shell-greet-text"))
 	//TODO Shell开搞
@@ -102,7 +102,8 @@ fun main(args: Array<String>) {
 
 	writeDebugLog("PreInit", "Initialization finished.")
 
-	mainThread()
+	mainProcess() //启动主进程任务
 
-	println("\\& &color:red.null[[E] There is a error.]& \\&")
+	println("\\& &color:red.n[[E] There is a error.]& " +
+			"\\& &color:green.n[[I] There is an info.]& \\&") //Mark测试
 }

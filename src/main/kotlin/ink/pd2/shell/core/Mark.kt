@@ -112,44 +112,51 @@ object Mark {
 
 	private fun update1(s: String): StringBuilder {
 		val str = StringBuilder(s)
-		//=========================================================
-		// 查找前后两个&的位置
-		//---------------------------------------------------------
-		val l = s.length //字符串总长
+		val l = str.length //字符串总长
 		var i = 0 //查找进度
-		var i1 = 0; var b1 = false //第一个&位置(i1)和是否找到(b1)
-		var i2 = 0; var b2 = false //第二个&位置(i2)和是否找到(b2)
-		// 查找第一个
 		while (i < l) {
-			i1 = s.indexOf('&', i)
-			if (i1 == -1) break
-			if (i1 != 0 && s[i1 - 1] == '\\') {
-				i = i1 + 1
-				continue
+			//=========================================================
+			// 查找前后两个&的位置
+			//---------------------------------------------------------
+			var i1 = 0;
+			var b1 = false //第一个&位置(i1)和是否找到(b1)
+			var i2 = 0;
+			var b2 = false //第二个&位置(i2)和是否找到(b2)
+			// 查找第一个
+			while (i < l) {
+				i1 = str.indexOf('&', i)
+				if (i1 == -1) break
+				if (i1 != 0 && str[i1 - 1] == '\\') {
+					i = i1 + 1
+					continue
+				}
+				b1 = true; i = i1 + 1; break
 			}
-			b1 = true; i = i1 + 1; break
-		}
-		// 查找第二个
-		while (b1 && i < l) {
-			i2 = s.indexOf('&', i)
-			if (s[i2 - 1] == '\\') {
-				i = i2 + 1
-				continue
+			// 查找第二个
+			while (b1 && i < l) {
+				i2 = str.indexOf('&', i)
+				if (str[i2 - 1] == '\\') {
+					i = i2 + 1
+					continue
+				}
+				b2 = true; break
 			}
-			b2 = true; break
-		}
-		//=========================================================
-		// 判断格式是否正确并分离记号和被标记的字符串
-		//---------------------------------------------------------
-		if (b1 && b2 && i1 + 2 < i2) {
-			val ss = s.substring(i1 + 1, i2).split(':')
-			if (ss.size == 2) {
-				val mark = marks[ss[0]]
-				if (mark != null)
-					str.replace(i1, i2 + 1, mark.onMarkUpdate(ss[1])) //替换
+			//=========================================================
+			// 判断格式是否正确并分离记号和被标记的字符串
+			//---------------------------------------------------------
+			if (b1 && b2 && i1 + 2 < i2) {
+				val ss = str.substring(i1 + 1, i2).split(':')
+				if (ss.size == 2) {
+					val mark = marks[ss[0]]
+					if (mark != null) {
+						str.replace(i1, i2 + 1, mark.onMarkUpdate(ss[1])) //替换
+						continue //在当前i位置之后继续查找
+					}
+				}
 			}
+			//=========================================================
+			break
 		}
-		//=========================================================
 		return str
 	}
 }

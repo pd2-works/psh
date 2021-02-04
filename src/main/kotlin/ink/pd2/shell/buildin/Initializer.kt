@@ -28,7 +28,7 @@ object Initializer {
 		putStr("psh.log-init-jline-reader", "Initializing JLine terminal reader...")
 		putStr("psh.exit", "Exit")
 		putStr("psh.plugin-no-description", "There is no description.")
-		putStr("psh.shell-hint-text", "&USER:&HOSTNAME$ ")
+		putStr("psh.shell-hint-text", "&color:green.n[]&:$ ")
 		putStr("psh.shell-greet-text", "Welcome to Pd2 Shell!\n    ____      _____      _____ __         ____   __  \n   / __ \\____/ /__ \\    / ___// /_  ___  / / /   \\ \\ \n  / /_/ / __  /__/ /    \\__ \\/ __ \\/ _ \\/ / /     \\ \\\n / ____/ /_/ // __/    ___/ / / / /  __/ / /      / /\n/_/    \\__,_//____/   /____/_/ /_/\\___/_/_/      /_/ \n")
 		/*
 		=====================================================
