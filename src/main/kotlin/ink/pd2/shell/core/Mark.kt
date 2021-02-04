@@ -146,7 +146,7 @@ object Mark {
 			if (ss.size == 2) {
 				val mark = marks[ss[0]]
 				if (mark != null)
-					str.replace(i1, i2, mark.onMarkUpdate(ss[1])) //替换
+					str.replace(i1, i2 + 1, mark.onMarkUpdate(ss[1])) //替换
 			}
 		}
 		//=========================================================
