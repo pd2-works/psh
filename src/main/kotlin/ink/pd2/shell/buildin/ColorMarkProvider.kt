@@ -34,7 +34,7 @@ object ColorMarkProvider : MarkProvider {
         val i2 = value.lastIndexOf(']')
         if (i1 < i2) {
             val color   = value.substring(0, i1 - 1).split('.')
-            val ansi    = value.substring(i1 + 1, i2 - 1)
+            val ansi    = value.substring(i1 + 1, i2)
             val normal  = value.substring(i2 + 1)
             if (color.size == 2) {
                 var a = Ansi.ansi()

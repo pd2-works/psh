@@ -1,4 +1,4 @@
-package ink.pd2.shell.core;
+package ink.pd2.shell.buildin;
 
 import ink.pd2.shell.plugin.Plugin;
 

@@ -28,8 +28,9 @@ object Initializer {
 		putStr("psh.log-init-jline-reader", "Initializing JLine terminal reader...")
 		putStr("psh.exit", "Exit")
 		putStr("psh.plugin-no-description", "There is no description.")
-		putStr("psh.shell-hint-text", "&color:green.n[]&:$ ")
-		putStr("psh.shell-greet-text", "Welcome to Pd2 Shell!\n    ____      _____      _____ __         ____   __  \n   / __ \\____/ /__ \\    / ___// /_  ___  / / /   \\ \\ \n  / /_/ / __  /__/ /    \\__ \\/ __ \\/ _ \\/ / /     \\ \\\n / ____/ /_/ // __/    ___/ / / / /  __/ / /      / /\n/_/    \\__,_//____/   /____/_/ /_/\\___/_/_/      /_/ \n")
+		putStr("psh.shell-prompt-text-left", "&color:green.default[\\&v:user\\&]&:&color:blue.default[\\&v:current_folder\\&]&$ ")
+//		putStr("psh.shell-prompt-text-right", "...")
+		putStr("psh.shell-greet-text", "&color:blue.default[Welcome to Pd2 Shell!\n    ____      _____      _____ __         ____   __  \n   / __ \\____/ /__ \\    / ___// /_  ___  / / /   \\ \\ \n  / /_/ / __  /__/ /    \\__ \\/ __ \\/ _ \\/ / /     \\ \\\n / ____/ /_/ // __/    ___/ / / / /  __/ / /      / /\n/_/    \\__,_//____/   /____/_/ /_/\\___/_/_/      /_/ ]&\n\n")
 		/*
 		=====================================================
 		Welcome to Pd2 Shell!
@@ -50,6 +51,9 @@ object Initializer {
 
 	fun initMarks() {
 		Mark.regMarkProvider(VariableMarkProvider)
+		VariableMarkProvider.variables["user"] = "user"
+		VariableMarkProvider.variables["host"] = "localhost"
+		VariableMarkProvider.variables["current_dir"] = "."
 		Mark.regMarkProvider(ColorMarkProvider)
 		ColorMarkProvider.putColor("black", Ansi.Color.BLACK.value())
 		ColorMarkProvider.putColor("blue", Ansi.Color.BLUE.value())

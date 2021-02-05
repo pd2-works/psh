@@ -88,19 +88,19 @@ object Resources {
 	fun getString(key: String): String {
 		//获取字符串
 		val string = strings[key]
-		writeDebugLog("Resources<String>", "^ $key : ${string != null}")
+		writeDebugLog("Resources<String>", "&nomark&^ $key : ${string != null}")
 		return  string ?: return ""
 	}
 
 	fun putString(key: String, value: String) {
 		//添加字符串
 		strings[key] = value
-		writeLog("Resources<String>", "$key -> \"$value\"")
+		writeDebugLog("Resources<String>", "&nomark&$key -> \"$value\"")
 	}
 
 	fun removeString(key: String): String? {
 		//移除字符串
-		writeDebugLog("Resources<String>", "- $key : ${strings.containsKey(key)}")
+		writeDebugLog("Resources<String>", "&nomark&- $key : ${strings.containsKey(key)}")
 		return strings.remove(key)
 	}
 
@@ -144,9 +144,9 @@ object Resources {
 		return listener
 	}
 
-	fun getListeners(group: String, type: String): List<Listener> {
+	fun getListeners(group: String, type: String): Array<Listener> {
 		//获取指定组类全部对象
-		val list = ArrayList<Listener>(listOf())
+		val list = ArrayList<Listener>()
 		for (key in listeners.keys) {
 			val skey = key.split('.')
 			if (skey[0] == group && skey[1] == type) {
@@ -155,7 +155,7 @@ object Resources {
 			}
 		}
 		writeDebugLog("Resources<Listener>", "^ $group.$type.* : ${list.isNotEmpty()}")
-		return list
+		return list.toArray() as Array<Listener>
 	}
 
 	fun putListener(key: String, value: Listener) {
@@ -170,7 +170,7 @@ object Resources {
 		} else {
 			throw ResourceKeyFormatException("The key's format does NOT match the standard.")
 		}
-		writeLog("Resources<Listener>", "$key -> $value")
+		writeDebugLog("Resources<Listener>", "$key -> $value")
 	}
 
 	fun removeListener(key: String): Listener? {

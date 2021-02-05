@@ -39,6 +39,9 @@ public class ConsoleInput extends Input {
 
 	@Override
 	public String getCommand() {
-		return reader.readLine(Resources.getString(""));
+		return reader.readLine(
+				Resources.getString("psh.shell-prompt-text-left"),
+				Resources.getString("psh.shell-prompt-text-right"),
+				(Character) null, null);
 	}
 }

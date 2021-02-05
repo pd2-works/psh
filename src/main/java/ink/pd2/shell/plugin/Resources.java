@@ -8,7 +8,7 @@ import java.util.Set;
 public final class Resources {
     public static String getString(String key) {
         return Mark.INSTANCE.update(ink.pd2.shell.core.
-                Resources.INSTANCE.getString(key), false);
+                Resources.INSTANCE.getString(key), true);
     }
     public static void putString(String key, String value) {
         ink.pd2.shell.core.

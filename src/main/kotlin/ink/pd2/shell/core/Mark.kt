@@ -40,23 +40,19 @@ object Mark {
 	 */
 
 	fun update(s: String, isTruth: Boolean = true): String {
-		if (isTruth)
-			return update1(s).replace(Regex("\\\\&"), "&")
-		return update1(s).toString()
-	}
-
-	private fun update1(s: String): StringBuilder {
-		val str = StringBuilder(s)
-		val l = str.length //字符串总长
+		//若有&nomark&标记则直接返回去掉标记的原字符串
+		if (s.startsWith("&nomark&")) return s.substring(8)
+		var str = StringBuilder(s)
+		var l = 0 //字符串总长
 		var i = 0 //查找进度
-		while (i < l) {
+		while (true) {
+			i = 0
+			l = str.length
 			//=========================================================
 			// 查找前后两个&的位置
 			//---------------------------------------------------------
-			var i1 = 0;
-			var b1 = false //第一个&位置(i1)和是否找到(b1)
-			var i2 = 0;
-			var b2 = false //第二个&位置(i2)和是否找到(b2)
+			var i1 = 0; var b1 = false //第一个&位置(i1)和是否找到(b1)
+			var i2 = 0; var b2 = false //第二个&位置(i2)和是否找到(b2)
 			// 查找第一个
 			while (i < l) {
 				i1 = str.indexOf('&', i)
@@ -70,6 +66,7 @@ object Mark {
 			// 查找第二个
 			while (b1 && i < l) {
 				i2 = str.indexOf('&', i)
+				if (i2 == -1) break
 				if (str[i2 - 1] == '\\') {
 					i = i2 + 1
 					continue
@@ -80,18 +77,26 @@ object Mark {
 			// 判断格式是否正确并分离记号和被标记的字符串
 			//---------------------------------------------------------
 			if (b1 && b2 && i1 + 2 < i2) {
-				val ss = str.substring(i1 + 1, i2).split(':')
+				val ss = str.substring(i1 + 1, i2).split(Regex(":"), 2)
 				if (ss.size == 2) {
 					val mark = marks[ss[0]]
 					if (mark != null) {
 						str.replace(i1, i2 + 1, mark.onMarkUpdate(ss[1])) //替换
+						if (isTruth) str = StringBuilder(
+							str.replace(Regex("\\\\&"), "&"))
 						continue //在当前i位置之后继续查找
 					}
+				} else if (ss.size == 1) {
+					if (ss[0] == "nomark") {
+						str.deleteRange(i1, i2 + 1)
+						break
+					}
+					str.replace(i1, i2 + 1, marks[ss[0]]?.onMarkUpdate(""))
 				}
 			}
 			//=========================================================
 			break
 		}
-		return str
+		return str.toString()
 	}
 }

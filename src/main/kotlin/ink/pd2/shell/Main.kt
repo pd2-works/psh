@@ -9,6 +9,8 @@ import ink.pd2.shell.io.ConsoleOutput
 import ink.pd2.shell.io.Input
 import ink.pd2.shell.io.Output
 import ink.pd2.shell.log.writeDebugLog
+import ink.pd2.shell.log.writeLog
+import java.net.InetAddress
 import java.util.LinkedList
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
@@ -25,12 +27,16 @@ fun print(s: String) {
 	output?.print(Mark.update(s))
 }
 fun println(s: String) {
-	output?.println(Mark.update(s))
+	val ss = Mark.update(s)
+	output?.println(ss)
 }
 
 //环境变量修改
-fun addVariable(key: String, value: String) {
+fun putVariable(key: String, value: String) {
 	VariableMarkProvider.variables[key] = value
+}
+fun getVariableValue(key: String): String? {
+	return VariableMarkProvider.variables[key]
 }
 fun removeVariable(key: String) {
 	VariableMarkProvider.variables.remove(key)
@@ -54,8 +60,11 @@ fun removeVariable(key: String) {
 
 fun mainProcess() {
 	writeDebugLog("Main[OBJECT]", "output: $output")
-	output?.print(Resources.getString("psh.shell-greet-text"))
-	//TODO Shell开搞
+	output?.print(Mark.update(Resources.getString("psh.shell-greet-text")))
+	putVariable("user", System.getProperty("user.name"))
+	putVariable("host", InetAddress.getLocalHost().hostName)
+//	startShell(Shell(input!!, output!!))
+	//TODO 监听网络Shell
 }
 
 /**
@@ -71,11 +80,11 @@ fun mainProcess() {
  * @since PSH 1.0
  */
 
-fun startShell(shell: Shell) {
+private fun startShell(shell: Shell) {
 	shells.add(shell)
-	thread {
+//	thread {
 		shell.run()
-	}
+//	}
 }
 
 fun exit(status: Int, reason: String) {
@@ -85,18 +94,24 @@ fun exit(status: Int, reason: String) {
 
 /**
  * ## main() | 程序入口
+ *
+ * @author Maxel Black
+ * @since PSH 1.0
  */
 
 fun main(args: Array<String>) {
+	output = ConsoleOutput() //设置output流
+
+	Initializer.initMarks() //初始化默认标记
+
 	writeDebugLog("PreInit", "Initialization started.")
 
 	Initializer.initResources() //初始化资源
-	Initializer.initMarks() //初始化默认标记
 	Initializer.initTheme() //初始化主题
 
-	//设置I/O流
-	input = ConsoleInput()
-	output = ConsoleOutput()
+	input = ConsoleInput() //设置input流
+
+	//TODO 初始化插件
 
 	//TODO 判断是否有另一个psh进程正在运行
 
@@ -104,6 +119,5 @@ fun main(args: Array<String>) {
 
 	mainProcess() //启动主进程任务
 
-//	println("\\& &color:red.n[[E] There is a error.]& " +
-//			"\\& &color:green.n[[I] There is an info.]& \\&") //Mark测试
+	writeLog("Main", "&v:user& on &v:host& exit.") //Mark测试
 }
