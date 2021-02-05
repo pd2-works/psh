@@ -104,6 +104,6 @@ fun main(args: Array<String>) {
 
 	mainProcess() //启动主进程任务
 
-	println("\\& &color:red.n[[E] There is a error.]& " +
-			"\\& &color:green.n[[I] There is an info.]& \\&") //Mark测试
+//	println("\\& &color:red.n[[E] There is a error.]& " +
+//			"\\& &color:green.n[[I] There is an info.]& \\&") //Mark测试
 }

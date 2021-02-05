@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'ink.pd2'
-version '1.0.0-a102'
+version '1.0.0-a105'
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ jar {
     manifest {
         attributes(
                 "Manifest-Version": 1.0,
-                'Main-Class': 'ink.pd2.shell.RunKt'
+                'Main-Class': 'ink.pd2.shell.MainKt'
         )
     }
 }
