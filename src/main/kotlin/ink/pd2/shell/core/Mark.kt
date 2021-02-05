@@ -43,8 +43,8 @@ object Mark {
 		//若有&nomark&标记则直接返回去掉标记的原字符串
 		if (s.startsWith("&nomark&")) return s.substring(8)
 		var str = StringBuilder(s)
-		var l = 0 //字符串总长
-		var i = 0 //查找进度
+		var l: Int //字符串总长
+		var i: Int //查找进度
 		while (true) {
 			i = 0
 			l = str.length

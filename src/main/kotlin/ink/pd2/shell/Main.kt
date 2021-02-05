@@ -9,6 +9,8 @@ import ink.pd2.shell.io.ConsoleOutput
 import ink.pd2.shell.io.Input
 import ink.pd2.shell.io.Output
 import ink.pd2.shell.log.writeDebugLog
+import ink.pd2.shell.log.writeErrorLog
+import ink.pd2.shell.log.writeException
 import ink.pd2.shell.log.writeLog
 import java.net.InetAddress
 import java.util.LinkedList
@@ -104,7 +106,7 @@ fun main(args: Array<String>) {
 
 	Initializer.initMarks() //初始化默认标记
 
-	writeDebugLog("PreInit", "Initialization started.")
+	writeDebugLog("Main.PreInit", "Initialization started.")
 
 	Initializer.initResources() //初始化资源
 	Initializer.initTheme() //初始化主题
@@ -115,9 +117,9 @@ fun main(args: Array<String>) {
 
 	//TODO 判断是否有另一个psh进程正在运行
 
-	writeDebugLog("PreInit", "Initialization finished.")
+	writeDebugLog("Main.PreInit", "Initialization finished.")
 
 	mainProcess() //启动主进程任务
 
-	writeLog("Main", "&v:user& on &v:host& exit.") //Mark测试
+	writeLog("Main", "The shell on '&v:user&' exit.")
 }

@@ -144,7 +144,7 @@ object Resources {
 		return listener
 	}
 
-	fun getListeners(group: String, type: String): Array<Listener> {
+	fun getListeners(group: String, type: String): ArrayList<Listener> {
 		//获取指定组类全部对象
 		val list = ArrayList<Listener>()
 		for (key in listeners.keys) {
@@ -155,7 +155,7 @@ object Resources {
 			}
 		}
 		writeDebugLog("Resources<Listener>", "^ $group.$type.* : ${list.isNotEmpty()}")
-		return list.toArray() as Array<Listener>
+		return list
 	}
 
 	fun putListener(key: String, value: Listener) {
