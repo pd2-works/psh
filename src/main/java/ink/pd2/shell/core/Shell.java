@@ -1,9 +1,6 @@
-package ink.pd2.shell;
+package ink.pd2.shell.core;
 
-import ink.pd2.shell.core.Listener;
-import ink.pd2.shell.core.Logger;
-import ink.pd2.shell.core.Resources;
-import ink.pd2.shell.plugin.CommandExecutedListener;
+import ink.pd2.shell.Main;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,8 @@
 package ink.pd2.shell.io;
 
-import ink.maxelbk.psh.api.KotlinScripts;
 import ink.pd2.shell.Main;
 import ink.pd2.shell.core.Logger;
-import ink.pd2.shell.plugin.Resources;
+import ink.pd2.shell.core.Resources;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
@@ -17,7 +16,7 @@ public class ConsoleInput extends Input {
 
 	public ConsoleInput() {
 		Logger.INS.writeLog("ConsoleInput.init",
-				Resources.getString("psh.log-init-jline-reader"));
+				Resources.INS.getString("psh.log-init-jline-reader"));
 		//初始化 JLine LineReader
 		LineReader r;
 		try {
@@ -41,8 +40,8 @@ public class ConsoleInput extends Input {
 	@Override
 	public String getCommand() {
 		return reader.readLine(
-				Resources.getString("psh.shell-prompt-text-left"),
-				Resources.getString("psh.shell-prompt-text-right"),
+				Resources.INS.getString("psh.shell-prompt-text-left"),
+				Resources.INS.getString("psh.shell-prompt-text-right"),
 				(Character) null, null);
 	}
 }

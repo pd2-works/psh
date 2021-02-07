@@ -4,8 +4,9 @@ import ink.pd2.shell.buildin.Initializer;
 import ink.pd2.shell.buildin.VariableMarkProvider;
 import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Mark;
+import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.io.*;
-import ink.pd2.shell.plugin.Resources;
+import ink.pd2.shell.core.Resources;
 
 import java.net.InetAddress;
 import java.util.LinkedList;
@@ -56,7 +57,7 @@ public final class Main {
 
 	public static void mainProcess() {
 		Logger.INS.writeDebugLog("Main[OBJECT]", "output: " + output);
-		print(Resources.getString("psh.shell-greet-text"));
+		print(Resources.INS.getString("psh.shell-greet-text"));
 		try {
 			putVariable("user", System.getProperty("user.name"));
 			putVariable("host", InetAddress.getLocalHost().getHostName());
@@ -74,7 +75,7 @@ public final class Main {
 	 *
 	 * @param shell 将要运行的 Shell 会话对象
 	 *
-	 * @see ink.pd2.shell.Shell
+	 * @see Shell
 	 *
 	 * @author Maxel Black
 	 * @since PSH 1.0
@@ -87,7 +88,7 @@ public final class Main {
 	}
 
 	public static void exit(String reason) {
-		System.out.println(Resources.getString("psh.exit") + ": " + reason);
+		System.out.println(Resources.INS.getString("psh.exit") + ": " + reason);
 	}
 
 	/**
