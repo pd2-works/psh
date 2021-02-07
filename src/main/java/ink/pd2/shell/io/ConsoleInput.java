@@ -1,7 +1,8 @@
 package ink.pd2.shell.io;
 
 import ink.maxelbk.psh.api.KotlinScripts;
-import ink.maxelbk.psh.api.Logger;
+import ink.pd2.shell.Main;
+import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.plugin.Resources;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -15,7 +16,7 @@ public class ConsoleInput extends Input {
 	private final LineReader reader;
 
 	public ConsoleInput() {
-		Logger.writeLog("ConsoleInput.init",
+		Logger.INS.writeLog("ConsoleInput.init",
 				Resources.getString("psh.log-init-jline-reader"));
 		//初始化 JLine LineReader
 		LineReader r;
@@ -26,8 +27,8 @@ public class ConsoleInput extends Input {
 			r = LineReaderBuilder.builder().appName("Pd2Shell").terminal(t).build();
 		} catch (IOException e) {
 			r = null;
-			Logger.writeException("ConsoleInput.init", e);
-			KotlinScripts.Main.INSTANCE.exit(2, "JLine Initialization FAILED.");
+			Logger.INS.writeException("ConsoleInput.init", e);
+			Main.exit("JLine Initialization FAILED.");
 		}
 		reader = r;
 	}

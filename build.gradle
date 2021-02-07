@@ -32,7 +32,7 @@ jar {
     manifest {
         attributes(
                 "Manifest-Version": 1.0,
-                'Main-Class': 'ink.pd2.shell.MainKt'
+                'Main-Class': 'ink.pd2.shell.Main'
         )
     }
 }

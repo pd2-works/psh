@@ -48,6 +48,6 @@ public abstract class Plugin {
     //API方法
     public void addCommand(Command c) {
         //TODO 验证指令格式
-        ink.pd2.shell.core.Resources.INSTANCE.putCommand(resourcesGroup, c);
+        ink.pd2.shell.core.Resources.INS.putCommand(resourcesGroup, c);
     }
 }
