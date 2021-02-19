@@ -1,4 +1,7 @@
-package ink.pd2.shell.core;
+package ink.pd2.shell.api;
+
+import ink.pd2.shell.core.CommandParameter;
+import ink.pd2.shell.core.Shell;
 
 import java.util.Arrays;
 import java.util.HashSet;

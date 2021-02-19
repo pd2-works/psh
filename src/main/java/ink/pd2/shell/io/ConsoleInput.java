@@ -2,7 +2,9 @@ package ink.pd2.shell.io;
 
 import ink.pd2.shell.Main;
 import ink.pd2.shell.core.Logger;
+import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.Resources;
+import ink.pd2.shell.core.Shell;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
@@ -15,7 +17,7 @@ public class ConsoleInput extends Input {
 	private final LineReader reader;
 
 	public ConsoleInput() {
-		Logger.INS.writeLog("ConsoleInput.init",
+		Logger.INS.info("ConsoleInput.init",
 				Resources.INS.getString("psh.log-init-jline-reader"));
 		//初始化 JLine LineReader
 		LineReader r;
@@ -38,10 +40,10 @@ public class ConsoleInput extends Input {
 	}
 
 	@Override
-	public String getCommand() {
+	public String getCommand(Shell shell) {
 		return reader.readLine(
-				Resources.INS.getString("psh.shell-prompt-text-left"),
-				Resources.INS.getString("psh.shell-prompt-text-right"),
+				Mark.INS.update(Resources.INS.getString("psh.shell-prompt-text-left")),
+				Mark.INS.update(Resources.INS.getString("psh.shell-prompt-text-right")),
 				(Character) null, null);
 	}
 }

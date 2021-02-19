@@ -3,10 +3,5 @@
     "class": "ink.pd2.shell.core.CorePlugin",
     "sign": "",
     "order": 1
-  },
-  {
-    "class": "ink.maxelbk.psh.edge.PshEdgePlugin",
-    "sign": "",
-    "order": 1
   }
 ]

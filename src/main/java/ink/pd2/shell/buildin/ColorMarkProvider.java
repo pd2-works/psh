@@ -6,7 +6,7 @@ import org.fusesource.jansi.Ansi;
 import java.util.HashMap;
 
 public class ColorMarkProvider implements MarkProvider {
-	public final static ColorMarkProvider INSTANCE = new ColorMarkProvider();
+	public final static ColorMarkProvider INS = new ColorMarkProvider();
 
 	private final HashMap<String, Integer> colors = new HashMap<>();
 	public void putColor(String key, int value) {

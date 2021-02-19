@@ -1,9 +1,8 @@
 package ink.pd2.shell.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import ink.pd2.shell.api.Command;
+
+import java.util.*;
 
 /**
  * <h2>Resources | 全局资源</h2>
@@ -52,7 +51,7 @@ public final class Resources {
 	 * 建议在<b>整个插件初始化过程的最前面</b>调用添加资源组的方法( {@code add(groupName)} )</p>
 	 *
 	 * @see ink.pd2.shell.core.Resources
-	 * @see ink.pd2.shell.plugin.Plugin
+	 * @see ink.pd2.shell.api.Plugin
 	 * @see ink.pd2.shell.core.ResourceKeyFormatException
 	 *
 	 * @author Maxel Black
@@ -87,7 +86,7 @@ public final class Resources {
 	public String getString(String key) {
 		//获取字符串
 		String string = strings.get(key);
-		Logger.INS.writeDebugLog("Resources<String>",
+		Logger.INS.debug("Resources<String>",
 				"&nomark&^ " + key + " : " + (string != null));
 		return string == null? "" : string;
 	}
@@ -95,13 +94,13 @@ public final class Resources {
 	public void putString(String key, String value) {
 		//添加字符串
 		strings.put(key, value);
-		Logger.INS.writeDebugLog("Resources<String>",
+		Logger.INS.debug("Resources<String>",
 				"&nomark&" + key + " -> \"" + value + "\"");
 	}
 
 	public String removeString(String key) {
 		//移除字符串
-		Logger.INS.writeDebugLog("Resources<String>",
+		Logger.INS.debug("Resources<String>",
 				"&nomark&- " + key + " : " + strings.containsKey(key));
 		return strings.remove(key);
 	}
@@ -111,7 +110,7 @@ public final class Resources {
 	private Command getCommand(String key) {
 		//获取对象
 		Command command = commands.get(key);
-		Logger.INS.writeDebugLog("Resources<Command>",
+		Logger.INS.debug("Resources<Command>",
 				"&nomark&^ " + key + " : " + (command != null));
 		return command;
 	}
@@ -130,12 +129,12 @@ public final class Resources {
 	public Listener getListener(String key) {
 		//获取对象
 		Listener listener = listeners.get(key);
-		Logger.INS.writeDebugLog("Resources<Listener>",
+		Logger.INS.debug("Resources<Listener>",
 				"&nomark&^ " + key + " : " + (listener != null));
 		return listener;
 	}
 
-	public Listener[] getListeners(String group, String type) {
+	public List<Listener> getListeners(String group, String type) {
 		//获取指定组类全部对象
 		ArrayList<Listener> list = new ArrayList<>();
 		for (String key : listeners.keySet()) {
@@ -145,9 +144,9 @@ public final class Resources {
 				if (l != null) list.add(l);
 			}
 		}
-		Logger.INS.writeDebugLog("Resources<Listener>",
+		Logger.INS.debug("Resources<Listener>",
 				"&nomark&^ " + group + '.' + type + ".* : " + !list.isEmpty());
-		return list.toArray(new Listener[0]);
+		return list;
 	}
 
 	public void putListener(String key, Listener value) {
@@ -162,14 +161,14 @@ public final class Resources {
 		} else {
 			throw new ResourceKeyFormatException("The key's format does NOT match the standard.");
 		}
-		Logger.INS.writeDebugLog("Resources<Listener>",
+		Logger.INS.debug("Resources<Listener>",
 				"&nomark&" + key + " -> " + value);
 	}
 
 	public Listener removeListener(String key) {
 		//移除对象
 		Listener listener = listeners.remove(key);
-		Logger.INS.writeDebugLog("Resources<Listener>",
+		Logger.INS.debug("Resources<Listener>",
 				"&nomark&^ " + key + " : " + (listener != null));
 		return listener;
 	}

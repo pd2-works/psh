@@ -9,23 +9,23 @@ import java.util.Date;
 public final class Logger {
 	public static final Logger INS = new Logger();
 
-	public void writeDebugLog(String location, String message) {
-		Main.println("[&color:blue.null[" + getDate(true) + "]&] [&color:yellow.null[Debug]&|&color:cyan.null[" + location + "]&] " + message);
+	public void debug(String location, String message) {
+		Main.println("[&color:blue.null[" + getDate(true) + "]&] [&color:yellow.null[D]&|&color:cyan.null[" + location + "]&] " + message);
 	}
 
-	public void writeLog(String location, String message) {
-		Main.println("[&color:blue.null[" + getDate(false) + "]&] [&color:green.null[Info]&|&color:cyan.null[" + location + "]&] " + message);
+	public void info(String location, String message) {
+		Main.println("[&color:blue.null[" + getDate(false) + "]&] [&color:green.null[I]&|&color:cyan.null[" + location + "]&] " + message);
 	}
 
-	public void writeErrorLog(String location, String message) {
-		Main.println("[&color:blue.null[" + getDate(false) + "]&] [&color:red.null[Error]&|&color:cyan.null[" + location + "]&] " + message);
+	public void error(String location, String message) {
+		Main.println("[&color:blue.null[" + getDate(false) + "]&] [&color:red.null[E]&|&color:cyan.null[" + location + "]&] " + message);
 	}
 
 	public void writeException(String location, Exception exception) {
 		StringWriter s = new StringWriter();
 		PrintWriter p = new PrintWriter(s);
 		exception.printStackTrace(p);
-		writeDebugLog(location, "&color:red.null[EXCEPTION:\n" + s + "]&");
+		debug(location, "&color:red.null[EXCEPTION:\n" + s + "]&");
 	}
 
 	private String getDate(boolean ms) {

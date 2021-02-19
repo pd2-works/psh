@@ -5,7 +5,7 @@ import ink.pd2.shell.core.MarkProvider;
 import java.util.HashMap;
 
 public class VariableMarkProvider implements MarkProvider {
-	public final static VariableMarkProvider INSTANCE = new VariableMarkProvider();
+	public final static VariableMarkProvider INS = new VariableMarkProvider();
 
 	private final HashMap<String, String> variables = new HashMap<>();
 	public HashMap<String, String> getVariables() {
@@ -19,7 +19,7 @@ public class VariableMarkProvider implements MarkProvider {
 	public String onMarkUpdate(String value) {
 		String variable = variables.get(value);
 		if (variable == null) {
-			return "&v:" + value + "&";
+			return "\\&v:" + value + "\\&";
 		}
 		return variable;
 	}

@@ -30,13 +30,13 @@ public final class Main {
 
 	//环境变量
 	public static void putVariable(String key, String value) {
-		VariableMarkProvider.INSTANCE.getVariables().put(key, value);
+		VariableMarkProvider.INS.getVariables().put(key, value);
 	}
 	public static String getVariableValue(String key) {
-		return VariableMarkProvider.INSTANCE.getVariables().get(key);
+		return VariableMarkProvider.INS.getVariables().get(key);
 	}
 	public static String removeVariable(String key) {
-		return VariableMarkProvider.INSTANCE.getVariables().remove(key);
+		return VariableMarkProvider.INS.getVariables().remove(key);
 	}
 
 	/**
@@ -46,25 +46,25 @@ public final class Main {
 	 *
 	 * <h3>用法</h3>
 	 *
-	 * 主进程由 main() 方法自动执行, 若无特别需要, 切记:
+	 * <p>主进程由 main() 方法自动执行, 若无特别需要, 切记:</p>
 	 *
-	 * 请勿尝试调用此方法!
+	 * <p>请勿尝试调用此方法!</p>
 	 *
-	 * 请勿尝试调用此方法!!
+	 * <p>请勿尝试调用此方法!!</p>
 	 *
-	 * 请勿尝试调用此方法!!!
+	 * <p>请勿尝试调用此方法!!!</p>
 	 */
 
 	public static void mainProcess() {
-		Logger.INS.writeDebugLog("Main[OBJECT]", "output: " + output);
+		Logger.INS.debug("Main[OBJECT]", "output: " + output);
 		print(Resources.INS.getString("psh.shell-greet-text"));
 		try {
 			putVariable("user", System.getProperty("user.name"));
 			putVariable("host", InetAddress.getLocalHost().getHostName());
-//			startShell(new Shell());
+			startShell(new Shell());
 			//TODO 监听网络Shell
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.INS.writeException("Main", e);
 		}
 	}
 
@@ -99,23 +99,24 @@ public final class Main {
 	 */
 
 	public static void main(String[] args) {
-		output = new  ConsoleOutput(); //设置output流
+		output = new ConsoleOutput(); //设置output流
 
 		Initializer.INS.initMarks(); //初始化默认标记
 
-		Logger.INS.writeDebugLog("Main.PreInit", "Initialization started.");
+		Logger.INS.debug("Main.PreInit", "Initialization started.");
 
 		Initializer.INS.initResources(); //初始化资源
 		Initializer.INS.initTheme(); //初始化主题
 
 		input = new ConsoleInput(); //设置input流
 
-		//TODO 初始化插件
-
 		//TODO 判断是否有另一个psh进程正在运行
 
-		Logger.INS.writeDebugLog("Main.PreInit", "Initialization finished.");
+		Logger.INS.debug("Main.PreInit", "Initialization finished.");
 
-		Logger.INS.writeLog("Main", "The shell on '&v:user&' exit.");
+		//主进程
+		mainProcess();
+
+		Logger.INS.info("Main", "The shell on '&v:user&' exit.");
 	}
 }

@@ -1,6 +1,5 @@
-package ink.pd2.shell.plugin;
+package ink.pd2.shell.api;
 
-import ink.pd2.shell.core.Command;
 import ink.pd2.shell.core.Resources;
 
 public abstract class Plugin {

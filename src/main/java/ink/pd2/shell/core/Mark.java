@@ -62,9 +62,10 @@ public final class Mark {
 	 */
 
 	public String update(String s, boolean isTruth) {
-		//若有&nomark&标记则直接返回去掉标记的原字符串
+		//优化: 若有&nomark&标记则直接返回去掉标记的原字符串 (因效率提升不高且综合效率下降已注释)
 //		if (s.startsWith("&nomark&")) return s.substring(8);
-		StringBuilder str = new  StringBuilder(s);
+		if (s == null) return null;
+		StringBuilder str = new StringBuilder(s);
 		int l, i; //字符串总长, 查找进度
 		while (true) {
 			i = 0;
@@ -78,8 +79,13 @@ public final class Mark {
 			while (i < l) {
 				i1 = str.indexOf("&", i);
 				if (i1 == -1) break;
-				if (i1 != 0 && str.charAt(i1 - 1) == '\\') {
-					i = i1 + 1;
+				int i1c = i1 - 1;
+				if (i1 != 0 && str.charAt(i1c) == '\\') {
+					i = i1;
+					if (isTruth) {
+						str.deleteCharAt(i1c);
+						l--;
+					}
 					continue;
 				}
 				b1 = true; i = i1 + 1; break;
@@ -88,8 +94,13 @@ public final class Mark {
 			while (b1 && i < l) {
 				i2 = str.indexOf("&", i);
 				if (i2 == -1) break;
-				if (str.charAt(i2 - 1) == '\\') {
-					i = i2 + 1;
+				int i2c = i2 - 1;
+				if (str.charAt(i2c) == '\\') {
+					i = i2;
+					if (isTruth) {
+						str.deleteCharAt(i2c);
+						l--;
+					}
 					continue;
 				}
 				b2 = true; break;
@@ -102,17 +113,18 @@ public final class Mark {
 				if (ss.length == 2) {
 					MarkProvider mark = marks.get(ss[0]);
 					if (mark != null) {
-						str.replace(i1, i2 + 1, mark.onMarkUpdate(ss[1])); //替换标记
-						//查找转义字符 '\&' 并替换
-						if (isTruth) {
-							int str_i = 0, str_l = str.length();
-							while (str_i < str_l) {
-								str_i = str.indexOf("\\&", str_i);
-								if (str_i == -1) break;
-								str.deleteCharAt(str_i);
-								str_i++; str_l--;
-							}
-						}
+						String r = mark.onMarkUpdate(ss[1]); //用于替换的字符串
+						str.replace(i1, i2 + 1, r); //替换标记
+						//查找转义字符 '\&' 并替换 (因算法死循环问题已注释)
+//						if (isTruth) {
+//							str_l = str_i + r.length();
+//							while (str_i < str_l) {
+//								str_i = str.indexOf("\\&", str_i);
+//								if (str_i == -1 || str_i >= str_l) break;
+//								str.deleteCharAt(str_i);
+//								str_i++; str_l--;
+//							}
+//						}
 						continue; //在当前i位置之后继续查找
 					}
 				} else if (ss.length == 1) {

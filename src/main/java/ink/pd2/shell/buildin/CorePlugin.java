@@ -2,7 +2,7 @@ package ink.pd2.shell.buildin;
 
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.core.CommandExecutedListener;
-import ink.pd2.shell.plugin.Plugin;
+import ink.pd2.shell.api.Plugin;
 
 public class CorePlugin extends Plugin {
 	public CorePlugin() {

@@ -8,16 +8,23 @@ import org.fusesource.jansi.Ansi;
 public final class Initializer {
 	public final static Initializer INS = new Initializer();
 
+	public void initPlugins() {
+		Logger.INS.info("Initializer",
+				Resources.INS.getString("psh.log-init-plugin"));
+		//TODO 初始化插件
+	}
+
 	public void initTheme() {
-		Logger.INS.writeLog("Initializer",
+		Logger.INS.info("Initializer",
 			Resources.INS.getString("psh.log-init-theme"));
-		//初始化主题
+		//TODO 初始化主题
 	}
 
 	public void initResources() {
-		Logger.INS.writeLog("Initializer", "Initializing core resources...");
+		Logger.INS.info("Initializer", "Initializing core resources...");
 
 		//初始化资源
+		putStr("psh.log-init-plugin", "Initializing Plugins...");
 		putStr("psh.log-init-shell", "Initializing new shell thread...");
 		putStr("psh.log-init-theme", "Loading UI theme...");
 		putStr("psh.log-init-jline-reader", "Initializing JLine terminal reader...");
@@ -38,26 +45,26 @@ public final class Initializer {
 		=====================================================
 		 */
 
-		Logger.INS.writeLog("Initializer", "Resources initialization finished.");
+		Logger.INS.info("Initializer", "Resources initialization finished.");
 	}
 	private void putStr(String k, String v) {
 		Resources.INS.putString(k, v);
 	}
 
 	public void initMarks() {
-		Mark.INS.regMarkProvider(VariableMarkProvider.INSTANCE);
-		VariableMarkProvider.INSTANCE.getVariables().put("user", "user");
-		VariableMarkProvider.INSTANCE.getVariables().put("host", "localhost");
-		VariableMarkProvider.INSTANCE.getVariables().put("current_dir", ".");
-		Mark.INS.regMarkProvider(ColorMarkProvider.INSTANCE);
-		ColorMarkProvider.INSTANCE.putColor("black", Ansi.Color.BLACK.value());
-		ColorMarkProvider.INSTANCE.putColor("blue", Ansi.Color.BLUE.value());
-		ColorMarkProvider.INSTANCE.putColor("cyan", Ansi.Color.CYAN.value());
-		ColorMarkProvider.INSTANCE.putColor("default", Ansi.Color.DEFAULT.value());
-		ColorMarkProvider.INSTANCE.putColor("green", Ansi.Color.GREEN.value());
-		ColorMarkProvider.INSTANCE.putColor("magenta", Ansi.Color.MAGENTA.value());
-		ColorMarkProvider.INSTANCE.putColor("red", Ansi.Color.RED.value());
-		ColorMarkProvider.INSTANCE.putColor("white", Ansi.Color.WHITE.value());
-		ColorMarkProvider.INSTANCE.putColor("yellow", Ansi.Color.YELLOW.value());
+		Mark.INS.regMarkProvider(VariableMarkProvider.INS);
+		VariableMarkProvider.INS.getVariables().put("user", "user");
+		VariableMarkProvider.INS.getVariables().put("host", "localhost");
+		VariableMarkProvider.INS.getVariables().put("current_dir", ".");
+		Mark.INS.regMarkProvider(ColorMarkProvider.INS);
+		ColorMarkProvider.INS.putColor("black", Ansi.Color.BLACK.value());
+		ColorMarkProvider.INS.putColor("blue", Ansi.Color.BLUE.value());
+		ColorMarkProvider.INS.putColor("cyan", Ansi.Color.CYAN.value());
+		ColorMarkProvider.INS.putColor("default", Ansi.Color.DEFAULT.value());
+		ColorMarkProvider.INS.putColor("green", Ansi.Color.GREEN.value());
+		ColorMarkProvider.INS.putColor("magenta", Ansi.Color.MAGENTA.value());
+		ColorMarkProvider.INS.putColor("red", Ansi.Color.RED.value());
+		ColorMarkProvider.INS.putColor("white", Ansi.Color.WHITE.value());
+		ColorMarkProvider.INS.putColor("yellow", Ansi.Color.YELLOW.value());
 	}
 }
