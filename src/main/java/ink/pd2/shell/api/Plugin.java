@@ -9,20 +9,21 @@ public abstract class Plugin {
     private String description; //描述
     private String versionName; //版本名
 
+    private final PluginUtils utils;
+
     public Plugin(String group, String name, int versionCode) {
-        this.resourcesGroup = group;
-        this.name = name;
-        description = Resources.INS.getString("psh.plugin-no-description");
-        this.versionCode = versionCode;
+        this(group, name, versionCode,
+                Resources.INS.getString("psh.plugin-no-description"));
     }
     public Plugin(String group, String name, int versionCode, String description) {
         this.resourcesGroup = group;
         this.name = name;
         this.versionCode = versionCode;
         this.description = description;
+        utils = new PluginUtils(this);
     }
 
-    public abstract void init();
+    public abstract void init(PluginUtils utils);
 
     //get & set
     public String getResourcesGroup() {
@@ -47,9 +48,7 @@ public abstract class Plugin {
         this.description = description;
     }
 
-    //API方法
-    public void addCommand(Command c) {
-        //TODO 验证指令格式
-        ink.pd2.shell.core.Resources.INS.putCommand(resourcesGroup, c);
+    public PluginUtils getUtils() {
+        return utils;
     }
 }

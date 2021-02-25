@@ -28,7 +28,7 @@ import java.util.*;
  * 否则将会抛出 {@code ResourceKeyFormatException} 异常.</p>
  *
  * @see groups
- * @see ink.pd2.shell.core.ResourceKeyFormatException
+ * @see ResourceException
  *
  * @author Maxel Black
  * @since PSH 1.0
@@ -52,7 +52,7 @@ public final class Resources {
 	 *
 	 * @see ink.pd2.shell.core.Resources
 	 * @see ink.pd2.shell.api.Plugin
-	 * @see ink.pd2.shell.core.ResourceKeyFormatException
+	 * @see ResourceException
 	 *
 	 * @author Maxel Black
 	 * @since PSH 1.0
@@ -63,7 +63,7 @@ public final class Resources {
 		public static void add(String groupName) {
 			//判断组名是否符合规范并添加组
 			if (groupName.contains(".") || groupName.contains("\n")) {
-				throw new ResourceKeyFormatException(
+				throw new ResourceException(
 						"Group name CANNOT contains any dot(.) or '\\n' character.");
 			} else {
 				groups.add(groupName);
@@ -116,60 +116,44 @@ public final class Resources {
 	}
 	//TODO 获取指令
 
-	public void putCommand(String group, Command... c) {
-		if (!groups.contains(group))
-			throw new ResourceKeyFormatException("Group name does NOT exist.");
+	public void putCommand(Command... c) {
 		for (Command i : c) {
+			String group = i.getGroup();
+			if (!groups.contains(group))
+				throw new ResourceException("Group name does NOT exist.");
 			commands.put(group + ":" + i.getName(), i);
 		}
 	}
 
 	//监听器
-	private final HashMap<String, Listener> listeners = new HashMap<>();
-	public Listener getListener(String key) {
-		//获取对象
-		Listener listener = listeners.get(key);
-		Logger.INS.debug("Resources<Listener>",
-				"&nomark&^ " + key + " : " + (listener != null));
-		return listener;
-	}
-
-	public List<Listener> getListeners(String group, String type) {
+	private final HashMap<String, ArrayList<Listener>> listeners = new HashMap<>();
+	public List<Listener> getListeners(String key) {
 		//获取指定组类全部对象
-		ArrayList<Listener> list = new ArrayList<>();
-		for (String key : listeners.keySet()) {
-			String[] skey = key.split("\\.");
-			if (skey[0].equals(group) && skey[1].equals(type)) {
-				Listener l = listeners.get(key);
-				if (l != null) list.add(l);
-			}
-		}
+		ArrayList<Listener> list = listeners.get(key);
 		Logger.INS.debug("Resources<Listener>",
-				"&nomark&^ " + group + '.' + type + ".* : " + !list.isEmpty());
+				"&nomark&^ " + key + " : " + !list.isEmpty());
 		return list;
 	}
 
-	public void putListener(String key, Listener value) {
-		//判断key是否符合规范 | 添加对象
-		String[] skey = key.split("\\.");
-		if (skey.length > 2) {
-			if (groups.contains(skey[0])) {
-				listeners.put(key, value);
-			} else {
-				throw new ResourceKeyFormatException("Group name does NOT exist.");
+	public void addListener(String key, Listener value) {
+		//添加对象
+		if (listeners.containsKey(key)) {
+			ArrayList<Listener> list = listeners.get(key);
+			if (list == null) {
+				throw new ResourceException("Listener type has NOT ever been reg");
 			}
 		} else {
-			throw new ResourceKeyFormatException("The key's format does NOT match the standard.");
+			throw new ResourceException("Group name does NOT exist.");
 		}
 		Logger.INS.debug("Resources<Listener>",
-				"&nomark&" + key + " -> " + value);
+				"&nomark&" + key + " += " + value);
 	}
 
-	public Listener removeListener(String key) {
+	public boolean removeListener(String key, Listener value) {
 		//移除对象
-		Listener listener = listeners.remove(key);
+		boolean b = listeners.get(key).remove(value);
 		Logger.INS.debug("Resources<Listener>",
-				"&nomark&^ " + key + " : " + (listener != null));
-		return listener;
+				"&nomark&- " + key + " : " + b);
+		return b;
 	}
 }

@@ -22,14 +22,22 @@ public class ConsoleInput extends Input {
 		//初始化 JLine LineReader
 		LineReader r;
 		try {
-			Terminal t = TerminalBuilder.builder().jansi(true).name("Pd2ShellTerminal")
-					.jna(true).dumb(true).encoding(Charset.defaultCharset()).build();
+			Terminal t = TerminalBuilder.builder()
+					.jansi(true).jna(true).dumb(true)
+					.name("Pd2ShellTerminal")
+					.encoding(Charset.defaultCharset())
+					.build();
 			//TODO 处理自动补全
-			r = LineReaderBuilder.builder().appName("Pd2Shell").terminal(t).build();
+			r = LineReaderBuilder.builder()
+					.appName("Pd2Shell")
+					.terminal(t)
+					.build();
 		} catch (IOException e) {
 			r = null;
 			Logger.INS.writeException("ConsoleInput.init", e);
-			Main.exit("JLine Initialization FAILED.");
+			Logger.INS.error("ConsoleInput.init",
+					Resources.INS.getString("psh.log-error-init-jline"));
+			Main.exit(Resources.INS.getString("psh.log-error-init-jline"));
 		}
 		reader = r;
 	}

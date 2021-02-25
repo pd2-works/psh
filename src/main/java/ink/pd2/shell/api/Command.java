@@ -8,14 +8,18 @@ import java.util.HashSet;
 
 public class Command {
 	private final String name; //指令名
+	private final String group; //组名
+
 	private final HashSet<CommandEvent> events = new HashSet<>(); //指令执行事件
 
-	public Command(String name) {
+	public Command(String group, String name) {
+		this.group = group;
 		this.name = name;
 	}
-	public Command(String name, CommandEvent... events) {
+	public Command(String group, String name, CommandEvent... events) {
+		this.group = group;
 		this.name = name;
-		this.events.addAll(Arrays.asList(events));
+		if (events.length != 0) this.events.addAll(Arrays.asList(events));
 	}
 
 	public void onExecute(Shell shell, CommandParameter parameter) {
@@ -36,7 +40,11 @@ public class Command {
 		events.remove(event);
 	}
 
+	//get & set
 	public String getName() {
 		return name;
+	}
+	public String getGroup() {
+		return group;
 	}
 }

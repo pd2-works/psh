@@ -6,7 +6,7 @@ import java.util.Map;
 public final class Mark {
 	public final static Mark INS = new Mark();
 
-	private final Map<String, MarkProvider> marks = new HashMap<>();
+	private final static Map<String, MarkProvider> marks = new HashMap<>();
 
 	public void regMarkProvider(MarkProvider provider) {
 		marks.put(provider.getSign(), provider);
@@ -113,7 +113,7 @@ public final class Mark {
 				if (ss.length == 2) {
 					MarkProvider mark = marks.get(ss[0]);
 					if (mark != null) {
-						String r = mark.onMarkUpdate(ss[1]); //用于替换的字符串
+						String r = mark.onMarkUpdate(this, ss[1]); //用于替换的字符串
 						str.replace(i1, i2 + 1, r); //替换标记
 						//查找转义字符 '\&' 并替换 (因算法死循环问题已注释)
 //						if (isTruth) {
@@ -132,7 +132,8 @@ public final class Mark {
 						str.delete(i1, i2 + 1);
 						break;
 					}
-					str.replace(i1, i2 + 1, marks.get(ss[0]).onMarkUpdate(""));
+					str.replace(i1, i2 + 1,
+							marks.get(ss[0]).onMarkUpdate(this, ""));
 				}
 			}
 			//=========================================================

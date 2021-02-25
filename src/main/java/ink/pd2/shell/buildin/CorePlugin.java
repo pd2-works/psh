@@ -1,5 +1,6 @@
 package ink.pd2.shell.buildin;
 
+import ink.pd2.shell.api.PluginUtils;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.core.CommandExecutedListener;
 import ink.pd2.shell.api.Plugin;
@@ -11,7 +12,7 @@ public class CorePlugin extends Plugin {
 	}
 
 	@Override
-	public void init() {
+	public void init(PluginUtils utils) {
 		new CommandExecutedListener() {
 			@Override
 			public int getPriority() {

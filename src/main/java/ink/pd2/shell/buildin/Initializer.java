@@ -8,12 +8,6 @@ import org.fusesource.jansi.Ansi;
 public final class Initializer {
 	public final static Initializer INS = new Initializer();
 
-	public void initPlugins() {
-		Logger.INS.info("Initializer",
-				Resources.INS.getString("psh.log-init-plugin"));
-		//TODO 初始化插件
-	}
-
 	public void initTheme() {
 		Logger.INS.info("Initializer",
 			Resources.INS.getString("psh.log-init-theme"));
@@ -28,6 +22,7 @@ public final class Initializer {
 		putStr("psh.log-init-shell", "Initializing new shell thread...");
 		putStr("psh.log-init-theme", "Loading UI theme...");
 		putStr("psh.log-init-jline-reader", "Initializing JLine terminal reader...");
+		putStr("psh.log-error-init-jline", "JLine Initialization FAILED.");
 		putStr("psh.exit", "Exit");
 		putStr("psh.plugin-no-description", "There is no description.");
 		putStr("psh.shell-prompt-text-left", "&color:green.default[\\&v:user\\&]&:&color:blue.default[\\&v:current_folder\\&]&$ ");

@@ -14,11 +14,16 @@ public final class PluginManager {
 
 	private final List<Plugin> plugins = new ArrayList<>();
 
+	public void load(String folderPath) {
+		//TODO 加载插件
+	}
 
+	public void reload(JarFile file) {
+		//TODO 热重载
+	}
 
-	private String readPropertyFile(String path) throws IOException {
+	private String readPropertyFile(JarFile file) throws IOException {
 		//初始化文件读取流
-		JarFile file = new JarFile(path);
 		JarEntry entry = file.getJarEntry("plugin.psh");
 		InputStreamReader r = new InputStreamReader(
 				file.getInputStream(entry), StandardCharsets.UTF_8);
@@ -30,6 +35,7 @@ public final class PluginManager {
 			s.append((char) tmp);
 		}
 
+		r.close();
 		return s.toString();
 	}
 }

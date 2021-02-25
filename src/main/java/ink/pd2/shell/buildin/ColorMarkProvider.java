@@ -1,5 +1,6 @@
 package ink.pd2.shell.buildin;
 
+import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.MarkProvider;
 import org.fusesource.jansi.Ansi;
 
@@ -22,7 +23,7 @@ public class ColorMarkProvider implements MarkProvider {
 	}
 
 	@Override
-	public String onMarkUpdate(String value) {
+	public String onMarkUpdate(Mark mark, String value) {
 		//================================================
 		//||  "&color:fg.bg&"                           ||
 		//||  "&color:fg.bg[colored_text]normal_text&"  ||

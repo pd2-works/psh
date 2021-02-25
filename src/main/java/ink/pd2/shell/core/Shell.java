@@ -50,7 +50,7 @@ public class Shell {
 		listeners.add(new ArrayList<>(1));
 		Logger.INS.info("Shell", Resources.INS.getString("psh.log-init-shell"));
 		//将事件按优先级排序
-		List<Listener> ls = Resources.INS.getListeners("psh", "command-executed");
+		List<Listener> ls = Resources.INS.getListeners("psh.command-executed");
 		for (Listener li : ls) {
 			CommandExecutedListener l = (CommandExecutedListener) li;
 			listeners.get(l.getPriority()).add(l);
@@ -71,10 +71,10 @@ public class Shell {
 			user = getCurrentUser();
 			try {
 				Main.putVariable("current_dir", dir.getCanonicalPath());
+				Main.putVariable("current_folder", dir.getCanonicalFile().getName());
 			} catch (IOException e) {
 				Logger.INS.writeException("Shell", e);
 			}
-			Main.putVariable("current_folder", dir.getName());
 			//指令处理和执行
 			String c = Main.input.getCommand(this);
 			event:

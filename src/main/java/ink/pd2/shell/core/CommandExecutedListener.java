@@ -1,6 +1,11 @@
 package ink.pd2.shell.core;
 
-public interface CommandExecutedListener extends ink.pd2.shell.core.Listener {
+public abstract class CommandExecutedListener implements Listener {
+
+	@Override
+	public String getType() {
+		return "command-executed";
+	}
 
 	/**
 	 * <h2>getPriority() | 事件执行的优先级</h2>
@@ -16,7 +21,7 @@ public interface CommandExecutedListener extends ink.pd2.shell.core.Listener {
 	 * @since PSH 1.0
 	 */
 
-	int getPriority();
+	public abstract int getPriority();
 
 	/**
 	 * <h2>event() | 事件活动</h2>
@@ -29,5 +34,5 @@ public interface CommandExecutedListener extends ink.pd2.shell.core.Listener {
 	 * @since PSH 1.0
 	 */
 
-	Boolean event(Shell shell, String command);
+	public abstract Boolean event(Shell shell, String command);
 }
