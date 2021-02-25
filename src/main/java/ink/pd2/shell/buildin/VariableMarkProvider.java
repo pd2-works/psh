@@ -1,5 +1,6 @@
 package ink.pd2.shell.buildin;
 
+import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.MarkProvider;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class VariableMarkProvider implements MarkProvider {
 		return "v";
 	}
 
-	public String onMarkUpdate(String value) {
+	public String onMarkUpdate(Mark mark, String value) {
 		String variable = variables.get(value);
 		if (variable == null) {
 			return "\\&v:" + value + "\\&";
