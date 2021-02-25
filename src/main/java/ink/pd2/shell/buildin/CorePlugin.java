@@ -9,7 +9,7 @@ import ink.pd2.shell.api.Plugin;
 public class CorePlugin extends Plugin {
 	public CorePlugin() {
 		super("psh", "Pd2 Shell",13 ,
-				"The core commands and options.");
+				"The core commands, options and APIs.");
 	}
 
 	@Override
@@ -21,7 +21,8 @@ public class CorePlugin extends Plugin {
 			}
 			@Override
 			public Boolean event(Shell shell, String command) {
-				return null;
+				//TODO 解析指令
+				return true;
 			}
 		});
 	}

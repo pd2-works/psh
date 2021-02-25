@@ -83,6 +83,10 @@ public final class Resources {
 
 	//字符串
 	private final HashMap<String, String> strings = new HashMap<>();
+	public HashMap<String, String> getStringMap() {
+		return strings;
+	}
+
 	public String getString(String key) {
 		//获取字符串
 		String string = strings.get(key);
@@ -107,6 +111,10 @@ public final class Resources {
 
 	//指令
 	private final HashMap<String, Command> commands = new HashMap<>();
+	public HashMap<String, Command> getCommandMap() {
+		return commands;
+	}
+
 	private Command getCommand(String key) {
 		//获取对象
 		Command command = commands.get(key);
@@ -123,7 +131,7 @@ public final class Resources {
 			String key = group + ':' + i.getName();
 			commands.put(key, i);
 			Logger.INS.debug("Resources<Command>",
-					"&nomark&+= " + key);
+					"&nomark&+ " + key);
 		}
 	}
 
@@ -136,6 +144,10 @@ public final class Resources {
 
 	//监听器
 	private final HashMap<String, ArrayList<Listener>> listeners = new HashMap<>();
+	public HashMap<String, ArrayList<Listener>> getListenerMap() {
+		return listeners;
+	}
+
 	public List<Listener> getListeners(String key) {
 		//获取指定组类全部对象
 		ArrayList<Listener> list = listeners.get(key);
@@ -166,7 +178,7 @@ public final class Resources {
 		String key = group + '.' + value.getType();
 		boolean b = listeners.get(key).remove(value);
 		Logger.INS.debug("Resources<Listener>",
-				"&nomark&" + key + " -= " + group + " : " + b);
+				"&nomark&" + key + " -= " + value + " : " + b);
 		return b;
 	}
 

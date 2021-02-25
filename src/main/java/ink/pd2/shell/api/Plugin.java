@@ -1,7 +1,8 @@
 package ink.pd2.shell.api;
 
-import ink.pd2.shell.Main;
 import ink.pd2.shell.core.Resources;
+
+import java.util.HashMap;
 
 public abstract class Plugin {
     private final String resourcesGroup; //资源组
@@ -51,5 +52,25 @@ public abstract class Plugin {
 
     public PluginUtils getUtils() {
         return utils;
+    }
+
+    //API: string resources
+    public class s {
+        public String get(String key) {
+            return Resources.INS.getString(resourcesGroup + '.' + key);
+        }
+
+        public void put(String key, String value) {
+            Resources.INS.putString(resourcesGroup + '.' + key, value);
+        }
+
+        public String remove(String key) {
+            return Resources.INS.removeString(key);
+        }
+
+        public HashMap<String, String> getAll() {
+            //TODO 获取插件资源组中所有字符串
+            return null;
+        }
     }
 }
