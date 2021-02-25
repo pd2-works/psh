@@ -114,15 +114,24 @@ public final class Resources {
 				"&nomark&^ " + key + " : " + (command != null));
 		return command;
 	}
-	//TODO 获取指令
 
 	public void putCommand(Command... c) {
 		for (Command i : c) {
 			String group = i.getGroup();
 			if (!groups.contains(group))
 				throw new ResourceException("Group name does NOT exist.");
-			commands.put(group + ":" + i.getName(), i);
+			String key = group + ':' + i.getName();
+			commands.put(key, i);
+			Logger.INS.debug("Resources<Command>",
+					"&nomark&+= " + key);
 		}
+	}
+
+	public Command removeCommand(String key) {
+		Command command = commands.remove(key);
+		Logger.INS.debug("Resources<Command>",
+				"&nomark&^ " + key + " : " + (command != null));
+		return command;
 	}
 
 	//监听器
@@ -131,16 +140,19 @@ public final class Resources {
 		//获取指定组类全部对象
 		ArrayList<Listener> list = listeners.get(key);
 		Logger.INS.debug("Resources<Listener>",
-				"&nomark&^ " + key + " : " + !list.isEmpty());
+				"&nomark&^ " + key + " : " + (list != null));
 		return list;
 	}
 
-	public void addListener(String key, Listener value) {
+	public void addListener(String group, Listener value) {
+		String key = group + '.' + value.getType();
 		//添加对象
 		if (listeners.containsKey(key)) {
 			ArrayList<Listener> list = listeners.get(key);
 			if (list == null) {
-				throw new ResourceException("Listener type has NOT ever been reg");
+				throw new ResourceException("Listener type has NOT ever been registered.");
+			} else {
+				list.add(value);
 			}
 		} else {
 			throw new ResourceException("Group name does NOT exist.");
@@ -149,11 +161,35 @@ public final class Resources {
 				"&nomark&" + key + " += " + value);
 	}
 
-	public boolean removeListener(String key, Listener value) {
+	public boolean removeListener(String group, Listener value) {
 		//移除对象
+		String key = group + '.' + value.getType();
 		boolean b = listeners.get(key).remove(value);
 		Logger.INS.debug("Resources<Listener>",
-				"&nomark&- " + key + " : " + b);
+				"&nomark&" + key + " -= " + group + " : " + b);
 		return b;
 	}
+
+	public void registerListenerType(String group, String type) {
+		if (groups.contains(group)) {
+			String key = group + '.' + type;
+			if (listeners.containsKey(key)) {
+				throw new ResourceException("Listener type has already existed.");
+			} else {
+				listeners.put(key, new ArrayList<>());
+				Logger.INS.debug("Resources<Listener>",
+						"&nomark&Type += " + key);
+			}
+		} else {
+			throw new ResourceException("Group name does NOT exist.");
+		}
+	}
+
+	public ArrayList<Listener> unregisterListenerType(String key) {
+		ArrayList<Listener> list = listeners.remove(key);
+		Logger.INS.debug("Resources<Listener>",
+				"&nomark&Type -= " + key + " : " + (list != null));
+		return list;
+	}
+
 }

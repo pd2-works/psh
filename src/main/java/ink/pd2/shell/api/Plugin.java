@@ -1,5 +1,6 @@
 package ink.pd2.shell.api;
 
+import ink.pd2.shell.Main;
 import ink.pd2.shell.core.Resources;
 
 public abstract class Plugin {
@@ -11,12 +12,12 @@ public abstract class Plugin {
 
     private final PluginUtils utils;
 
-    public Plugin(String group, String name, int versionCode) {
-        this(group, name, versionCode,
+    public Plugin(String resourcesGroup, String name, int versionCode) {
+        this(resourcesGroup, name, versionCode,
                 Resources.INS.getString("psh.plugin-no-description"));
     }
-    public Plugin(String group, String name, int versionCode, String description) {
-        this.resourcesGroup = group;
+    public Plugin(String resourcesGroup, String name, int versionCode, String description) {
+        this.resourcesGroup = resourcesGroup;
         this.name = name;
         this.versionCode = versionCode;
         this.description = description;

@@ -47,11 +47,11 @@ public final class Initializer {
 	}
 
 	public void initMarks() {
-		Mark.INS.regMarkProvider(VariableMarkProvider.INS);
+		Mark.INS.registerMarkProvider(VariableMarkProvider.INS);
 		VariableMarkProvider.INS.getVariables().put("user", "user");
 		VariableMarkProvider.INS.getVariables().put("host", "localhost");
 		VariableMarkProvider.INS.getVariables().put("current_dir", ".");
-		Mark.INS.regMarkProvider(ColorMarkProvider.INS);
+		Mark.INS.registerMarkProvider(ColorMarkProvider.INS);
 		ColorMarkProvider.INS.putColor("black", Ansi.Color.BLACK.value());
 		ColorMarkProvider.INS.putColor("blue", Ansi.Color.BLUE.value());
 		ColorMarkProvider.INS.putColor("cyan", Ansi.Color.CYAN.value());

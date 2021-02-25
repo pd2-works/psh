@@ -17,12 +17,20 @@ public class PluginUtils {
 
 	//TODO 插件API
 	//API方法
+
+	//指令相关
 	public void addCommand(Command c) {
 		assert plugin != null;
 //		Resources.INS.putCommand(plugin.getResourcesGroup(), c); TODO
 	}
 	public void removeCommand(Command c) {
 
+	}
+
+	//监听器相关
+	public void registerListenerType(String type) {
+		assert plugin != null;
+		Resources.INS.registerListenerType(plugin.getResourcesGroup(), type);
 	}
 
 }

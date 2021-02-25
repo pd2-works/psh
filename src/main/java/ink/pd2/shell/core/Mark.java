@@ -8,7 +8,7 @@ public final class Mark {
 
 	private final static Map<String, MarkProvider> marks = new HashMap<>();
 
-	public void regMarkProvider(MarkProvider provider) {
+	public void registerMarkProvider(MarkProvider provider) {
 		marks.put(provider.getSign(), provider);
 	}
 
