@@ -1,9 +1,11 @@
 package ink.pd2.shell.api;
 
+import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.core.Listener;
 import ink.pd2.shell.core.Resources;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class PluginUtils {
 	private final Plugin plugin;
@@ -21,6 +23,7 @@ public class PluginUtils {
 
 	public final CommandUtils command = new CommandUtils();
 	public final ListenerUtils listener = new ListenerUtils();
+	public final static ShellUtils shell = new ShellUtils();
 
 	//指令相关
 	public class CommandUtils {
@@ -37,8 +40,8 @@ public class PluginUtils {
 			return map.remove(plugin.getResourcesGroup() + ':' + commandName);
 		}
 
-		public void remove(Command c) {
-			Resources.INS.removeCommand(
+		public Command remove(Command c) {
+			return Resources.INS.removeCommand(
 					plugin.getResourcesGroup() + '.' + c.getName());
 		}
 	}
@@ -49,8 +52,8 @@ public class PluginUtils {
 			Resources.INS.registerListenerType(plugin.getResourcesGroup(), type);
 		}
 
-		public boolean unregisterType(String type) {
-			return Resources.INS.unregisterListenerType(type) != null;
+		public List<Listener> unregisterType(String type) {
+			return Resources.INS.unregisterListenerType(type);
 		}
 
 		public void add(String group, Listener listener) {
@@ -68,6 +71,14 @@ public class PluginUtils {
 		}
 	}
 
-	//字符串相关位于 Plugin 类
+	//Shell相关
+	public static final class ShellUtils {
+		public int newCommandList() {
+			return CorePlugin.newCommandList();
+		}
+
+	}
+
+	//字符串相关位于Plugin类
 
 }
