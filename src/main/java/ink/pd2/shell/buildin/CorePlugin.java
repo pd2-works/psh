@@ -8,13 +8,15 @@ import ink.pd2.shell.api.Plugin;
 
 public class CorePlugin extends Plugin {
 	public CorePlugin() {
-		super("psh", "Pd2 Shell",13 ,
-				"The core commands, options and APIs.");
+		super("psh", 13,
+				Resources.INS.getString("psh.name"),
+				Resources.INS.getString("psh.description"));
+		setVersionName(Resources.INS.getString("psh.version"));
 	}
 
 	@Override
-	public void init(PluginUtils utils) {
-		Resources.INS.addListener("psh", new CommandExecutedListener() {
+	public void init( PluginUtils utils) {
+		utils.listener.add(new CommandExecutedListener() {
 			@Override
 			public int getPriority() {
 				return Shell.DEFAULT_PRIORITY;
@@ -25,5 +27,6 @@ public class CorePlugin extends Plugin {
 				return true;
 			}
 		});
+
 	}
 }

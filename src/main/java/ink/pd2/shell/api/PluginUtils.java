@@ -19,8 +19,11 @@ public class PluginUtils {
 	//| <- 资源管理 ->  |
 	//==================
 
+	public final CommandUtils command = new CommandUtils();
+	public final ListenerUtils listener = new ListenerUtils();
+
 	//指令相关
-	public class command {
+	public class CommandUtils {
 		public void add(Command c) {
 			Resources.INS.putCommand(c);
 		}
@@ -41,7 +44,7 @@ public class PluginUtils {
 	}
 
 	//监听器相关
-	public class listener {
+	public class ListenerUtils {
 		public void registerType(String type) {
 			Resources.INS.registerListenerType(plugin.getResourcesGroup(), type);
 		}

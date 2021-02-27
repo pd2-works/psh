@@ -29,7 +29,7 @@ public abstract class CommandExecutedListener implements Listener {
 	 * @param shell 执行指令的Shell对象
 	 * @param command 执行的指令对象
 	 *
-	 * @return 下一步操作: true为继续运行, false为退出, null为跳过其他事件直接进入下一循环
+	 * @return 下一步操作: true为继续运行, false为退出, null为跳过其他事件直接进入下一指令输入过程
 	 *
 	 * @since PSH 1.0
 	 */

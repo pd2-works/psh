@@ -17,6 +17,9 @@ public final class PluginManager {
 	public void load(String folderPath) {
 		//TODO 加载插件
 	}
+	public void load(JarFile file) {
+
+	}
 
 	public void reload(JarFile file) {
 		//TODO 热重载

@@ -13,11 +13,14 @@ public class VariableMarkProvider implements MarkProvider {
 		return variables;
 	}
 
+	//TODO 基于对象区分的环境变量层叠式分配
+
 	public String getSign() {
 		return "v";
 	}
 
 	public String onMarkUpdate(Mark mark, String value) {
+
 		String variable = variables.get(value);
 		if (variable == null) {
 			return "\\&v:" + value + "\\&";

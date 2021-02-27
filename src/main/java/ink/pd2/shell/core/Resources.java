@@ -25,7 +25,7 @@ import java.util.*;
  * 不同资源也可能有一些不同的特殊操作方法).</p>
  *
  * <p>监听器/指令资源带有资源组机制(详见 {@code Groups} 子对象), {@code key} 的命名规则需遵循资源组限制,
- * 否则将会抛出 {@code ResourceKeyFormatException} 异常.</p>
+ * 否则将会抛出 {@code ResourceException} 异常.</p>
  *
  * @see groups
  * @see ResourceException

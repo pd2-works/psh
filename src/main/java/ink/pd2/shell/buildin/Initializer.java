@@ -18,15 +18,26 @@ public final class Initializer {
 		Logger.INS.info("Initializer", "Initializing core resources...");
 
 		//初始化资源
+
+		//字符串
+		putStr("psh.name", "Pd2 Shell");
+		putStr("psh.version", "1.0.0-a113");
+		putStr("psh.description", "The core commands, options and APIs.");
+
 		putStr("psh.log-init-plugin", "Initializing Plugins...");
 		putStr("psh.log-init-shell", "Initializing new shell thread...");
 		putStr("psh.log-init-theme", "Loading UI theme...");
 		putStr("psh.log-init-jline-reader", "Initializing JLine terminal reader...");
 		putStr("psh.log-error-init-jline", "JLine Initialization FAILED.");
+
 		putStr("psh.exit", "Exit");
+
+		putStr("psh.plugin-no-name", "Unnamed");
 		putStr("psh.plugin-no-description", "There is no description.");
+
 		putStr("psh.shell-prompt-text-left", "&color:green.default[\\&v:user\\&]&:&color:blue.default[\\&v:current_folder\\&]&$ ");
 //		putStr("psh.shell-prompt-text-right", "...");
+
 		putStr("psh.shell-greet-text", "&color:blue.default[Welcome to Pd2 Shell!\n    ____      _____      _____ __         ____   __  \n   / __ \\____/ /__ \\    / ___// /_  ___  / / /   \\ \\ \n  / /_/ / __  /__/ /    \\__ \\/ __ \\/ _ \\/ / /     \\ \\\n / ____/ /_/ // __/    ___/ / / / /  __/ / /      / /\n/_/    \\__,_//____/   /____/_/ /_/\\___/_/_/      /_/ ]&\n\n");
 		/*
 		=====================================================
@@ -39,6 +50,9 @@ public final class Initializer {
 
 		=====================================================
 		 */
+
+		//监听器
+		Resources.INS.registerListenerType("psh", "command-executed");
 
 		Logger.INS.info("Initializer", "Resources initialization finished.");
 	}
