@@ -1,6 +1,7 @@
 package ink.pd2.shell.core;
 
 import ink.pd2.shell.api.Command;
+import ink.pd2.shell.api.plugin.Plugin;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ public final class Resources {
 	 * 建议在<b>整个插件初始化过程的最前面</b>调用添加资源组的方法( {@code add(groupName)} )</p>
 	 *
 	 * @see ink.pd2.shell.core.Resources
-	 * @see ink.pd2.shell.api.Plugin
+	 * @see Plugin
 	 * @see ResourceException
 	 *
 	 * @author Maxel Black
@@ -167,7 +168,7 @@ public final class Resources {
 				list.add(value);
 			}
 		} else {
-			throw new ResourceException("Group name does NOT exist.");
+			throw new ResourceException("Group name '" + group + "' does NOT exist.");
 		}
 		Logger.INS.debug("Resources<Listener>",
 				"&nomark&" + key + " += " + value);
@@ -193,7 +194,7 @@ public final class Resources {
 						"&nomark&Type += " + key);
 			}
 		} else {
-			throw new ResourceException("Group name does NOT exist.");
+			throw new ResourceException("Group name '" + group + "' does NOT exist.");
 		}
 	}
 

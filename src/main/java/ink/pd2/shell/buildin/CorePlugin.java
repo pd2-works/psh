@@ -1,11 +1,11 @@
 package ink.pd2.shell.buildin;
 
 import ink.pd2.shell.api.Command;
-import ink.pd2.shell.api.PluginUtils;
+import ink.pd2.shell.api.plugin.PluginInterface;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.core.CommandExecutedListener;
-import ink.pd2.shell.api.Plugin;
+import ink.pd2.shell.api.plugin.Plugin;
 
 import java.util.*;
 
@@ -31,8 +31,8 @@ public class CorePlugin extends Plugin {
 	}
 
 	@Override
-	public void init( PluginUtils utils) {
-		utils.listener.add(new CommandExecutedListener() {
+	public void init( PluginInterface api) {
+		api.listener.add(new CommandExecutedListener() {
 			@Override
 			public int getPriority() {
 				return Shell.DEFAULT_PRIORITY;
@@ -43,6 +43,7 @@ public class CorePlugin extends Plugin {
 				return true;
 			}
 		});
+
 
 	}
 }

@@ -1,5 +1,6 @@
 package ink.pd2.shell;
 
+import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.buildin.Initializer;
 import ink.pd2.shell.buildin.VariableMarkProvider;
 import ink.pd2.shell.core.Logger;
@@ -15,6 +16,9 @@ import java.util.List;
 public final class Main {
 	//Shell对象
 	private final static List<Shell> shells = new LinkedList<>();
+	public static List<Shell> getShells() {
+		return shells;
+	}
 
 	//I/O流
 	public static Input input;
@@ -31,12 +35,17 @@ public final class Main {
 	//环境变量
 	public static void putVariable(String key, String value) {
 		VariableMarkProvider.INS.getVariables().put(key, value);
+		Logger.INS.debug("Main<Variable>", key + " -> " + value);
 	}
 	public static String getVariableValue(String key) {
-		return VariableMarkProvider.INS.getVariables().get(key);
+		String value = VariableMarkProvider.INS.getVariables().get(key);
+		Logger.INS.debug("Main<Variable>", "^ " + key + " : " + (value != null));
+		return value;
 	}
 	public static String removeVariable(String key) {
-		return VariableMarkProvider.INS.getVariables().remove(key);
+		String value = VariableMarkProvider.INS.getVariables().remove(key);
+		Logger.INS.debug("Main<Variable>", "- " + key + " : " + (value != null));
+		return value;
 	}
 
 	/**
@@ -103,10 +112,16 @@ public final class Main {
 
 		Initializer.INS.initMarks(); //初始化默认标记
 
+		Resources.groups.add("psh"); //添加核心资源组
+
 		Logger.INS.debug("Main.PreInit", "Initialization started.");
 
 		Initializer.INS.initResources(); //初始化资源
 		Initializer.INS.initTheme(); //初始化主题
+
+		//加载核心插件和API
+		CorePlugin core = new CorePlugin();
+		core.init();
 
 		input = new ConsoleInput(); //设置input流
 

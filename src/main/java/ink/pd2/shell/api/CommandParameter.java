@@ -1,4 +1,4 @@
-package ink.pd2.shell.core;
+package ink.pd2.shell.api;
 
 public class CommandParameter {
 	public CommandParameter(String command) {

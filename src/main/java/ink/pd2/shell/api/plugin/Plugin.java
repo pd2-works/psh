@@ -1,7 +1,11 @@
-package ink.pd2.shell.api;
+package ink.pd2.shell.api.plugin;
 
 import ink.pd2.shell.core.Resources;
+import ink.pd2.shell.core.i18n.Language;
+import ink.pd2.shell.util.PluginUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public abstract class Plugin implements Initializeable {
@@ -11,7 +15,7 @@ public abstract class Plugin implements Initializeable {
 	private String description; //描述
 	private String versionName; //版本名
 
-	private final PluginUtils utils; //工具对象
+	private final PluginInterface api; //工具对象
 
 	public Plugin(String resourcesGroup, int versionCode) {
 		this(resourcesGroup, versionCode,
@@ -26,15 +30,28 @@ public abstract class Plugin implements Initializeable {
 		this.name = name;
 		this.versionCode = versionCode;
 		this.description = description;
-		utils = new PluginUtils(this);
+		api = new PluginInterface(this);
 	}
 
 	@Override
 	public void init() {
-		init(getUtils());
+		init(getApi());
 	}
 
-	public abstract void init(PluginUtils utils);
+	@Override
+	public void initLanguage(File[] files) {
+		for (File file : files) {
+			try {
+				PluginUtils.INS.loadLanguage(new Language(file));
+			} catch (IOException e) {
+				throw new PluginInitializationException(
+						"An exception has been thrown while the plugin '"
+								+ getResourcesGroup() + "' is initializing.");
+			}
+		}
+	}
+
+	public abstract void init(PluginInterface api);
 
 	//get & set
 	public String getResourcesGroup() {
@@ -62,8 +79,8 @@ public abstract class Plugin implements Initializeable {
 		this.description = description;
 	}
 
-	public PluginUtils getUtils() {
-		return utils;
+	public PluginInterface getApi() {
+		return api;
 	}
 
 	//API: string resources

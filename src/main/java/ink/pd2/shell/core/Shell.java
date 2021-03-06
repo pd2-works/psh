@@ -64,6 +64,9 @@ public class Shell {
 
 	public void run() {
 		thread = Thread.currentThread();
+		Logger.INS.info(getLogLocation(), "A new shell started.");
+
+		//CLI启动
 		shell:
 		while (true) {
 			//TODO 层级环境变量
@@ -73,10 +76,11 @@ public class Shell {
 				Main.putVariable("current_dir", dir.getCanonicalPath());
 				Main.putVariable("current_folder", dir.getCanonicalFile().getName());
 			} catch (IOException e) {
-				Logger.INS.writeException("Shell", e);
+				Logger.INS.writeException(getLogLocation(), e);
 			}
 			//指令处理和执行
 			String c = Main.input.getCommand(this);
+
 			event:
 			for (ArrayList<CommandExecutedListener> ls : listeners)
 				for (CommandExecutedListener l : ls) {
@@ -88,6 +92,10 @@ public class Shell {
 		}
 		//退出事件
 
+	}
+
+	private String getLogLocation() {
+		return "Shell@" + thread.getId();
 	}
 
 }
