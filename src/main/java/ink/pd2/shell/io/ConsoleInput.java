@@ -7,6 +7,7 @@ import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.Shell;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.UserInterruptException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
@@ -48,10 +49,14 @@ public class ConsoleInput extends Input {
 	}
 
 	@Override
-	public String getCommand(Shell shell) {
-		return reader.readLine(
-				Mark.INS.update(Resources.INS.getString("psh.shell-prompt-text-left")),
-				Mark.INS.update(Resources.INS.getString("psh.shell-prompt-text-right")),
-				(Character) null, null);
+	public String getCommand(Shell shell, Mark mark) {
+		try {
+			return reader.readLine(
+					mark.update(Resources.INS.getString("psh.shell-prompt-text-left")),
+					mark.update(Resources.INS.getString("psh.shell-prompt-text-right")),
+					(Character) null, null);
+		} catch (UserInterruptException e) {
+			return null;
+		}
 	}
 }

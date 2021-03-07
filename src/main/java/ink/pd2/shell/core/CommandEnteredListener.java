@@ -1,10 +1,10 @@
 package ink.pd2.shell.core;
 
-public abstract class CommandExecutedListener implements Listener {
+public abstract class CommandEnteredListener implements Listener {
 
 	@Override
 	public String getType() {
-		return "command-executed";
+		return "command-entered";
 	}
 
 	/**

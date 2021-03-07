@@ -3,7 +3,7 @@ package ink.pd2.shell.core;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Mark {
+public class Mark {
 	public final static Mark INS = new Mark();
 
 	private final static Map<String, MarkProvider> marks = new HashMap<>();
