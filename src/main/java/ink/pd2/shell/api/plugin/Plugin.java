@@ -18,12 +18,10 @@ public abstract class Plugin implements Initializeable {
 	private final PluginInterface api; //工具对象
 
 	public Plugin(String resourcesGroup, int versionCode) {
-		this(resourcesGroup, versionCode,
-				Resources.INS.getString("psh.plugin-no-name"));
+		this(resourcesGroup, versionCode, null, null);
 	}
 	public Plugin(String resourcesGroup, int versionCode, String name) {
-		this(resourcesGroup, versionCode, name,
-				Resources.INS.getString("psh.plugin-no-description"));
+		this(resourcesGroup, versionCode, name, null);
 	}
 	public Plugin(String resourcesGroup, int versionCode, String name, String description) {
 		this.resourcesGroup = resourcesGroup;

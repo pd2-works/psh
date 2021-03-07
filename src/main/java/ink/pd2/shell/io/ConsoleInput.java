@@ -50,6 +50,7 @@ public class ConsoleInput extends Input {
 
 	@Override
 	public String getCommand(Shell shell, Mark mark) {
+		if (mark == null) mark = Mark.INS;
 		try {
 			return reader.readLine(
 					mark.update(Resources.INS.getString("psh.shell-prompt-text-left")),
@@ -58,5 +59,12 @@ public class ConsoleInput extends Input {
 		} catch (UserInterruptException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public String newLine(String lPrompt, String rPrompt, Mark mark) {
+		if (mark == null) mark = Mark.INS;
+		return reader.readLine(mark.update(lPrompt),
+				mark.update(rPrompt), (Character) null, null);
 	}
 }

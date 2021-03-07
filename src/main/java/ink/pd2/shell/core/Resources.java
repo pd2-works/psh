@@ -160,15 +160,11 @@ public final class Resources {
 	public void addListener(String group, Listener value) {
 		String key = group + '.' + value.getType();
 		//添加对象
-		if (listeners.containsKey(key)) {
-			ArrayList<Listener> list = listeners.get(key);
-			if (list == null) {
-				throw new ResourceException("Listener type has NOT ever been registered.");
-			} else {
-				list.add(value);
-			}
+		ArrayList<Listener> list = listeners.get(key);
+		if (list == null) {
+			throw new ResourceException("Listener type has NOT ever been registered.");
 		} else {
-			throw new ResourceException("Group name '" + group + "' does NOT exist.");
+			list.add(value);
 		}
 		Logger.INS.debug("Resources<Listener>",
 				"&nomark&" + key + " += " + value);

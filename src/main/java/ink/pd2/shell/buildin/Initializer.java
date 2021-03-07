@@ -21,7 +21,7 @@ public final class Initializer {
 
 		//字符串
 		putStr("psh.name", "Pd2 Shell");
-		putStr("psh.version", "1.0.0-a113");
+		putStr("psh.version", "1.0.0-a115");
 		putStr("psh.description", "The core commands, options and APIs.");
 
 		putStr("psh.log-init-plugin", "Initializing Plugins...");
@@ -52,7 +52,7 @@ public final class Initializer {
 		 */
 
 		//监听器
-		Resources.INS.registerListenerType("psh", "command-executed");
+		Resources.INS.registerListenerType("psh", "command-entered");
 
 		Logger.INS.info("Initializer", "Resources initialization finished.");
 	}

@@ -3,6 +3,8 @@ package ink.pd2.shell.core;
 import ink.pd2.shell.Main;
 import ink.pd2.shell.buildin.VariableMark;
 import ink.pd2.shell.buildin.VariableMarkProvider;
+import ink.pd2.shell.io.Input;
+import ink.pd2.shell.io.Output;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,18 +23,18 @@ public class Shell {
 	public void putVariable(String key, String value) {
 		variables.put(key, value);
 		Logger.INS.debug("Shell@" + thread.getId() + "<Variable>",
-				key + " -> " + value);
+				"&nomark&" + key + " -> \"" + value + '"');
 	}
 	public String getVariableValue(String key) {
 		String value = variables.get(key);
 		Logger.INS.debug("Shell@" + thread.getId() + "<Variable>",
-				"^ " + key + " : " + (value != null));
+				"&nomark&^ " + key + " : " + (value != null));
 		return value;
 	}
 	public String removeVariable(String key) {
 		String value = VariableMarkProvider.INS.getVariables().remove(key);
 		Logger.INS.debug("Shell@" + thread.getId() + "<Variable>",
-				"- " + key + " : " + (value != null));
+				"&nomark&- " + key + " : " + (value != null));
 		return value;
 	}
 
@@ -58,6 +60,21 @@ public class Shell {
 		else dir = file.getParentFile();
 	}
 
+	//基本输入输出
+	public void print(String s) {
+		Main.print(s);
+	}
+	public void println(String s) {
+		Main.println(s);
+	}
+	public String readLine() {
+		return Main.input.readLine();
+	}
+
+	public Input input = Main.input;
+	public Output output = Main.output;
+
+	//功能和特性
 	public String getCurrentUser() {
 		return getVariableValue("user");
 	}
@@ -66,11 +83,11 @@ public class Shell {
 	private final ArrayList<ArrayList<CommandEnteredListener>> listeners
 			= new ArrayList<>(5);
 
-	public Shell() {
+	private void init() {
 		listeners.add(new ArrayList<>(0));
 		listeners.add(new ArrayList<>(0));
 		listeners.add(new ArrayList<>(1));
-		Logger.INS.info("Shell", Resources.INS.getString("psh.log-init-shell"));
+		Logger.INS.info("Shell.init", Resources.INS.getString("psh.log-init-shell"));
 		//将事件按优先级排序
 		List<Listener> ls = Resources.INS.getListeners("psh.command-entered");
 		for (Listener li : ls) {
@@ -85,7 +102,14 @@ public class Shell {
 	}
 
 	public void run() {
+		run(VariableMarkProvider.INS.getVariables().newChild());
+	}
+	public void run(VariableMark variables) {
 		thread = Thread.currentThread();
+
+		this.variables = variables;
+		init();
+
 		Logger.INS.info(getLogLocation(), "A new shell started.");
 
 		//CLI启动
@@ -103,17 +127,25 @@ public class Shell {
 			//指令处理和执行
 			String c = Main.input.getCommand(this, variables);
 
-			event:
-			for (ArrayList<CommandEnteredListener> ls : listeners)
-				for (CommandEnteredListener l : ls) {
-					Boolean b = l.event(this, c);
-					if (b == null) break event;
-					if (!b) break shell;
-				}
+			if (!enterCommand(c)) break;
 
 		}
 		//退出事件
 
+	}
+
+	public Boolean enterCommand(String command) {
+		Logger.INS.debug(getLogLocation() + "<CommandLine>", command);
+
+		Boolean b = true;
+		event:
+		for (ArrayList<CommandEnteredListener> ls : listeners)
+			for (CommandEnteredListener l : ls) {
+				b = l.event(this, command);
+				if (b == null) break event;
+			}
+
+		return b;
 	}
 
 	private String getLogLocation() {

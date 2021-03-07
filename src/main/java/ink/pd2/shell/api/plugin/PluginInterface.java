@@ -22,6 +22,7 @@ public class PluginInterface {
 	public final ListenerUtils listener = new ListenerUtils();
 	public final static ShellUtils shell = new ShellUtils();
 	public final static CorePlugin core = new CorePlugin();
+	public final LogUtils log = new LogUtils();
 
 	//API方法 TODO 插件API
 
@@ -30,13 +31,15 @@ public class PluginInterface {
 	//==================
 
 	//指令相关
-	public class CommandUtils {
-		public void add(Command c) {
-			Resources.INS.putCommand(c);
+	public final class CommandUtils {
+		public void add(Command command) {
+			Resources.INS.putCommand(command);
 		}
 
 		public Command add(String name, CommandEvent event) {
-			return new Command(plugin.getResourcesGroup(), name, event);
+			Command command = new Command(plugin.getResourcesGroup(), name, event);
+			Resources.INS.putCommand(command);
+			return command;
 		}
 
 		public Command remove(String commandName) {
@@ -51,7 +54,7 @@ public class PluginInterface {
 	}
 
 	//监听器相关
-	public class ListenerUtils {
+	public final class ListenerUtils {
 		public void registerType(String type) {
 			Resources.INS.registerListenerType(plugin.getResourcesGroup(), type);
 		}

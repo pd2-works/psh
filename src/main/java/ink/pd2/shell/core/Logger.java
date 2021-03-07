@@ -25,7 +25,8 @@ public final class Logger {
 		StringWriter s = new StringWriter();
 		PrintWriter p = new PrintWriter(s);
 		exception.printStackTrace(p);
-		debug(location, "&color:red.null[EXCEPTION:\n" + s + "]&");
+		debug(location, "&color:red.null[EXCEPTION in thread '"
+				+ Thread.currentThread().getName() + "':\n" + s + "]&");
 	}
 
 	private String getDate(boolean ms) {

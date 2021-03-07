@@ -35,7 +35,7 @@ public final class Main {
 	//环境变量
 	public static void putVariable(String key, String value) {
 		VariableMarkProvider.INS.getVariables().put(key, value);
-		Logger.INS.debug("Main<Variable>", key + " -> " + value);
+		Logger.INS.debug("Main<Variable>", key + " -> \"" + value + '"');
 	}
 	public static String getVariableValue(String key) {
 		String value = VariableMarkProvider.INS.getVariables().get(key);
