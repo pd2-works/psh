@@ -44,7 +44,7 @@ public abstract class Plugin implements Initializeable {
 			} catch (IOException e) {
 				throw new PluginInitializationException(
 						"An exception has been thrown while the plugin '"
-								+ getResourcesGroup() + "' is initializing.");
+								+ getResourcesGroup() + "' is initializing.", e);
 			}
 		}
 	}

@@ -6,6 +6,8 @@ import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.core.Listener;
 import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Resources;
+import ink.pd2.shell.util.CoreUtils;
+import ink.pd2.shell.util.ShellUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +22,9 @@ public class PluginInterface {
 
 	public final CommandUtils command = new CommandUtils();
 	public final ListenerUtils listener = new ListenerUtils();
-	public final static ShellUtils shell = new ShellUtils();
-	public final static CorePlugin core = new CorePlugin();
 	public final LogUtils log = new LogUtils();
+	public final ShellUtils shell = ShellUtils.INS;
+	public final CoreUtils core = CoreUtils.INS;
 
 	//API方法 TODO 插件API
 
@@ -83,19 +85,6 @@ public class PluginInterface {
 	//==================
 	//| <- 系统操作 ->  |
 	//==================
-
-	//Shell相关
-	public static final class ShellUtils {
-		public int newCommandList() {
-			return CorePlugin.newCommandList();
-		}
-
-	}
-
-	//核心相关
-	public static final class CoreUtils {
-
-	}
 
 	//日志相关
 	public final class LogUtils {

@@ -5,6 +5,7 @@ import ink.pd2.shell.io.Input;
 import ink.pd2.shell.io.Output;
 
 public final class ConsoleUtils {
+	private ConsoleUtils() {}
 	public final static ConsoleUtils INS = new ConsoleUtils();
 
 	public String inputNewLine(Input input) {

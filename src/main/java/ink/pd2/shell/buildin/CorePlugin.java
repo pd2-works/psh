@@ -4,12 +4,16 @@ import ink.pd2.shell.Main;
 import ink.pd2.shell.api.Command;
 import ink.pd2.shell.api.CommandParameter;
 import ink.pd2.shell.api.plugin.PluginInterface;
+import ink.pd2.shell.api.plugin.PluginLoadingException;
+import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.core.CommandEnteredListener;
 import ink.pd2.shell.api.plugin.Plugin;
 import ink.pd2.shell.util.ConsoleUtils;
+import ink.pd2.shell.util.PluginUtils;
 
+import java.io.File;
 import java.util.*;
 
 public class CorePlugin extends Plugin {
@@ -33,6 +37,13 @@ public class CorePlugin extends Plugin {
 				Resources.INS.getString("psh.name"),
 				Resources.INS.getString("psh.description"));
 		setVersionName(Resources.INS.getString("psh.version"));
+	}
+
+	@Override
+	public File[] getI18nFiles() {
+		return new File(
+				getClass().getResource("lang").toString()
+		).listFiles();
 	}
 
 	@Override
@@ -87,7 +98,7 @@ public class CorePlugin extends Plugin {
 						if (groupNotFound) shell.println("&color:red.null[Group not found.]&");
 					}
 				}
-				//TODO 解析指令
+				//TODO 监听器
 				return true;
 			}
 		});
@@ -100,6 +111,22 @@ public class CorePlugin extends Plugin {
 
 		//TODO Other functions
 
+		//加载插件
+		try {
+			loadPlugins();
+		} catch (PluginLoadingException e) {
+			Logger.INS.writeException("Plugin.Initializer", e);
+
+		}
+
 		newCommandList();
 	}
+
+	private void loadPlugins() throws PluginLoadingException {
+		Plugin[] plugins = PluginUtils.INS.load("");
+		for (Plugin i : plugins) {
+			PluginUtils.INS.initObject(i);
+		}
+	}
+
 }

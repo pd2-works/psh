@@ -1,9 +1,26 @@
 package ink.pd2.shell.core;
 
+/**
+ * <h2>CommandEnteredListener | 命令输入监听器</h2>
+ *
+ * <p>该监听器在 CLI 中指令被输入时激活对应事件</p>
+ *
+ * <p>该监听器来源于 {@code Shell} 类</p>
+ *
+ * @see ink.pd2.shell.core.Shell
+ *
+ * @since PSH 1.0
+ */
+
 public abstract class CommandEnteredListener implements Listener {
+	//常量
+	public final static int PRIORITY_HIGH = 0;
+	public final static int PRIORITY_MEDIUM = 1;
+	public final static int PRIORITY_LOW = 2;
+	public final static int DEFAULT_PRIORITY = PRIORITY_MEDIUM;
 
 	@Override
-	public String getType() {
+	public final String getType() {
 		return "command-entered";
 	}
 
@@ -15,8 +32,6 @@ public abstract class CommandEnteredListener implements Listener {
 	 * {@code PRIORITY_LOW} (低优先级)</p>
 	 *
 	 * @return 优先级
-	 *
-	 * @see ink.pd2.shell.core.Shell
 	 *
 	 * @since PSH 1.0
 	 */
