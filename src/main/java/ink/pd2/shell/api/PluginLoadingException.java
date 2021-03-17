@@ -1,4 +1,4 @@
-package ink.pd2.shell.api.plugin;
+package ink.pd2.shell.api;
 
 public class PluginLoadingException extends Exception {
 	public PluginLoadingException(String message) {

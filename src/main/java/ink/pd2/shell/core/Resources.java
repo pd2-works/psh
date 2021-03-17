@@ -1,7 +1,7 @@
 package ink.pd2.shell.core;
 
 import ink.pd2.shell.api.Command;
-import ink.pd2.shell.api.plugin.Plugin;
+import ink.pd2.shell.api.Plugin;
 
 import java.util.*;
 

@@ -1,8 +1,5 @@
-package ink.pd2.shell.api.plugin;
+package ink.pd2.shell.api;
 
-import ink.pd2.shell.api.Command;
-import ink.pd2.shell.api.CommandEvent;
-import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.core.Listener;
 import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Resources;

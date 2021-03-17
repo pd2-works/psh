@@ -1,8 +1,6 @@
-package ink.pd2.shell.api.plugin;
+package ink.pd2.shell.api;
 
-import java.io.IOException;
-
-public class PluginInitializationException extends RuntimeException {
+public class PluginInitializationException extends Exception {
 	public PluginInitializationException(String message) {
 		super(message);
 	}

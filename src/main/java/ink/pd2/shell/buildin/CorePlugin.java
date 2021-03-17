@@ -1,15 +1,11 @@
 package ink.pd2.shell.buildin;
 
 import ink.pd2.shell.Main;
-import ink.pd2.shell.api.Command;
-import ink.pd2.shell.api.CommandParameter;
-import ink.pd2.shell.api.plugin.PluginInterface;
-import ink.pd2.shell.api.plugin.PluginLoadingException;
+import ink.pd2.shell.api.*;
 import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.core.CommandEnteredListener;
-import ink.pd2.shell.api.plugin.Plugin;
 import ink.pd2.shell.util.ConsoleUtils;
 import ink.pd2.shell.util.PluginUtils;
 
@@ -56,6 +52,7 @@ public class CorePlugin extends Plugin {
 
 			@Override
 			public Boolean event(Shell shell, String command) {
+				if (command == null) return true;
 				CommandParameter parameter = new CommandParameter(command);
 				String c = parameter.getCommandName();
 				if (c != null) {
@@ -103,30 +100,35 @@ public class CorePlugin extends Plugin {
 			}
 		});
 
-		api.command.add("test-args", (shell, parameter) -> {
-			for (String s : parameter.getArguments()) {
-				Main.print(s + '\n');
+		api.command.add("test.args", (shell, parameter) -> {
+			String[] s = parameter.getArguments();
+			for (int i = 0; i < s.length; i++) {
+				Main.println(i + " [" + s[i] + "]");
 			}
 		});
 
 		//TODO Other functions
 
 		//加载插件
-		try {
-			loadPlugins();
-		} catch (PluginLoadingException e) {
-			Logger.INS.writeException("Plugin.Initializer", e);
-
-		}
+		loadPlugins();
 
 		newCommandList();
 	}
 
-	private void loadPlugins() throws PluginLoadingException {
-		Plugin[] plugins = PluginUtils.INS.load("");
-		for (Plugin i : plugins) {
-			PluginUtils.INS.initObject(i);
+	private void loadPlugins() {
+		try {
+			Plugin[] plugins = PluginUtils.INS.load("");
+			for (Plugin i : plugins) {
+				PluginUtils.INS.initObject(i);
+			}
+		} catch (PluginInitializationException|PluginLoadingException e) {
+			Logger.INS.writeException("Plugin.Init", e);
+			Logger.INS.error("Plugin.Init", "Plugin initialization FAILED.");
 		}
+	}
+
+	private void printCommands(List<Command> commands) {
+
 	}
 
 }

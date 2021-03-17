@@ -1,5 +1,6 @@
 package ink.pd2.shell;
 
+import ink.pd2.shell.api.PluginInitializationException;
 import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.buildin.Initializer;
 import ink.pd2.shell.buildin.VariableMarkProvider;
@@ -51,17 +52,20 @@ public final class Main {
 	/**
 	 * <h2>mainProcess() | 主进程</h2>
 	 *
-	 * Pd2 Shell 的主进程起始点.
+	 * <p>Pd2 Shell 的主进程起始点.</p>
 	 *
-	 * <h3>用法</h3>
+	 * <b>用法:</b>
 	 *
 	 * <p>主进程由 main() 方法自动执行, 若无特别需要, 切记:</p>
 	 *
-	 * <p>请勿尝试调用此方法!</p>
+	 * <p><b>请勿尝试调用此方法!</b></p>
 	 *
-	 * <p>请勿尝试调用此方法!!</p>
+	 * <p><b>请勿尝试调用此方法!!</b></p>
 	 *
-	 * <p>请勿尝试调用此方法!!!</p>
+	 * <p><b>请勿尝试调用此方法!!!</b></p>
+	 *
+	 * @author Maxel Black
+	 * @since PSH 1.0
 	 */
 
 	public static void mainProcess() {
@@ -93,7 +97,7 @@ public final class Main {
 	private static void startShell(Shell shell) {
 		shells.add(shell);
 		//TODO 把shell扔进另一个线程
-		shell.run();
+		new Thread(shell::run).start();
 	}
 
 	public static void exit(String reason) {
@@ -121,7 +125,11 @@ public final class Main {
 
 		//加载核心插件和API
 		CorePlugin core = new CorePlugin();
-		core.init();
+		try {
+			core.init();
+		} catch (PluginInitializationException e) {
+			Logger.INS.writeException("Main.PreInit", e);
+		}
 
 		input = new ConsoleInput(); //设置input流
 

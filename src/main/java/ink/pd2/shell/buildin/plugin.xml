@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plugin name="Pd2 Shell"
+        versionCode="115"
+        mainClass="ink.pd2.shell.buildin.CorePlugin">
+
+    <function item="verify">
+        <code>12</code>
+    </function>
+
+</plugin>

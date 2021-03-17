@@ -1,23 +1,19 @@
 package ink.pd2.shell.util;
 
-import ink.pd2.shell.api.plugin.Initializeable;
-import ink.pd2.shell.api.plugin.Plugin;
-import ink.pd2.shell.api.plugin.PluginLoadingException;
+import ink.pd2.shell.api.Initializeable;
+import ink.pd2.shell.api.Plugin;
+import ink.pd2.shell.api.PluginInitializationException;
+import ink.pd2.shell.api.PluginLoadingException;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.i18n.Language;
-import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public final class PluginUtils {
@@ -25,49 +21,54 @@ public final class PluginUtils {
 	public final static PluginUtils INS = new PluginUtils();
 
 	public Plugin[] load(String folderPath) throws PluginLoadingException {
-		ArrayList<Plugin> plugins = new ArrayList<>();
-
-		File folder = new File(folderPath);
-		if (!folder.isDirectory()) throw
-				new PluginLoadingException("The argument is NOT a folder path.");
-		File[] files = folder.listFiles();
-		ArrayList<URL> jars = new ArrayList<>();
 		try {
 
+			ArrayList<Plugin> plugins = new ArrayList<>();
+
+			File folder = new File(folderPath);
+			if (!folder.isDirectory()) throw
+					new PluginLoadingException("The argument is NOT a folder path.");
+			File[] files = folder.listFiles();
+			ArrayList<URL> jars = new ArrayList<>();
+
+			//过滤jar文件
 			for (File i : files) if (i.getName().endsWith(".jar")) {
 				jars.add(new URL(i.getCanonicalPath()));
 			}
-			if (jars.size() == 0) throw
-					new PluginLoadingException("Empty plugin folder.");
 
 			URLClassLoader loader = new URLClassLoader(jars.toArray(new URL[0]));
+			//获取jar中的配置文件路径
 			Enumeration<URL> configs = loader.getResources("plugin.xml");
+			//循环处理配置文件
 			while (configs.hasMoreElements()) {
 				String path = configs.nextElement().getFile();
 				InputStream stream = new FileInputStream(path);
-				PluginInfo[] infos = parseXML(stream);
-				for (PluginInfo info : infos) {
-					String mainClass = info.mainClass;
+				PluginInfo[] info = parseXML(stream); //解析插件配置信息
+				stream.close();
+				//循环加载配置
+				for (PluginInfo i : info) {
+					String mainClass = i.mainClass;
 					if (mainClass.equals("null") || mainClass.startsWith("ink.pd2.shell")) continue;
 					Plugin plugin = (Plugin) loader.loadClass(mainClass).newInstance();
 					plugins.add(plugin);
-					//TODO 其他处理
+					//TODO 其他特性处理(如版本验证)
 				}
 			}
+
+			return plugins.toArray(new Plugin[0]);
 
 		} catch (Exception e) {
 			throw new PluginLoadingException(
 					"An exception has been thrown while loading plugins", e);
 		}
 
-		return plugins.toArray(new Plugin[0]);
 	}
 
 	public void loadLanguage(Language object) {
 		//TODO 加载语言
 	}
 
-	public void initObject(Initializeable object) {
+	public void initObject(Initializeable object) throws PluginInitializationException {
 		Resources.groups.add(object.getResourcesGroup());
 		object.init();
 		object.initLanguage(object.getI18nFiles());

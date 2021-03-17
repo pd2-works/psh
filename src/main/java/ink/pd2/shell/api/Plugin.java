@@ -1,4 +1,4 @@
-package ink.pd2.shell.api.plugin;
+package ink.pd2.shell.api;
 
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.i18n.Language;
@@ -32,24 +32,30 @@ public abstract class Plugin implements Initializeable {
 	}
 
 	@Override
-	public void init() {
-		init(getApi());
-	}
-
-	@Override
-	public void initLanguage(File[] files) {
-		for (File file : files) {
-			try {
-				PluginUtils.INS.loadLanguage(new Language(file));
-			} catch (IOException e) {
-				throw new PluginInitializationException(
-						"An exception has been thrown while the plugin '"
-								+ getResourcesGroup() + "' is initializing.", e);
-			}
+	public void init() throws PluginInitializationException {
+		try {
+			init(getApi());
+		} catch (Exception e) {
+			throw new PluginInitializationException(
+					"An exception has been thrown while the plugin '"
+							+ getResourcesGroup() + "' is initializing.", e);
 		}
 	}
 
-	public abstract void init(PluginInterface api);
+	@Override
+	public void initLanguage(File[] files) throws PluginInitializationException {
+		try {
+			for (File file : files) {
+				PluginUtils.INS.loadLanguage(new Language(file));
+			}
+		} catch (Exception e) {
+			throw new PluginInitializationException(
+					"An exception has been thrown while the plugin '"
+							+ getResourcesGroup() + "' is initializing.", e);
+		}
+	}
+
+	public abstract void init(PluginInterface api) throws Exception;
 
 	//get & set
 	public String getResourcesGroup() {
