@@ -12,15 +12,15 @@ package ink.pd2.shell.core;
  * @since PSH 1.0
  */
 
-public abstract class CommandEnteredListener implements Listener {
+public interface CommandEnteredListener extends Listener {
 	//常量
-	public final static int PRIORITY_HIGH = 0;
-	public final static int PRIORITY_MEDIUM = 1;
-	public final static int PRIORITY_LOW = 2;
-	public final static int DEFAULT_PRIORITY = PRIORITY_MEDIUM;
+	int PRIORITY_HIGH = 0;
+	int PRIORITY_MEDIUM = 1;
+	int PRIORITY_LOW = 2;
+	int DEFAULT_PRIORITY = PRIORITY_MEDIUM;
 
 	@Override
-	public final String getType() {
+	default String getType() {
 		return "command-entered";
 	}
 
@@ -36,7 +36,9 @@ public abstract class CommandEnteredListener implements Listener {
 	 * @since PSH 1.0
 	 */
 
-	public abstract int getPriority();
+	default int getPriority() {
+		return Shell.DEFAULT_PRIORITY;
+	}
 
 	/**
 	 * <h2>event() | 事件活动</h2>
@@ -49,5 +51,5 @@ public abstract class CommandEnteredListener implements Listener {
 	 * @since PSH 1.0
 	 */
 
-	public abstract Boolean event(Shell shell, String command);
+	Boolean event(Shell shell, String command);
 }

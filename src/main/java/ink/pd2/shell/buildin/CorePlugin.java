@@ -44,61 +44,7 @@ public class CorePlugin extends Plugin {
 
 	@Override
 	public void init(PluginInterface api) {
-		api.listener.add(new CommandEnteredListener() {
-			@Override
-			public int getPriority() {
-				return Shell.DEFAULT_PRIORITY;
-			}
-
-			@Override
-			public Boolean event(Shell shell, String command) {
-				if (command == null) return true;
-				CommandParameter parameter = new CommandParameter(command);
-				String c = parameter.getCommandName();
-				if (c != null) {
-					String[] s = c.split(":", 2);
-					if (s.length == 1) {
-						ArrayList<Command> commands = commandList.get(s[0]);
-						if (commands == null) {
-							shell.println("&color:red.null[Command not found.]&");
-						} else {
-							int l = commands.size();
-							if (l == 1) {
-								commands.get(0).onExecute(shell, parameter);
-							} else {
-								shell.println("There are more than one plugin providing command '"
-										+ s[0] + "', which is your meaning?");
-								for (Command i : commands) {
-									shell.println(l + ") " + i.getGroup() + ':' + i.getName());
-								}
-								int choice = ConsoleUtils.INS.choice(
-										shell.input, null, 1, l) - 1;
-								commands.get(choice).onExecute(shell, parameter);
-							}
-						}
-					} else {
-						if (s[1].isEmpty()) {
-							s[1] = ConsoleUtils.INS.inputNewLine(shell.input);
-						}
-						ArrayList<Command> commands = commandList.get(s[1]);
-						boolean groupNotFound = true;
-						if (commands == null) {
-							shell.println("&color:red.null[Command not found.]&");
-							if (Resources.groups.contains(s[0])) groupNotFound = false;
-						} else for (Command i : commands) {
-							if (i.getGroup().equals(s[0])) {
-								i.onExecute(shell, parameter);
-								groupNotFound = false;
-								break;
-							}
-						}
-						if (groupNotFound) shell.println("&color:red.null[Group not found.]&");
-					}
-				}
-				//TODO 监听器
-				return true;
-			}
-		});
+		api.listener.add((CommandEnteredListener) this::runCommandEvent);
 
 		api.command.add("test.args", (shell, parameter) -> {
 			String[] s = parameter.getArguments();
@@ -129,6 +75,54 @@ public class CorePlugin extends Plugin {
 
 	private void printCommands(List<Command> commands) {
 
+	}
+
+	private Boolean runCommandEvent(Shell shell, String command) {
+		if (command == null) return true;
+		CommandParameter parameter = new CommandParameter(command);
+		String c = parameter.getCommandName();
+		if (c != null) {
+			String[] s = c.split(":", 2);
+			if (s.length == 1) {
+				ArrayList<Command> commands = commandList.get(s[0]);
+				if (commands == null) {
+					shell.println("&color:red.null[Command not found.]&");
+				} else {
+					int l = commands.size();
+					if (l == 1) {
+						commands.get(0).onExecute(shell, parameter);
+					} else {
+						shell.println("There are more than one plugin providing command '"
+								+ s[0] + "', which is your meaning?");
+						for (Command i : commands) {
+							shell.println(l + ") " + i.getGroup() + ':' + i.getName());
+						}
+						int choice = ConsoleUtils.INS.choice(
+								shell.input, null, 1, l) - 1;
+						commands.get(choice).onExecute(shell, parameter);
+					}
+				}
+			} else {
+				if (s[1].isEmpty()) {
+					s[1] = ConsoleUtils.INS.inputNewLine(shell.input);
+				}
+				ArrayList<Command> commands = commandList.get(s[1]);
+				boolean groupNotFound = true;
+				if (commands == null) {
+					shell.println("&color:red.null[Command not found.]&");
+					if (Resources.groups.contains(s[0])) groupNotFound = false;
+				} else for (Command i : commands) {
+					if (i.getGroup().equals(s[0])) {
+						i.onExecute(shell, parameter);
+						groupNotFound = false;
+						break;
+					}
+				}
+				if (groupNotFound) shell.println("&color:red.null[Group not found.]&");
+			}
+		}
+		//TODO 监听器
+		return true;
 	}
 
 }
