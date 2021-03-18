@@ -9,8 +9,13 @@ import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.io.*;
 import ink.pd2.shell.core.Resources;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
+import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -102,6 +107,8 @@ public final class Main {
 
 	public static void exit(String reason) {
 		System.out.println(Resources.INS.getString("psh.exit") + ": " + reason);
+		//TODO 退出事件监听器
+		System.exit(1);
 	}
 
 	/**
@@ -123,6 +130,15 @@ public final class Main {
 		Initializer.INS.initResources(); //初始化资源
 		Initializer.INS.initTheme(); //初始化主题
 
+		try {
+			input = new ConsoleInput(); //设置input流
+		} catch (IOException e) {
+			Logger.INS.writeException("ConsoleInput.init", e);
+			Logger.INS.error("ConsoleInput.init",
+					Resources.INS.getString("psh.log-error-init-jline"));
+			Main.exit(Resources.INS.getString("psh.log-error-init-jline"));
+		}
+
 		//加载核心插件和API
 		CorePlugin core = new CorePlugin();
 		try {
@@ -130,8 +146,6 @@ public final class Main {
 		} catch (PluginInitializationException e) {
 			Logger.INS.writeException("Main.PreInit", e);
 		}
-
-		input = new ConsoleInput(); //设置input流
 
 		//TODO 判断是否有另一个psh进程正在运行
 

@@ -17,29 +17,21 @@ import java.nio.charset.Charset;
 public class ConsoleInput extends Input {
 	private final LineReader reader;
 
-	public ConsoleInput() {
+	public ConsoleInput() throws IOException {
 		Logger.INS.info("ConsoleInput.init",
 				Resources.INS.getString("psh.log-init-jline-reader"));
 		//初始化 JLine LineReader
 		LineReader r;
-		try {
-			Terminal t = TerminalBuilder.builder()
-					.jansi(true).jna(true).dumb(true)
-					.name("Pd2ShellTerminal")
-					.encoding(Charset.defaultCharset())
-					.build();
-			//TODO 处理自动补全
-			r = LineReaderBuilder.builder()
-					.appName("Pd2Shell")
-					.terminal(t)
-					.build();
-		} catch (IOException e) {
-			r = null;
-			Logger.INS.writeException("ConsoleInput.init", e);
-			Logger.INS.error("ConsoleInput.init",
-					Resources.INS.getString("psh.log-error-init-jline"));
-			Main.exit(Resources.INS.getString("psh.log-error-init-jline"));
-		}
+		Terminal t = TerminalBuilder.builder()
+				.jansi(true).jna(true).dumb(true)
+				.name("Pd2ShellTerminal")
+				.encoding(Charset.defaultCharset())
+				.build();
+		//TODO 处理自动补全
+		r = LineReaderBuilder.builder()
+				.appName("Pd2Shell")
+				.terminal(t)
+				.build();
 		reader = r;
 	}
 

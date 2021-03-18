@@ -27,7 +27,7 @@ public final class PluginUtils {
 
 			File folder = new File(folderPath);
 			if (!folder.isDirectory()) throw
-					new PluginLoadingException("The argument is NOT a folder path.");
+					new PluginLoadingException('\'' + folder.getAbsolutePath() + "' is NOT a directory.");
 			File[] files = folder.listFiles();
 			ArrayList<URL> jars = new ArrayList<>();
 

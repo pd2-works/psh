@@ -1,5 +1,6 @@
 package ink.pd2.shell.buildin;
 
+import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.MarkProvider;
 
@@ -22,8 +23,10 @@ public class VariableMarkProvider implements MarkProvider {
 				return "\\&v:" + value + "\\&";
 			}
 			return variable;
-		} else {
-			throw new ClassCastException("The argument is NOT a VariableMark object.");
+		}
+		else {
+			Logger.INS.error("Variable", mark + " is NOT a VariableMark object.");
+			return "";
 		}
 	}
 }

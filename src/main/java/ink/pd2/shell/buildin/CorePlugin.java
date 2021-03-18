@@ -44,6 +44,7 @@ public class CorePlugin extends Plugin {
 
 	@Override
 	public void init(PluginInterface api) {
+		String directory = api.core.getJarDirectory();
 		api.listener.add((CommandEnteredListener) this::runCommandEvent);
 
 		api.command.add("test.args", (shell, parameter) -> {
@@ -56,20 +57,21 @@ public class CorePlugin extends Plugin {
 		//TODO Other functions
 
 		//加载插件
-		loadPlugins();
+		loadPlugins(directory + File.separator + "plugins");
 
 		newCommandList();
 	}
 
-	private void loadPlugins() {
+	private void loadPlugins(String path) {
 		try {
-			Plugin[] plugins = PluginUtils.INS.load("");
+			Plugin[] plugins = PluginUtils.INS.load(path);
 			for (Plugin i : plugins) {
 				PluginUtils.INS.initObject(i);
 			}
 		} catch (PluginInitializationException|PluginLoadingException e) {
 			Logger.INS.writeException("Plugin.Init", e);
 			Logger.INS.error("Plugin.Init", "Plugin initialization FAILED.");
+			getApi().core.exit("Plugin initialization FAILED.");
 		}
 	}
 
@@ -79,6 +81,9 @@ public class CorePlugin extends Plugin {
 
 	private Boolean runCommandEvent(Shell shell, String command) {
 		if (command == null) return true;
+		if (command.startsWith("exit")) {
+			return false;
+		}
 		CommandParameter parameter = new CommandParameter(command);
 		String c = parameter.getCommandName();
 		if (c != null) {

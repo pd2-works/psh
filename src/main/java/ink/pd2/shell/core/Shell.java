@@ -62,13 +62,19 @@ public class Shell {
 
 	//基本输入输出
 	public void print(String s) {
-		Main.print(s);
+		printSimple(Mark.INS.update(s));
 	}
 	public void println(String s) {
-		Main.println(s);
+		printlnSimple(Mark.INS.update(s));
+	}
+	public void printSimple(String s) {
+		output.print(s);
+	}
+	public void printlnSimple(String s) {
+		output.println(s);
 	}
 	public String readLine() {
-		return Main.input.readLine();
+		return input.readLine();
 	}
 
 	public Input input = Main.input;
@@ -113,7 +119,6 @@ public class Shell {
 		Logger.INS.info(getLogLocation(), "A new shell started.");
 
 		//CLI启动
-		shell:
 		while (true) {
 			//TODO 层级环境变量
 			//更新变量值
@@ -142,7 +147,7 @@ public class Shell {
 		for (ArrayList<CommandEnteredListener> ls : listeners)
 			for (CommandEnteredListener l : ls) {
 				b = l.event(this, command);
-				if (b == null) break event;
+				if (b == null || !b) break event;
 			}
 
 		return b;
