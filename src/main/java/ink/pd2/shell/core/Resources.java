@@ -28,7 +28,7 @@ import java.util.*;
  * <p>监听器/指令资源带有资源组机制(详见 {@code Groups} 子对象), {@code key} 的命名规则需遵循资源组限制,
  * 否则将会抛出 {@code ResourceException} 异常.</p>
  *
- * @see groups
+ * @see id
  * @see ResourceException
  *
  * @author Maxel Black
@@ -39,7 +39,7 @@ public final class Resources {
 	public final static Resources INS = new Resources();
 
 	/**
-	 * <h2>Resources.Groups | 资源组管理</h2>
+	 * <h2>Resources.id | 资源组管理</h2>
 	 *
 	 * <p>用于支持全局资源的资源组机制, 使资源管理更加方便</p>
 	 *
@@ -59,26 +59,26 @@ public final class Resources {
 	 * @since PSH 1.0
 	 */
 
-	public static final class groups {
-		private static Set<String> groups = new HashSet<>();
+	public static final class id {
+		private static final Set<String> ids = new HashSet<>();
 		public static void add(String groupName) {
 			//判断组名是否符合规范并添加组
 			if (groupName.contains(".") || groupName.contains("\n")) {
 				throw new ResourceException(
 						"Group name CANNOT contains any dot(.) or '\\n' character.");
 			} else {
-				groups.add(groupName);
+				ids.add(groupName);
 			}
 		}
 
 		public static boolean contains(String name) {
 			//判断组名是否存在
-			return groups.contains(name);
+			return ids.contains(name);
 		}
 
 		public static boolean remove(String name) {
 			//移除组
-			return groups.remove(name);
+			return ids.remove(name);
 		}
 	}
 
@@ -127,7 +127,7 @@ public final class Resources {
 	public void putCommand(Command... c) {
 		for (Command i : c) {
 			String group = i.getGroup();
-			if (!groups.contains(group))
+			if (!id.contains(group))
 				throw new ResourceException("Group name does NOT exist.");
 			String key = group + ':' + i.getName();
 			commands.put(key, i);
@@ -180,7 +180,7 @@ public final class Resources {
 	}
 
 	public void registerListenerType(String group, String type) {
-		if (groups.contains(group)) {
+		if (id.contains(group)) {
 			String key = group + '.' + type;
 			if (listeners.containsKey(key)) {
 				throw new ResourceException("Listener type has already existed.");

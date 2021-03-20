@@ -5,11 +5,10 @@ import ink.pd2.shell.core.i18n.Language;
 import ink.pd2.shell.util.PluginUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 public abstract class Plugin implements Initializeable {
-	private final String resourcesGroup; //资源组
+	private final String resourcesId; //资源组
 	private final int versionCode; //版本号
 	private String name; //插件名
 	private String description; //描述
@@ -17,14 +16,14 @@ public abstract class Plugin implements Initializeable {
 
 	private final PluginInterface api; //工具对象
 
-	public Plugin(String resourcesGroup, int versionCode) {
-		this(resourcesGroup, versionCode, null, null);
+	public Plugin(String resourcesId, int versionCode) {
+		this(resourcesId, versionCode, null, null);
 	}
-	public Plugin(String resourcesGroup, int versionCode, String name) {
-		this(resourcesGroup, versionCode, name, null);
+	public Plugin(String resourcesId, int versionCode, String name) {
+		this(resourcesId, versionCode, name, null);
 	}
-	public Plugin(String resourcesGroup, int versionCode, String name, String description) {
-		this.resourcesGroup = resourcesGroup;
+	public Plugin(String resourcesId, int versionCode, String name, String description) {
+		this.resourcesId = resourcesId;
 		this.name = name;
 		this.versionCode = versionCode;
 		this.description = description;
@@ -32,34 +31,34 @@ public abstract class Plugin implements Initializeable {
 	}
 
 	@Override
-	public void init() throws PluginInitializationException {
+	public void init() throws InitializationException {
 		try {
 			init(getApi());
 		} catch (Exception e) {
-			throw new PluginInitializationException(
+			throw new InitializationException(
 					"An exception has been thrown while the plugin '"
-							+ getResourcesGroup() + "' is initializing.", e);
+							+ getResourcesId() + "' is initializing.", e);
 		}
 	}
 
 	@Override
-	public void initLanguage(File[] files) throws PluginInitializationException {
+	public void initLanguage(File[] files) throws InitializationException {
 		try {
 			for (File file : files) {
 				PluginUtils.INS.loadLanguage(new Language(file));
 			}
 		} catch (Exception e) {
-			throw new PluginInitializationException(
+			throw new InitializationException(
 					"An exception has been thrown while the plugin '"
-							+ getResourcesGroup() + "' is initializing.", e);
+							+ getResourcesId() + "' is initializing.", e);
 		}
 	}
 
 	public abstract void init(PluginInterface api) throws Exception;
 
 	//get & set
-	public String getResourcesGroup() {
-		return resourcesGroup;
+	public String getResourcesId() {
+		return resourcesId;
 	}
 	public int getVersionCode() {
 		return versionCode;
@@ -92,11 +91,11 @@ public abstract class Plugin implements Initializeable {
 
 	public class StringUtils {
 		public String get(String key) {
-			return Resources.INS.getString(resourcesGroup + '.' + key);
+			return Resources.INS.getString(resourcesId + '.' + key);
 		}
 
 		public void put(String key, String defaultValue) {
-			Resources.INS.putString(resourcesGroup + '.' + key, defaultValue);
+			Resources.INS.putString(resourcesId + '.' + key, defaultValue);
 		}
 
 		public String remove(String key) {

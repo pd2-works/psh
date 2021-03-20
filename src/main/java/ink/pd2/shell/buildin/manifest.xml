@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<manifest>
+
+    <resources>
+        <int name="versionCode">1</int>
+        <file name="sign">/sign.pub</file>
+    </resources>
+
+    <plugin name="Pd2 Shell"
+            versionCode="115"
+            mainClass="ink.pd2.shell.buildin.CorePlugin"/>
+    <extension name="Pd2 Shell Linux Platform Extension"
+            versionCode="1"
+            mainClass="ink.maxelbk.psh.LinuxPlatformExtension"/>
+
+    <function item="safe-check">
+        <verify>@R.file/sign</verify>
+    </function>
+    <function item="resources"/>
+    <function item="plugin"/>
+
+</manifest>

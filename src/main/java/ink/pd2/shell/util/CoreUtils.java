@@ -9,7 +9,7 @@ public final class CoreUtils {
 	public final static CoreUtils INS = new CoreUtils();
 
 	public void exit(String reason) {
-		Main.exit(reason);
+		Main.exit(1, reason);
 	}
 
 	public String getJarPath() {

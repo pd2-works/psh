@@ -36,41 +36,41 @@ public class PluginInterface {
 		}
 
 		public Command add(String name, CommandEvent event) {
-			Command command = new Command(plugin.getResourcesGroup(), name, event);
+			Command command = new Command(plugin.getResourcesId(), name, event);
 			Resources.INS.putCommand(command);
 			return command;
 		}
 
 		public Command remove(String commandName) {
 			HashMap<String, Command> map = Resources.INS.getCommandMap();
-			return map.remove(plugin.getResourcesGroup() + ':' + commandName);
+			return map.remove(plugin.getResourcesId() + ':' + commandName);
 		}
 
 		public Command remove(Command c) {
 			return Resources.INS.removeCommand(
-					plugin.getResourcesGroup() + '.' + c.getName());
+					plugin.getResourcesId() + '.' + c.getName());
 		}
 	}
 
 	//监听器相关
 	public final class ListenerUtils {
 		public void registerType(String type) {
-			Resources.INS.registerListenerType(plugin.getResourcesGroup(), type);
+			Resources.INS.registerListenerType(plugin.getResourcesId(), type);
 		}
 
 		public List<Listener> unregisterType(String type) {
 			return Resources.INS.unregisterListenerType(type);
 		}
 
-		public void add(String group, Listener listener) {
-			Resources.INS.addListener(group, listener);
+		public void add(String id, Listener listener) {
+			Resources.INS.addListener(id, listener);
 		}
 		public void add(Listener listener) {
 			Resources.INS.addListener("psh", listener);
 		}
 
-		public boolean remove(String group, Listener listener) {
-			return Resources.INS.removeListener(group, listener);
+		public boolean remove(String id, Listener listener) {
+			return Resources.INS.removeListener(id, listener);
 		}
 		public boolean remove(Listener listener) {
 			return Resources.INS.removeListener("psh", listener);
@@ -86,17 +86,17 @@ public class PluginInterface {
 	//日志相关
 	public final class LogUtils {
 		public void debug(String message) {
-			Logger.INS.debug("Plugin:" + plugin.getResourcesGroup(), message);
+			Logger.INS.debug("Plugin:" + plugin.getResourcesId(), message);
 		}
 		public void info(String message) {
-			Logger.INS.info("Plugin:" + plugin.getResourcesGroup(), message);
+			Logger.INS.info("Plugin:" + plugin.getResourcesId(), message);
 		}
 		public void error(String message) {
-			Logger.INS.error("Plugin:" + plugin.getResourcesGroup(), message);
+			Logger.INS.error("Plugin:" + plugin.getResourcesId(), message);
 		}
 
 		public void writeException(Exception exception) {
-			Logger.INS.writeException("Plugin:" + plugin.getResourcesGroup(), exception);
+			Logger.INS.writeException("Plugin:" + plugin.getResourcesId(), exception);
 		}
 		public void printException(Exception exception) {
 			//TODO 输出错误

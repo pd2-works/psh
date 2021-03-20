@@ -2,7 +2,7 @@ package ink.pd2.shell.util;
 
 import ink.pd2.shell.api.Initializeable;
 import ink.pd2.shell.api.Plugin;
-import ink.pd2.shell.api.PluginInitializationException;
+import ink.pd2.shell.api.InitializationException;
 import ink.pd2.shell.api.PluginLoadingException;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.i18n.Language;
@@ -38,7 +38,7 @@ public final class PluginUtils {
 
 			URLClassLoader loader = new URLClassLoader(jars.toArray(new URL[0]));
 			//获取jar中的配置文件路径
-			Enumeration<URL> configs = loader.getResources("plugin.xml");
+			Enumeration<URL> configs = loader.getResources("manifest.xml");
 			//循环处理配置文件
 			while (configs.hasMoreElements()) {
 				String path = configs.nextElement().getFile();
@@ -68,8 +68,8 @@ public final class PluginUtils {
 		//TODO 加载语言
 	}
 
-	public void initObject(Initializeable object) throws PluginInitializationException {
-		Resources.groups.add(object.getResourcesGroup());
+	public void initObject(Initializeable object) throws InitializationException {
+		Resources.id.add(object.getResourcesId());
 		object.init();
 		object.initLanguage(object.getI18nFiles());
 	}

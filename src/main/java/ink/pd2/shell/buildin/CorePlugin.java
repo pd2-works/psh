@@ -68,7 +68,7 @@ public class CorePlugin extends Plugin {
 			for (Plugin i : plugins) {
 				PluginUtils.INS.initObject(i);
 			}
-		} catch (PluginInitializationException|PluginLoadingException e) {
+		} catch (InitializationException |PluginLoadingException e) {
 			Logger.INS.writeException("Plugin.Init", e);
 			Logger.INS.error("Plugin.Init", "Plugin initialization FAILED.");
 			getApi().core.exit("Plugin initialization FAILED.");
@@ -115,7 +115,7 @@ public class CorePlugin extends Plugin {
 				boolean groupNotFound = true;
 				if (commands == null) {
 					shell.println("&color:red.null[Command not found.]&");
-					if (Resources.groups.contains(s[0])) groupNotFound = false;
+					if (Resources.id.contains(s[0])) groupNotFound = false;
 				} else for (Command i : commands) {
 					if (i.getGroup().equals(s[0])) {
 						i.onExecute(shell, parameter);

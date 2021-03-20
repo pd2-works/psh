@@ -1,6 +1,6 @@
 package ink.pd2.shell;
 
-import ink.pd2.shell.api.PluginInitializationException;
+import ink.pd2.shell.api.InitializationException;
 import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.buildin.Initializer;
 import ink.pd2.shell.buildin.VariableMarkProvider;
@@ -9,13 +9,9 @@ import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.io.*;
 import ink.pd2.shell.core.Resources;
-import org.jline.reader.LineReaderBuilder;
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -105,7 +101,7 @@ public final class Main {
 		new Thread(shell::run).start();
 	}
 
-	public static void exit(String reason) {
+	public static void exit(int status, String reason) {
 		System.out.println(Resources.INS.getString("psh.exit") + ": " + reason);
 		//TODO 退出事件监听器
 		System.exit(1);
@@ -123,7 +119,7 @@ public final class Main {
 
 		Initializer.INS.initMarks(); //初始化默认标记
 
-		Resources.groups.add("psh"); //添加核心资源组
+		Resources.id.add("psh"); //添加核心资源组
 
 		Logger.INS.debug("Main.PreInit", "Initialization started.");
 
@@ -136,14 +132,14 @@ public final class Main {
 			Logger.INS.writeException("ConsoleInput.init", e);
 			Logger.INS.error("ConsoleInput.init",
 					Resources.INS.getString("psh.log-error-init-jline"));
-			Main.exit(Resources.INS.getString("psh.log-error-init-jline"));
+			Main.exit(1, Resources.INS.getString("psh.log-error-init-jline"));
 		}
 
 		//加载核心插件和API
 		CorePlugin core = new CorePlugin();
 		try {
 			core.init();
-		} catch (PluginInitializationException e) {
+		} catch (InitializationException e) {
 			Logger.INS.writeException("Main.PreInit", e);
 		}
 
