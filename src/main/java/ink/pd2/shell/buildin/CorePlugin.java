@@ -36,13 +36,6 @@ public class CorePlugin extends Plugin {
 	}
 
 	@Override
-	public File[] getI18nFiles() {
-		return new File(
-				getClass().getResource("lang").toString()
-		).listFiles();
-	}
-
-	@Override
 	public void init(PluginInterface api) {
 		String directory = api.core.getJarDirectory();
 		api.listener.add((CommandEnteredListener) this::runCommandEvent);

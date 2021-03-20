@@ -8,6 +8,4 @@ public interface Initializeable {
 
 	String getResourcesId();
 	int getVersionCode();
-
-	File[] getI18nFiles();
 }

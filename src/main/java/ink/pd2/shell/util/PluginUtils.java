@@ -4,6 +4,7 @@ import ink.pd2.shell.api.Initializeable;
 import ink.pd2.shell.api.Plugin;
 import ink.pd2.shell.api.InitializationException;
 import ink.pd2.shell.api.PluginLoadingException;
+import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.i18n.Language;
 import org.dom4j.DocumentException;
@@ -12,8 +13,7 @@ import org.dom4j.Element;
 import java.io.*;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.*;
 import java.util.jar.JarFile;
 
 public final class PluginUtils {
@@ -43,23 +43,25 @@ public final class PluginUtils {
 			while (configs.hasMoreElements()) {
 				String path = configs.nextElement().getFile();
 				InputStream stream = new FileInputStream(path);
-				PluginInfo[] info = parseXML(stream); //解析插件配置信息
+				Manifest info = parseXML(stream); //解析插件配置信息
 				stream.close();
 				//循环加载配置
-				for (PluginInfo i : info) {
+				for (Manifest.PluginInfo i : info.plugins) {
 					String mainClass = i.mainClass;
 					if (mainClass.equals("null") || mainClass.startsWith("ink.pd2.shell")) continue;
 					Plugin plugin = (Plugin) loader.loadClass(mainClass).newInstance();
 					plugins.add(plugin);
-					//TODO 其他特性处理(如版本验证)
+					Logger.INS.debug("Plugin.Load",
+							"A new plugin instance of '" + plugin.getResourcesId() + "' was created");
 				}
+
 			}
 
 			return plugins.toArray(new Plugin[0]);
 
 		} catch (Exception e) {
 			throw new PluginLoadingException(
-					"An exception has been thrown while loading plugins", e);
+					"An exception was thrown while loading plugins", e);
 		}
 
 	}
@@ -71,7 +73,6 @@ public final class PluginUtils {
 	public void initObject(Initializeable object) throws InitializationException {
 		Resources.id.add(object.getResourcesId());
 		object.init();
-		object.initLanguage(object.getI18nFiles());
 	}
 
 	public Plugin loadJar(JarFile file) {
@@ -100,25 +101,81 @@ public final class PluginUtils {
 //		return s.toString();
 //	}
 
-	private PluginInfo[] parseXML(InputStream stream) throws DocumentException {
+	private Manifest parseXML(InputStream stream) throws DocumentException {
 		XMLUtils utils = XMLUtils.INS;
 		Element root = utils.readFile(stream).getRootElement();
-		Element[] children = utils.getAllChildElements(root, "Plugin");
 
-		ArrayList<PluginInfo> infos = new ArrayList<>();
-		for (Element i : children) {
+		//加载插件
+		Element[] plugins = utils.getAllChildElements(root, "plugin");
+		ArrayList<Manifest.PluginInfo> pluginInfo = new ArrayList<>();
+		for (Element i : plugins) {
 			String mainClass = i.attributeValue("mainClass", "null");
-			infos.add(new PluginInfo(mainClass));
+			String name = i.attributeValue("name", "Unnamed");
+			int versionCode = Integer.parseInt(
+					i.attributeValue("versionCode", "1"));
+			pluginInfo.add(new Manifest.PluginInfo(mainClass, name, versionCode));
 		}
-		return infos.toArray(new PluginInfo[0]);
+
+		//加载扩展
+		Element[] extensions = utils.getAllChildElements(root, "extension");
+		ArrayList<Manifest.ExtensionInfo> extensionInfo = new ArrayList<>();
+		for (Element i : extensions) {
+			String mainClass = i.attributeValue("mainClass", "null");
+			String name = i.attributeValue("name", "Unnamed");
+			extensionInfo.add(new Manifest.ExtensionInfo(mainClass, name));
+		}
+
+		//TODO 加载功能
+
+		return new Manifest(
+				pluginInfo.toArray(new Manifest.PluginInfo[0]),
+				extensionInfo.toArray(new Manifest.ExtensionInfo[0]),
+				null
+		);
 	}
 
-	public static class PluginInfo {
-		public final String mainClass;
+	//清单文件数据
+	public static class Manifest {
+		public final PluginInfo[] plugins;
+		public final ExtensionInfo[] extensions;
+		public final FunctionInfo[] functions;
 
-		private PluginInfo(String mainClass) {
-			this.mainClass = mainClass;
+		public Manifest(PluginInfo[] plugins, ExtensionInfo[] extensions, FunctionInfo[] functions) {
+			this.plugins = plugins;
+			this.extensions = extensions;
+			this.functions = functions;
 		}
+
+		//扩展信息
+		public static class ExtensionInfo {
+			public final String mainClass;
+			public final String name;
+			private ExtensionInfo(String mainClass, String name) {
+				this.mainClass = mainClass;
+				this.name = name;
+			}
+		}
+
+		//插件信息
+		public static class PluginInfo extends ExtensionInfo {
+			public final int versionCode;
+			private PluginInfo(String mainClass, String name, int versionCode) {
+				super(mainClass, name);
+				this.versionCode = versionCode;
+			}
+		}
+
+		//启用功能信息
+		public static class FunctionInfo {
+			public String name;
+			public LinkedHashMap<String, String> parameters;
+
+			public FunctionInfo(String name, LinkedHashMap<String, String> parameters) {
+				this.name = name;
+				this.parameters = parameters;
+			}
+		}
+
 	}
 
 }

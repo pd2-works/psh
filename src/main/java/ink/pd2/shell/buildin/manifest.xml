@@ -2,22 +2,24 @@
 
 <manifest>
 
-    <resources>
-        <int name="versionCode">1</int>
-        <file name="sign">/sign.pub</file>
-    </resources>
+    <function item="string">
+        <parameter name="versionCode">115</parameter>
+    </function>
+
+    <function item="safeCheck">
+        <parameter name="verify">@file/sign.ver</parameter>
+        <parameter name="minLibVersion">115</parameter>
+    </function>
+
+    <function item="i18n">
+        <parameter name="directory">@file/lang</parameter>
+    </function>
 
     <plugin name="Pd2 Shell"
-            versionCode="115"
+            versionCode="@string/versionCode"
             mainClass="ink.pd2.shell.buildin.CorePlugin"/>
-    <extension name="Pd2 Shell Linux Platform Extension"
-            versionCode="1"
-            mainClass="ink.maxelbk.psh.LinuxPlatformExtension"/>
 
-    <function item="safe-check">
-        <verify>@R.file/sign</verify>
-    </function>
-    <function item="resources"/>
-    <function item="plugin"/>
+    <extension name="Pd2 Shell Linux Platform Extension"
+               mainClass="ink.maxelbk.psh.LinuxPlatformExtension"/>
 
 </manifest>
