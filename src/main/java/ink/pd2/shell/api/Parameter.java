@@ -1,19 +1,14 @@
 package ink.pd2.shell.api;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
 import java.util.LinkedList;
 
-public class CommandParameter {
+public class Parameter {
 	//指令参数
 	private final String command;
-	private final String name;
+	private String name;
 	private final String[] args;
 
-	public CommandParameter(String command) {
+	public Parameter(String command) {
 		this.command = command;
 
 		LinkedList<String> list = new LinkedList<>();
@@ -47,6 +42,9 @@ public class CommandParameter {
 	public String getCommandName() {
 		return name;
 	}
+	public void setCommandName(String name) {
+		this.name = name;
+	}
 	public String getCommand() {
 		return command;
 	}
@@ -54,8 +52,8 @@ public class CommandParameter {
 		return args;
 	}
 
-	public CommandLine parseParameter(Options options) throws ParseException {
-		return new DefaultParser().parse(options, args);
+	public ParsedParameter parseParameter() {
+		return null;
 	}
 
 }

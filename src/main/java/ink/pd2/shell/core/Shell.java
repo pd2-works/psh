@@ -37,6 +37,9 @@ public class Shell {
 				"&nomark&- " + key + " : " + (value != null));
 		return value;
 	}
+	public VariableMark getVariableMark() {
+		return variables;
+	}
 
 	//Shell信息
 	private Thread thread;
@@ -136,6 +139,8 @@ public class Shell {
 
 		}
 		//退出事件
+
+		Logger.INS.info(getLogLocation(), "The shell on '&v:user&' exit.");
 
 	}
 

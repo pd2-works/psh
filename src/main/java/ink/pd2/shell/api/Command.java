@@ -21,7 +21,7 @@ public class Command {
 		if (events.length != 0) this.events.addAll(Arrays.asList(events));
 	}
 
-	public void onExecute(Shell shell, CommandParameter parameter) {
+	public void onExecute(Shell shell, Parameter parameter) {
 		for (CommandEvent event : events) {
 			event.run(shell, parameter);
 		}
@@ -45,5 +45,8 @@ public class Command {
 	}
 	public String getGroup() {
 		return group;
+	}
+	public String getFullName() {
+		return group + ':' + name;
 	}
 }

@@ -3,6 +3,7 @@ package ink.pd2.shell.api;
 import ink.pd2.shell.core.Listener;
 import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Resources;
+import ink.pd2.shell.util.ConsoleUtils;
 import ink.pd2.shell.util.CoreUtils;
 import ink.pd2.shell.util.ShellUtils;
 
@@ -22,6 +23,7 @@ public class PluginInterface {
 	public final LogUtils log = new LogUtils();
 	public final ShellUtils shell = ShellUtils.INS;
 	public final CoreUtils core = CoreUtils.INS;
+	public final ConsoleUtils console = ConsoleUtils.INS;
 
 	//API方法 TODO 插件API
 
@@ -31,7 +33,7 @@ public class PluginInterface {
 
 	//指令相关
 	public final class CommandUtils {
-		public void add(Command command) {
+		public void add(Command... command) {
 			Resources.INS.putCommand(command);
 		}
 
@@ -49,6 +51,10 @@ public class PluginInterface {
 		public Command remove(Command c) {
 			return Resources.INS.removeCommand(
 					plugin.getResourcesId() + '.' + c.getName());
+		}
+
+		public Command get(String key) {
+			return Resources.INS.getCommandMap().get(key);
 		}
 	}
 

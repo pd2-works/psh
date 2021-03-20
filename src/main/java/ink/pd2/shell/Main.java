@@ -149,7 +149,5 @@ public final class Main {
 
 		//主进程
 		mainProcess();
-
-		Logger.INS.info("Main", "The shell on '&v:user&' exit.");
 	}
 }

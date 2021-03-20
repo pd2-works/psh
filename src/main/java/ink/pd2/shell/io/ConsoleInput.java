@@ -5,6 +5,7 @@ import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.Shell;
+import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
@@ -17,7 +18,7 @@ import java.nio.charset.Charset;
 public class ConsoleInput extends Input {
 	private final LineReader reader;
 
-	public ConsoleInput() throws IOException {
+	public ConsoleInput() throws IOException, EndOfFileException {
 		Logger.INS.info("ConsoleInput.init",
 				Resources.INS.getString("psh.log-init-jline-reader"));
 		//初始化 JLine LineReader
@@ -49,6 +50,10 @@ public class ConsoleInput extends Input {
 					mark.update(Resources.INS.getString("psh.shell-prompt-text-right")),
 					(Character) null, null);
 		} catch (UserInterruptException e) {
+			return null;
+		} catch (EndOfFileException e) {
+			Logger.INS.error("ConsoleInput", "Console input stream was closed forcibly.");
+			Main.exit(1, "Force stopped");
 			return null;
 		}
 	}

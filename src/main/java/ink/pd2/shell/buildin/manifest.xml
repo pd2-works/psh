@@ -3,10 +3,10 @@
 <manifest>
 
     <function item="string">
-        <parameter name="versionCode">115</parameter>
+        <parameter name="version_code">115</parameter>
     </function>
 
-    <function item="safeCheck">
+    <function item="safe_check">
         <parameter name="verify">@file/sign.ver</parameter>
         <parameter name="minLibVersion">115</parameter>
     </function>

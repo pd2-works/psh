@@ -10,15 +10,24 @@ public final class Logger {
 	public static final Logger INS = new Logger();
 
 	public void debug(String location, String message) {
-		Main.println("[&color:blue.null[" + getDate(true) + "]&] [&color:yellow.null[D]&|&color:cyan.null[" + location + "]&] " + message);
+		Main.println("[&color:blue.null["
+				+ getDate(true)
+				+ "]&] [&color:yellow.null[D]&|&color:cyan.null["
+				+ location + "]&] " + message);
 	}
 
 	public void info(String location, String message) {
-		Main.println("[&color:blue.null[" + getDate(false) + "]&] [&color:green.null[I]&|&color:cyan.null[" + location + "]&] " + message);
+		Main.println("[&color:blue.null["
+				+ getDate(false)
+				+ "]&] [&color:green.null[I]&|&color:cyan.null["
+				+ location + "]&] " + message);
 	}
 
 	public void error(String location, String message) {
-		Main.println("[&color:blue.null[" + getDate(false) + "]&] [&color:red.null[E]&|&color:cyan.null[" + location + "]&] " + message);
+		Main.println("[&color:blue.null["
+				+ getDate(false)
+				+ "]&] [&color:red.null[E]&|&color:cyan.null["
+				+ location + "]&] &color:red.null[" + message + "]&");
 	}
 
 	public void writeException(String location, Exception exception) {
