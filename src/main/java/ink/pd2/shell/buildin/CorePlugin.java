@@ -52,6 +52,10 @@ public class CorePlugin extends Plugin {
 		newCommandList();
 	}
 
+	/* ================= */
+	/* |<- 功能函数区 ->| */
+	/* ================= */
+
 	private void loadPlugins(String path) {
 		try {
 			Plugin[] plugins = PluginUtils.INS.load(path);
@@ -79,12 +83,6 @@ public class CorePlugin extends Plugin {
 		Command c3 = new Command("psh-lab", "test.repeat",
 				(shell, parameter) -> shell.println("You chose the command from 'psh-lab'."));
 		getApi().command.add(c1, c2, c3);
-	}
-
-	private void printCommands(Output output, List<Command> commands) {
-		for (int i = 0; i < commands.size(); i++) {
-			output.println(i + 1 + ") " + commands.get(i).getFullName());
-		}
 	}
 
 	private Boolean runCommandEvent(Shell shell, String command) {
@@ -133,6 +131,17 @@ public class CorePlugin extends Plugin {
 		if (temp == null) {
 			shell.println("&color:red.null[Command '" + commandName + "' not found]&");
 		} else {
+			ParameterTemplate template = temp.getTemplate();
+			//处理参数
+			if (template != null) {
+				try {
+					ParsedParameter p = parameter.parseParameter(template);
+				} catch (ParameterException e) {
+					int cause = e.getMessage().charAt(0) - 0x30;
+					//TODO 处理参数错误
+				}
+				//TODO 验证参数
+			}
 			temp.onExecute(shell, parameter);
 		}
 
@@ -174,6 +183,12 @@ public class CorePlugin extends Plugin {
 		}
 
 		return builder.toString();
+	}
+
+	private void printCommands(Output output, List<Command> commands) {
+		for (int i = 0; i < commands.size(); i++) {
+			output.println(i + 1 + ") " + commands.get(i).getFullName());
+		}
 	}
 
 }

@@ -5,7 +5,6 @@ import ink.pd2.shell.core.Logger;
 import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.util.ConsoleUtils;
 import ink.pd2.shell.util.CoreUtils;
-import ink.pd2.shell.util.ShellUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,6 @@ public class PluginInterface {
 	public final CommandUtils command = new CommandUtils();
 	public final ListenerUtils listener = new ListenerUtils();
 	public final LogUtils log = new LogUtils();
-	public final ShellUtils shell = ShellUtils.INS;
 	public final CoreUtils core = CoreUtils.INS;
 	public final ConsoleUtils console = ConsoleUtils.INS;
 

@@ -1,6 +1,6 @@
 # Pd2 Shell
 
-*English* | [简体中文](README_zh-cn.md)
+*English* | [简体中文](README_sc.md)
 
 A shell-like toolbox based on Java &amp; Kotlin.
 

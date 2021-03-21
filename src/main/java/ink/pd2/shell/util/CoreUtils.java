@@ -1,6 +1,7 @@
 package ink.pd2.shell.util;
 
 import ink.pd2.shell.Main;
+import ink.pd2.shell.buildin.CorePlugin;
 
 import java.io.File;
 
@@ -17,5 +18,9 @@ public final class CoreUtils {
 	}
 	public String getJarDirectory() {
 		return new File(getJarPath()).getParent();
+	}
+
+	public int newCommandList() {
+		return CorePlugin.newCommandList();
 	}
 }

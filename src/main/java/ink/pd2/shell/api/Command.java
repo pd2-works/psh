@@ -10,15 +10,19 @@ public class Command {
 	private final String group; //组名
 
 	private final HashSet<CommandEvent> events = new HashSet<>(); //指令执行事件
+	private ParameterTemplate template; //指令参数模板
 
 	public Command(String group, String name) {
-		this.group = group;
-		this.name = name;
+		this(group, name, (ParameterTemplate) null, (CommandEvent) null);
 	}
 	public Command(String group, String name, CommandEvent... events) {
+		this(group, name, null, events);
+	}
+	public Command(String group, String name, ParameterTemplate template, CommandEvent... events) {
 		this.group = group;
 		this.name = name;
-		if (events.length != 0) this.events.addAll(Arrays.asList(events));
+		this.template = template;
+		if (events != null && events.length != 0) this.events.addAll(Arrays.asList(events));
 	}
 
 	public void onExecute(Shell shell, Parameter parameter) {
@@ -49,4 +53,12 @@ public class Command {
 	public String getFullName() {
 		return group + ':' + name;
 	}
+
+	public ParameterTemplate getTemplate() {
+		return template;
+	}
+	public void setTemplate(ParameterTemplate template) {
+		this.template = template;
+	}
+
 }

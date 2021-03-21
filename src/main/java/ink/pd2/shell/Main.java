@@ -1,6 +1,6 @@
 package ink.pd2.shell;
 
-import ink.pd2.shell.api.InitializationException;
+import ink.pd2.shell.api.*;
 import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.buildin.Initializer;
 import ink.pd2.shell.buildin.VariableMarkProvider;
@@ -115,6 +115,8 @@ public final class Main {
 	 */
 
 	public static void main(String[] args) {
+		parseArgument(args); //解析参数
+
 		output = new ConsoleOutput(); //设置output流
 
 		Initializer.INS.initMarks(); //初始化默认标记
@@ -149,5 +151,38 @@ public final class Main {
 
 		//主进程
 		mainProcess();
+	}
+
+	private static void parseArgument(String[] args) {
+		Parameter parameter = new Parameter(args);
+
+		Option op_debug = new Option("debug", null, "false");
+		Option op_log = new Option("log", 'l', "inf");
+		Option op_directory = new Option("directory", 'd', ".");
+		ParameterTemplate template = new ParameterTemplate(op_debug, op_log, op_directory);
+
+		ParsedParameter parsed;
+		try {
+			parsed = parameter.parseParameter(template);
+		} catch (ParameterException e) {
+			parsed = null;
+			e.printStackTrace();
+			System.exit(1);
+		}
+
+		String s_debug = parsed.getOptionValue(op_debug);
+		String s_log = parsed.getOptionValue(op_log);
+		String s_directory = parsed.getOptionValue(op_directory);
+
+		if (s_debug != null) Logger.INS.isDebug = Boolean.parseBoolean(s_debug);
+		if (s_log != null) switch (s_log) {
+			case "inf": Logger.INS.inf = output;
+			case "err": Logger.INS.err = output;
+		}
+		if (s_directory != null) {
+			VariableMarkProvider.INS.getVariables().put("current_dir", s_directory);
+		} else {
+			VariableMarkProvider.INS.getVariables().put("current_dir", ".");
+		}
 	}
 }

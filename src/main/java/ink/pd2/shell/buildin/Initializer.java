@@ -64,7 +64,6 @@ public final class Initializer {
 		Mark.INS.registerMarkProvider(VariableMarkProvider.INS);
 		VariableMarkProvider.INS.getVariables().put("user", "user");
 		VariableMarkProvider.INS.getVariables().put("host", "localhost");
-		VariableMarkProvider.INS.getVariables().put("current_dir", ".");
 		Mark.INS.registerMarkProvider(ColorMarkProvider.INS);
 		ColorMarkProvider.INS.putColor("black", Ansi.Color.BLACK.value());
 		ColorMarkProvider.INS.putColor("blue", Ansi.Color.BLUE.value());
