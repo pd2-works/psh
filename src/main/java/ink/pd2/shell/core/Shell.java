@@ -115,6 +115,7 @@ public class Shell {
 	}
 	public void run(VariableMark variables) {
 		thread = Thread.currentThread();
+		thread.setName(getLogLocation());
 
 		this.variables = variables;
 		init();
@@ -133,7 +134,7 @@ public class Shell {
 				Logger.INS.writeException(getLogLocation(), e);
 			}
 			//指令处理和执行
-			String c = Main.input.getCommand(this, variables);
+			String c = Main.input.getCommandLine(this, variables);
 
 			if (!enterCommand(c)) break;
 

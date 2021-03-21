@@ -32,7 +32,7 @@ public class Parameter {
 					}
 			}
 		}
-		list.removeIf(String::isEmpty);
+		list.removeIf(String::isEmpty); //忽略所有多余空格
 		args = list.toArray(new String[0]);
 
 		name = list.size() == 0 ? null : list.get(0);

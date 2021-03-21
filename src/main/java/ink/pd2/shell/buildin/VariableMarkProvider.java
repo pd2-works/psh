@@ -25,7 +25,8 @@ public class VariableMarkProvider implements MarkProvider {
 			return variable;
 		}
 		else {
-			Logger.INS.error("Variable", mark + " is NOT a VariableMark object.");
+			Logger.INS.writeException("VariableMark",
+					new ClassCastException(mark + "is NOT a VariableMark object."));
 			return "";
 		}
 	}

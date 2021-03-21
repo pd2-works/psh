@@ -14,9 +14,11 @@ import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 
 public class ConsoleInput extends Input {
 	private final LineReader reader;
+	private final Scanner scanner;
 
 	public ConsoleInput() throws IOException, EndOfFileException {
 		Logger.INS.info("ConsoleInput.init",
@@ -34,15 +36,23 @@ public class ConsoleInput extends Input {
 				.terminal(t)
 				.build();
 		reader = r;
+
+		//初始化 Scanner
+		scanner = new Scanner(System.in);
 	}
 
 	@Override
 	public String readLine() {
-		return reader.readLine();
+		try {
+			return scanner.nextLine();
+		} catch (IllegalStateException e) {
+			Logger.INS.writeException("ConsoleInput.readLine", e);
+			return null;
+		}
 	}
 
 	@Override
-	public String getCommand(Shell shell, Mark mark) {
+	public String getCommandLine(Shell shell, Mark mark) {
 		if (mark == null) mark = Mark.INS;
 		try {
 			return reader.readLine(
@@ -52,16 +62,24 @@ public class ConsoleInput extends Input {
 		} catch (UserInterruptException e) {
 			return null;
 		} catch (EndOfFileException e) {
-			Logger.INS.error("ConsoleInput", "Console input stream was closed forcibly.");
+			Logger.INS.error("ConsoleInput.getCommandLine",
+					"Console input stream was closed forcibly.");
 			Main.exit(1, "Force stopped");
 			return null;
 		}
 	}
 
 	@Override
-	public String newLine(String lPrompt, String rPrompt, Mark mark) {
+	public String nextCommandLine(String lPrompt, String rPrompt, Mark mark) {
 		if (mark == null) mark = Mark.INS;
-		return reader.readLine(mark.update(lPrompt),
-				mark.update(rPrompt), (Character) null, null);
+		try {
+			return reader.readLine(mark.update(lPrompt),
+					mark.update(rPrompt), (Character) null, null);
+		} catch (EndOfFileException e) {
+			Logger.INS.error("ConsoleInput.nextCommandLine",
+					"Console input stream was closed forcibly.");
+			Main.exit(1, "Force stopped");
+			return null;
+		}
 	}
 }

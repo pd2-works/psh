@@ -74,8 +74,10 @@ public class CorePlugin extends Plugin {
 				Main.println(i + " [" + s[i] + "]");
 			}
 		});
-		Command c2 = new Command("psh", "test.repeat");
-		Command c3 = new Command("psh-lab", "test.repeat");
+		Command c2 = new Command("psh", "test.repeat",
+				(shell, parameter) -> shell.println("You chose the command from 'psh'."));
+		Command c3 = new Command("psh-lab", "test.repeat",
+				(shell, parameter) -> shell.println("You chose the command from 'psh-lab'."));
 		getApi().command.add(c1, c2, c3);
 	}
 
@@ -86,12 +88,17 @@ public class CorePlugin extends Plugin {
 	}
 
 	private Boolean runCommandEvent(Shell shell, String command) {
-		if (command == null || command.isEmpty() ||
-				(command = checkInput(command, shell)) == null
+		if (command == null ||
+				command.isEmpty() ||
+				(command = checkInput(command, shell)) == null ||
+				command.startsWith(":")
 		) return true;
 
 		Parameter parameter = new Parameter(command);
 		String commandName = parameter.getCommandName();
+
+		//若指令名是exit则直接退出
+		if (commandName.equals("exit")) return false;
 
 		/* |<- 解析指令 ->| */
 
@@ -119,12 +126,12 @@ public class CorePlugin extends Plugin {
 				}
 			} else if (!Resources.id.contains(split[0])) {
 				//若有分隔符则指令与资源组中一定至少有一个出了问题
-				shell.println("&color:red.null[Resource ID not found]&");
+				shell.println("&color:red.null[Resource ID '" + split[0] + "' not found]&");
 			}
 		}
 
 		if (temp == null) {
-			shell.println("&color:red.null[Command not found]&");
+			shell.println("&color:red.null[Command '" + commandName + "' not found]&");
 		} else {
 			temp.onExecute(shell, parameter);
 		}
@@ -143,15 +150,21 @@ public class CorePlugin extends Plugin {
 			int count = 0;
 			for (char i : builder.toString().toCharArray()) if (i == '"') count++;
 			if (count % 2 == 0) {
+				//去除开头和结尾空格
+				while (builder.charAt(0) == ' ') builder.deleteCharAt(0);
+				int index;
+				while (builder.charAt(index = (builder.length() - 1)) == ' ')
+					builder.deleteCharAt(index);
 				//若匹配则检查结尾字符串
-				char last = builder.charAt(builder.length() - 1);
-				if (last == ':') {
+				int lastIndex = builder.length() - 1;
+				char last = builder.charAt(lastIndex);
+				if (last == ':' && lastIndex != 0) {
 					//以':'结尾: 资源组存在则继续输入, 不存在则提示
 					String id = builder.substring(0, builder.length() - 1);
 					if (Resources.id.contains(id)) {
 						builder.append(api.console.inputNewLine(shell.input));
 					} else {
-						shell.println("&color:red.null[Resource ID not found]&");
+						shell.println("&color:red.null[Resource ID '" + id + "' not found]&");
 						return null; //返回null表示结束输入
 					}
 				} else break; //检查通过则返回
