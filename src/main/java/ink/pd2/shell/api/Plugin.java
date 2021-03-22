@@ -5,7 +5,10 @@ import ink.pd2.shell.core.i18n.Language;
 import ink.pd2.shell.util.PluginUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.ProtectionDomain;
 import java.util.HashMap;
+import java.util.jar.JarFile;
 
 public abstract class Plugin implements Initializeable {
 	private final String resourcesId; //资源组
@@ -107,6 +110,17 @@ public abstract class Plugin implements Initializeable {
 			//TODO 获取插件资源组中所有字符串
 			return null;
 		}
+	}
+
+	//功能型方法
+	public final String getJarPath() {
+		ProtectionDomain p = getClass().getProtectionDomain();
+		return p.getCodeSource().getLocation().getPath();
+	}
+
+	public final String getRootResource(String path) {
+		File root = new File(getClass().getResource('/' + path).toString());
+		return root.getPath();
 	}
 
 }

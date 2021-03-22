@@ -1,23 +1,20 @@
 package ink.pd2.shell.api;
 
-import ink.pd2.shell.core.i18n.Language;
-import ink.pd2.shell.util.PluginUtils;
-
-import java.io.File;
-
 public abstract class PlatformExtension implements Extension {
-	@Override
-	public void initLanguage(File[] files) throws InitializationException {
-		try {
-			for (File file : files) {
-				PluginUtils.INS.loadLanguage(new Language(file));
-			}
-		} catch (Exception e) {
-			throw new InitializationException(
-					"An exception has been thrown while an extension of the plugin '"
-							+ getResourcesId() + "' is initializing.", e);
-		}
-	}
+	//平台标识
+	public static final int PLATFORM_UNIX = 0x00;
+	public static final int PLATFORM_LINUX = 0x01;
+	public static final int PLATFORM_BSD = 0x02;
+	public static final int PLATFORM_WINDOWS = 0x10;
+	public static final int PLATFORM_WINDOWS_9X = 0x11;
+	public static final int PLATFORM_MACOS = 0x20;
+	public static final int PLATFORM_ARCHLINUX = 0xFFFFFFFF;
+
+//	//特性标识
+//	public static final int FUNCTION_SYSTEM = 0x01;
+//	public static final int FUNCTION_CHDIR = 0x02;
+//	public static final int FUNCTION_SU = 0x03;
+//	public static final int FUNCTION_SYSTEM_SUDO = 0x04;
 
 	@Override
 	public final String getResourcesId() {
@@ -26,5 +23,24 @@ public abstract class PlatformExtension implements Extension {
 
 	@Override
 	public abstract int getVersionCode();
+
+	@Override
+	public final Object getObject(Object... args) {
+		return null;
+	}
+	@Override
+	public Object getType() {
+		return null;
+	}
+
+	//信息
+	public abstract int getPlatform();
+	public abstract int getVersion();
+
+	//平台特性支持
+	public abstract int system(String command);
+	public abstract boolean chdir(String path);
+	public abstract boolean su(String username);
+	public abstract boolean system_sudo(String command);
 
 }

@@ -17,6 +17,9 @@ import java.util.*;
 import java.util.jar.JarFile;
 
 public final class PluginUtils {
+	//常量
+	public static final int EXTENSION_PLATFORM = 0x01;
+
 	private PluginUtils() {}
 	public final static PluginUtils INS = new PluginUtils();
 

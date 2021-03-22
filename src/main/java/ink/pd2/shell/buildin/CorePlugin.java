@@ -9,12 +9,14 @@ import ink.pd2.shell.core.CommandEnteredListener;
 import ink.pd2.shell.io.Output;
 import ink.pd2.shell.util.ConsoleUtils;
 import ink.pd2.shell.util.PluginUtils;
+import ink.pd2.shell.util.Property;
 
 import java.io.File;
 import java.util.*;
 
 public class CorePlugin extends Plugin {
-	private static HashMap<String, ArrayList<Command>> commandList;
+	private static HashMap<String, ArrayList<Command>> commandList; //指令列表
+	private static final HashMap<String, Plugin> pluginList = new HashMap<>(); //插件列表
 
 	public static int newCommandList() {
 		commandList = new HashMap<>();
@@ -38,13 +40,15 @@ public class CorePlugin extends Plugin {
 
 	@Override
 	public void init(PluginInterface api) {
-		String directory = api.core.getJarDirectory();
+		//获取jar所在目录
+		String directory = new File(getJarPath()).getParent();
+		//添加监听器
 		api.listener.add((CommandEnteredListener) this::runCommandEvent);
 
 		//TODO Other functions
 
 		//加载插件
-//		loadPlugins(directory + File.separator + "plugins");
+		if (Property.mode_load_module) loadPlugins(directory + File.separator + "plugins");
 
 		//加载测试功能
 		loadTestingFunctions();
@@ -61,6 +65,8 @@ public class CorePlugin extends Plugin {
 			Plugin[] plugins = PluginUtils.INS.load(path);
 			for (Plugin i : plugins) {
 				PluginUtils.INS.initObject(i);
+				Resources.INS.addPlugin(i);
+				pluginList.put(i.getResourcesId(), i);
 			}
 		} catch (InitializationException|PluginLoadingException e) {
 			Logger.INS.writeException("Plugin.Init", e);
@@ -190,6 +196,11 @@ public class CorePlugin extends Plugin {
 		for (int i = 0; i < commands.size(); i++) {
 			output.println(i + 1 + ") " + commands.get(i).getFullName());
 		}
+	}
+
+	//get & set
+	public static HashMap<String, Plugin> getPluginList() {
+		return pluginList;
 	}
 
 }

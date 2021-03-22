@@ -53,6 +53,11 @@ public class ParsedParameter {
 		return optionMap.remove(option);
 	}
 
+	//检查
+	public boolean containsOption(Option option) {
+		return optionMap.containsKey(option);
+	}
+
 	//get & set
 	public HashMap<Option, ArrayList<String>> getOptionMap() {
 		return optionMap;

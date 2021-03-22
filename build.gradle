@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'ink.pd2'
-version '1.0.0-a117'
+version '1.0.1-b118'
 
 repositories {
     mavenCentral()

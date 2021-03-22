@@ -1,6 +1,7 @@
 package ink.pd2.shell.core;
 
 import ink.pd2.shell.api.Command;
+import ink.pd2.shell.api.Extension;
 import ink.pd2.shell.api.Plugin;
 
 import java.util.*;
@@ -82,7 +83,8 @@ public final class Resources {
 		}
 	}
 
-	//字符串
+	/* |<- 字符串 ->| */
+
 	private final HashMap<String, String> strings = new HashMap<>();
 	public HashMap<String, String> getStringMap() {
 		return strings;
@@ -110,7 +112,38 @@ public final class Resources {
 		return strings.remove(key);
 	}
 
-	//指令
+	/* |<- 插件和插件扩展 ->| */
+
+	private final HashMap<Plugin, ArrayList<Extension>> plugins = new HashMap<>();
+	public HashMap<Plugin, ArrayList<Extension>> getPluginMap() {
+		return plugins;
+	}
+
+	public Set<Plugin> getAllPlugins() {
+		return plugins.keySet();
+	}
+	public void addPlugin(Plugin plugin) {
+		plugins.put(plugin, new ArrayList<>());
+	}
+	public ArrayList<Extension> removePlugin(Plugin plugin) {
+		return plugins.remove(plugin);
+	}
+
+	public Extension[] getExtensions(Plugin plugin) {
+		ArrayList<Extension> extensions = plugins.get(plugin);
+		if (extensions == null) return null;
+		return extensions.toArray(new Extension[0]);
+	}
+
+	public boolean addExtension(Plugin plugin, Extension... extension) {
+		ArrayList<Extension> extensions = plugins.get(plugin);
+		if (extensions == null || extension.length == 0) return false;
+		if (extension.length == 1) return extensions.add(extension[0]);
+		return extensions.addAll(Arrays.asList(extension));
+	}
+
+	/* |<- 指令 ->| */
+
 	private final HashMap<String, Command> commands = new HashMap<>();
 	public HashMap<String, Command> getCommandMap() {
 		return commands;

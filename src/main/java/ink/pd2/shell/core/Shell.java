@@ -124,12 +124,12 @@ public class Shell {
 
 		//CLI启动
 		while (true) {
-			//TODO 层级环境变量
 			//更新变量值
 			user = getCurrentUser();
 			try {
 				putVariable("current_dir", dir.getCanonicalPath());
-				putVariable("current_folder", dir.getCanonicalFile().getName());
+				File temp = dir.getCanonicalFile();
+				putVariable("current_folder", temp.getPath().equals("/")? "/" : temp.getName());
 			} catch (IOException e) {
 				Logger.INS.writeException(getLogLocation(), e);
 			}
@@ -142,7 +142,6 @@ public class Shell {
 		//退出事件
 
 		Logger.INS.info(getLogLocation(), "The shell on '" + user + "' exit.");
-
 	}
 
 	public Boolean enterCommand(String command) {

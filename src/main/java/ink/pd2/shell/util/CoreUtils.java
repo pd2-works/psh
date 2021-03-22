@@ -13,9 +13,11 @@ public final class CoreUtils {
 		Main.exit(1, reason);
 	}
 
+	@Deprecated
 	public String getJarPath() {
 		return new File(System.getProperty("java.class.path")).getAbsolutePath();
 	}
+	@Deprecated
 	public String getJarDirectory() {
 		return new File(getJarPath()).getParent();
 	}

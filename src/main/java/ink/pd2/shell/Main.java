@@ -9,6 +9,7 @@ import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.io.*;
 import ink.pd2.shell.core.Resources;
+import ink.pd2.shell.util.Property;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -139,13 +140,14 @@ public final class Main {
 		CorePlugin core = new CorePlugin();
 		try {
 			core.init();
+			Resources.INS.addPlugin(core);
 		} catch (InitializationException e) {
 			Logger.INS.writeException("Main.PreInit", e);
 		}
 
-		//TODO 判断是否有另一个psh进程正在运行
-
 		Logger.INS.debug("Main.PreInit", "Initialization finished.");
+
+		//TODO 判断是否有另一个psh进程正在运行
 
 		//主进程
 		mainProcess();
@@ -154,10 +156,16 @@ public final class Main {
 	private static void parseArgument(String[] args) {
 		Parameter parameter = new Parameter(args);
 
-		Option op_debug = new Option("debug", null, "true");
-		Option op_log = new Option("log", 'l', "inf");
-		Option op_directory = new Option("directory", 'd', ".");
-		ParameterTemplate template = new ParameterTemplate(op_debug, op_log, op_directory);
+		Option op_debug =
+				new Option("debug", null, "true");
+		Option op_log =
+				new Option("log", 'l', "inf");
+		Option op_directory =
+				new Option("directory", 'd', ".");
+		Option op_disable_module =
+				new Option("disable-module", null);
+		ParameterTemplate template = new ParameterTemplate(
+				op_debug, op_log, op_directory, op_disable_module);
 
 		ParsedParameter parsed;
 		try {
@@ -176,11 +184,14 @@ public final class Main {
 		if (s_log != null) switch (s_log) {
 			case "inf": Logger.INS.inf = output;
 			case "err": Logger.INS.err = output;
+			break;
 		}
 		if (s_directory != null) {
 			VariableMarkProvider.INS.getVariables().put("current_dir", s_directory);
 		} else {
 			VariableMarkProvider.INS.getVariables().put("current_dir", ".");
 		}
+
+		if (parsed.containsOption(op_disable_module)) Property.mode_load_module = false;
 	}
 }
