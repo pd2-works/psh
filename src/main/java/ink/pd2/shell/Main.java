@@ -115,12 +115,10 @@ public final class Main {
 	 */
 
 	public static void main(String[] args) {
-		parseArgument(args); //解析参数
-
 		output = new ConsoleOutput(); //设置output流
 
+		parseArgument(args); //解析参数
 		Initializer.INS.initMarks(); //初始化默认标记
-
 		Resources.id.add("psh"); //添加核心资源组
 
 		Logger.INS.debug("Main.PreInit", "Initialization started.");
@@ -156,7 +154,7 @@ public final class Main {
 	private static void parseArgument(String[] args) {
 		Parameter parameter = new Parameter(args);
 
-		Option op_debug = new Option("debug", null, "false");
+		Option op_debug = new Option("debug", null, "true");
 		Option op_log = new Option("log", 'l', "inf");
 		Option op_directory = new Option("directory", 'd', ".");
 		ParameterTemplate template = new ParameterTemplate(op_debug, op_log, op_directory);

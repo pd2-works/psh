@@ -85,6 +85,7 @@ public class CorePlugin extends Plugin {
 		getApi().command.add(c1, c2, c3);
 	}
 
+	//TODO [BUG] 所有指令皆为 not found
 	private Boolean runCommandEvent(Shell shell, String command) {
 		if (command == null ||
 				command.isEmpty() ||

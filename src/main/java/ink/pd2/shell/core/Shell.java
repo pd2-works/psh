@@ -134,7 +134,7 @@ public class Shell {
 				Logger.INS.writeException(getLogLocation(), e);
 			}
 			//指令处理和执行
-			String c = Main.input.getCommandLine(this, variables);
+			String c = input.getCommandLine(this, variables);
 
 			if (!enterCommand(c)) break;
 
