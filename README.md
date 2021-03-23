@@ -2,15 +2,15 @@
 
 *English* | [简体中文](README_sc.md)
 
-A shell-like toolbox based on Java &amp; Kotlin.
+A shell-like toolbox based on Java.
 
 ...Maybe it is just a real shell? (run
 
+[Pd2 Shell Documents (Simplified Chinese)](https://pd2-works.github.io/psh)
+
 ## How to Use
 
-
-
-PSH is in early development, now it doesn't have any functions.
+PSH is in test version, now it doesn't have any useful functions.
 
 A plan to launch PSH is to execute a command directly, like this:
 

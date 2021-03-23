@@ -2,7 +2,7 @@
 title: "Pd2 Shell"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: 'light'
-logo: '/assets/logo.png'
+#logo: '/assets/logo.png'
 
 # Code Highlight
 
