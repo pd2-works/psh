@@ -1,4 +1,24 @@
+# Main
 title: "Pd2 Shell"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: 'light'
+logo: '/assets/logo.png'
+
+# Code Highlight
+
+
+# Search
 search_enabled: true
+
+search:
+  rel_url: false
+  heading_level: 3
+  previews: 4
+  preview_words_before: 4
+  preview_words_after: 12
+
+# Links
+aux_links_new_tab: true
+heading_anchors: true
+footer_content: "Copyright &copy; 2020-2021 Pd2 Group. Distributed by <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GPL v3</a> license."
+
