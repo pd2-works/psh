@@ -1,7 +1,7 @@
 ---
 layout: default
-title: 使用
+title: 用户手册
 has_children: true
 ---
 
-# 使用手册
+# 快速开始
