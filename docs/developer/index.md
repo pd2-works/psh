@@ -14,9 +14,9 @@ Pd2 Shell 拥有一个模块式的扩展接口，并将“模块”概念分成�
 ## 核心依赖库
 
 ~~好吧目前确实连个依赖存储库地址都没有，所以~~
-暂且从 [GitHub Releases](https://github.com/pd2-works/psh/releases) 下载一个 JAR 来用吧... （发出 咕 声）
+暂且从 [GitHub Releases](https://github.com/pd2-works/psh/releases){:target="_blank"} 下载一个 JAR 来用吧... （发出 咕 声）
 
-下载之后导入即可。（对于 Java IDE 建议使用 [IntelliJ IDEA](https://www.jetbrains.com/zh-cn/idea) ，其他 IDE 都不大好用 ~~点名批评VS~~ ，文档中提到的编辑技巧之类都是针对 IDEA）
+下载之后导入即可。（对于 Java IDE 建议使用 [IntelliJ IDEA](https://www.jetbrains.com/zh-cn/idea){:target="_blank"} ，其他 IDE 都不大好用 ~~点名批评VS~~ ，文档中提到的编辑技巧之类都是针对 IDEA）
 
 ## 清单文件
 
