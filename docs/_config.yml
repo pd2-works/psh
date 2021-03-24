@@ -12,10 +12,10 @@ search_enabled: true
 
 search:
   rel_url: false
-  heading_level: 3
+  heading_level: 4
   previews: 4
   preview_words_before: 4
-  preview_words_after: 12
+  preview_words_after: 8
 
 # Links
 aux_links_new_tab: true
