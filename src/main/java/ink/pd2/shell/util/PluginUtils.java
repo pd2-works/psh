@@ -108,6 +108,8 @@ public final class PluginUtils {
 		XMLUtils utils = XMLUtils.INS;
 		Element root = utils.readFile(stream).getRootElement();
 
+		//TODO 加载功能
+
 		//加载插件
 		Element[] plugins = utils.getAllChildElements(root, "plugin");
 		ArrayList<Manifest.PluginInfo> pluginInfo = new ArrayList<>();

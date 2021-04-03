@@ -113,7 +113,7 @@ public class Shell {
 	public void run() {
 		run(VariableMarkProvider.INS.getVariables().newChild());
 	}
-	public void run(VariableMark variables) {
+	public final void run(VariableMark variables) {
 		thread = Thread.currentThread();
 		thread.setName(getLogLocation());
 
@@ -136,7 +136,7 @@ public class Shell {
 			//指令处理和执行
 			String c = input.getCommandLine(this, variables);
 
-			if (!enterCommand(c)) break;
+			if (!onCommandEntered(c)) break;
 
 		}
 		//退出事件
@@ -144,7 +144,7 @@ public class Shell {
 		Logger.INS.info(getLogLocation(), "The shell on '" + user + "' exit.");
 	}
 
-	public Boolean enterCommand(String command) {
+	public Boolean onCommandEntered(String command) {
 		Logger.INS.debug(getLogLocation() + "<CommandLine>", command);
 
 		Boolean b = true;
