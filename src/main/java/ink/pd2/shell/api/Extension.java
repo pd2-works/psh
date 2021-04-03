@@ -9,17 +9,23 @@ import java.io.File;
 
 public interface Extension extends Initializeable {
 	@Override
-	default void init() throws InitializationException {
+	default void onInit() throws InitializationException {
 		Plugin plugin = CorePlugin.getPluginList().get(getResourcesId());
 		if (plugin == null)
 			throw new InitializationException(
 					"The plugin with resources ID '" + getResourcesId() + "' was NOT found");
-		Resources.INS.addExtension(
-				CorePlugin.getPluginList().get(getResourcesId()), this);
+		try {
+			init();
+		} catch (Exception e) {
+			throw new InitializationException("Oops!", e);
+		}
+		Resources.INS.addExtension(plugin, this);
 	}
 
+	void init() throws Exception;
+
 	@Override
-	default void initLanguage(File[] files) throws InitializationException {
+	default void onInitLanguage(File[] files) throws InitializationException {
 		try {
 			for (File file : files) {
 				PluginUtils.INS.loadLanguage(new Language(file));
@@ -36,7 +42,6 @@ public interface Extension extends Initializeable {
 		return CorePlugin.getPluginList().get(getResourcesId()).getVersionCode();
 	}
 
-	Object getObject(Object... args);
-	Object getType();
+	Object api(Object... args);
 
 }

@@ -1,4 +1,4 @@
-package ink.pd2.shell.util;
+package ink.pd2.shell.core;
 
 public final class Property {
 	public static boolean mode_load_module = true;

@@ -34,7 +34,7 @@ public abstract class Plugin implements Initializeable {
 	}
 
 	@Override
-	public void init() throws InitializationException {
+	public void onInit() throws InitializationException {
 		try {
 			init(getApi());
 		} catch (Exception e) {
@@ -45,7 +45,7 @@ public abstract class Plugin implements Initializeable {
 	}
 
 	@Override
-	public void initLanguage(File[] files) throws InitializationException {
+	public void onInitLanguage(File[] files) throws InitializationException {
 		try {
 			for (File file : files) {
 				PluginUtils.INS.loadLanguage(new Language(file));

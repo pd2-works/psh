@@ -25,10 +25,13 @@ public class Command {
 		if (events != null && events.length != 0) this.events.addAll(Arrays.asList(events));
 	}
 
-	public void onExecute(Shell shell, Parameter parameter) {
+	public int onExecute(Shell shell, Parameter parameter) {
+		int returnCode = 0;
 		for (CommandEvent event : events) {
-			event.run(shell, parameter);
+			int tmp = event.run(shell, parameter);
+			if (tmp != 0) returnCode = tmp;
 		}
+		return returnCode;
 	}
 
 	//添加事件

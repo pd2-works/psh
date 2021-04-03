@@ -1,5 +1,6 @@
 package ink.pd2.shell.core;
 
+import ink.pd2.shell.Main;
 import ink.pd2.shell.io.Output;
 
 import java.io.PrintWriter;
@@ -11,6 +12,7 @@ public final class Logger {
 
 	public Output inf = null;
 	public Output err = null;
+	public Output out = Main.output;
 	public boolean isDebug = false;
 
 	public void debug(String location, String message) {
@@ -39,11 +41,16 @@ public final class Logger {
 	}
 
 	public void writeException(String location, Exception exception) {
+		writeException(location, exception, false);
+	}
+	public void writeException(String location, Exception exception, boolean print) {
 		StringWriter s = new StringWriter();
 		PrintWriter p = new PrintWriter(s);
 		exception.printStackTrace(p);
 		debug(location, "&color:red.null[EXCEPTION in thread '"
 				+ Thread.currentThread().getName() + "':\n" + s + "]&");
+		if (print) out.println(Mark.INS.update("&color:red.null[Exception in thread '"
+				+ Thread.currentThread().getName() + "':\n" + s + "]&"));
 	}
 
 	private String getDate(boolean ms) {

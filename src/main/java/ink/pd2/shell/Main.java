@@ -9,7 +9,7 @@ import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.io.*;
 import ink.pd2.shell.core.Resources;
-import ink.pd2.shell.util.Property;
+import ink.pd2.shell.core.Property;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -139,7 +139,7 @@ public final class Main {
 		//加载核心插件和API
 		CorePlugin core = new CorePlugin();
 		try {
-			core.init();
+			core.onInit();
 			Resources.INS.addPlugin(core);
 		} catch (InitializationException e) {
 			Logger.INS.writeException("Main.PreInit", e);

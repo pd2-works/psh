@@ -25,11 +25,7 @@ public abstract class PlatformExtension implements Extension {
 	public abstract int getVersionCode();
 
 	@Override
-	public final Object getObject(Object... args) {
-		return null;
-	}
-	@Override
-	public Object getType() {
+	public final Object api(Object... args) {
 		return null;
 	}
 
@@ -41,6 +37,8 @@ public abstract class PlatformExtension implements Extension {
 	public abstract int system(String command);
 	public abstract boolean chdir(String path);
 	public abstract boolean su(String username);
-	public abstract boolean system_sudo(String command);
+	public abstract int system_sudo(String command);
+
+
 
 }

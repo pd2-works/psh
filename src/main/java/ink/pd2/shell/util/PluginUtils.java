@@ -29,23 +29,23 @@ public final class PluginUtils {
 			ArrayList<Plugin> plugins = new ArrayList<>();
 
 			File folder = new File(folderPath);
-			if (!folder.isDirectory()) throw
-					new PluginLoadingException('\'' + folder.getAbsolutePath() + "' is NOT a directory.");
+			if (!folder.isDirectory()) throw new PluginLoadingException(
+							'\'' + folder.getAbsolutePath() + "' is NOT a directory.");
 			File[] files = folder.listFiles();
 			ArrayList<URL> jars = new ArrayList<>();
 
 			//过滤jar文件
 			for (File i : files) if (i.getName().endsWith(".jar")) {
-				jars.add(new URL(i.getCanonicalPath()));
+				jars.add(i.getCanonicalFile().toURI().toURL());
 			}
 
 			URLClassLoader loader = new URLClassLoader(jars.toArray(new URL[0]));
-			//获取jar中的配置文件路径
-			Enumeration<URL> configs = loader.getResources("manifest.xml");
 			//循环处理配置文件
-			while (configs.hasMoreElements()) {
-				String path = configs.nextElement().getFile();
-				InputStream stream = new FileInputStream(path);
+			for (URL url : jars) {
+				String path = url.getPath();
+				JarFile file = new JarFile(path);
+				InputStream stream =
+						file.getInputStream(file.getEntry("manifest.xml"));
 				Manifest info = parseXML(stream); //解析插件配置信息
 				stream.close();
 				//循环加载配置
@@ -55,7 +55,8 @@ public final class PluginUtils {
 					Plugin plugin = (Plugin) loader.loadClass(mainClass).newInstance();
 					plugins.add(plugin);
 					Logger.INS.debug("Plugin.Load",
-							"A new plugin instance of '" + plugin.getResourcesId() + "' was created");
+							"A new plugin instance of '"
+									+ plugin.getResourcesId() + "' was created");
 				}
 
 			}
@@ -75,7 +76,7 @@ public final class PluginUtils {
 
 	public void initObject(Initializeable object) throws InitializationException {
 		Resources.id.add(object.getResourcesId());
-		object.init();
+		object.onInit();
 	}
 
 	public Plugin loadJar(JarFile file) {

@@ -7,9 +7,8 @@ import ink.pd2.shell.core.Resources;
 import ink.pd2.shell.core.Shell;
 import ink.pd2.shell.core.CommandEnteredListener;
 import ink.pd2.shell.io.Output;
-import ink.pd2.shell.util.ConsoleUtils;
 import ink.pd2.shell.util.PluginUtils;
-import ink.pd2.shell.util.Property;
+import ink.pd2.shell.core.Property;
 
 import java.io.File;
 import java.util.*;
@@ -80,14 +79,17 @@ public class CorePlugin extends Plugin {
 
 		Command c1 = new Command("psh", "test.args", (shell, parameter) -> {
 			String[] s = parameter.getArguments();
-			for (int i = 0; i < s.length; i++) {
-				Main.println(i + " [" + s[i] + "]");
-			}
+			for (int i = 0; i < s.length; i++) Main.println(i + " [" + s[i] + "]");
+			return 0;
 		});
-		Command c2 = new Command("psh", "test.repeat",
-				(shell, parameter) -> shell.println("You chose the command from 'psh'."));
-		Command c3 = new Command("psh-lab", "test.repeat",
-				(shell, parameter) -> shell.println("You chose the command from 'psh-lab'."));
+		Command c2 = new Command("psh", "test.repeat", (shell, parameter) -> {
+			shell.println("You chose the command from 'psh'.");
+			return 0;
+		});
+		Command c3 = new Command("psh-lab", "test.repeat", (shell, parameter) -> {
+			shell.println("You chose the command from 'psh-lab'.");
+			return 1;
+		});
 		getApi().command.add(c1, c2, c3);
 	}
 
