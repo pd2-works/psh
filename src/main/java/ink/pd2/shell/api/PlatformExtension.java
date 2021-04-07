@@ -1,5 +1,7 @@
 package ink.pd2.shell.api;
 
+import java.util.Properties;
+
 public abstract class PlatformExtension implements Extension {
 	//平台标识
 	public static final int PLATFORM_UNIX = 0x00;
@@ -25,7 +27,7 @@ public abstract class PlatformExtension implements Extension {
 	public abstract int getVersionCode();
 
 	@Override
-	public final Object api(Object... args) {
+	public final Object run(Object... args) {
 		return null;
 	}
 
@@ -39,6 +41,7 @@ public abstract class PlatformExtension implements Extension {
 	public abstract boolean su(String username);
 	public abstract int system_sudo(String command);
 
-
+	public abstract Properties loadProperties();
+	public abstract boolean saveProperties(Properties properties);
 
 }

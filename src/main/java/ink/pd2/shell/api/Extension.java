@@ -42,6 +42,6 @@ public interface Extension extends Initializeable {
 		return CorePlugin.getPluginList().get(getResourcesId()).getVersionCode();
 	}
 
-	Object api(Object... args);
+	Object run(Object... args);
 
 }

@@ -5,10 +5,9 @@ import ink.pd2.shell.core.i18n.Language;
 import ink.pd2.shell.util.PluginUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.security.ProtectionDomain;
 import java.util.HashMap;
-import java.util.jar.JarFile;
+import java.util.Set;
 
 public abstract class Plugin implements Initializeable {
 	private final String resourcesId; //资源组
@@ -91,8 +90,7 @@ public abstract class Plugin implements Initializeable {
 
 	//API: string resources
 	public final StringUtils s = new StringUtils();
-
-	public class StringUtils {
+	private class StringUtils {
 		public String get(String key) {
 			return Resources.INS.getString(resourcesId + '.' + key);
 		}
@@ -105,10 +103,17 @@ public abstract class Plugin implements Initializeable {
 			return Resources.INS.removeString(key);
 		}
 
-		@Deprecated
 		public HashMap<String, String> getAll() {
-			//TODO 获取插件资源组中所有字符串
-			return null;
+			String id = getResourcesId();
+			HashMap<String, String>
+					stringMap = Resources.INS.getStringMap(),
+					returnMap = new HashMap<>();
+			Set<String> keySet = stringMap.keySet();
+			for (String i : keySet) {
+				String sKey = i.split("\\.", 2)[0];
+				if (sKey.equals(id)) returnMap.put(sKey, stringMap.get(i));
+			}
+			return returnMap;
 		}
 	}
 

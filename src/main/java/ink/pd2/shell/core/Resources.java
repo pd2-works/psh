@@ -95,7 +95,8 @@ public final class Resources {
 		String string = strings.get(key);
 		Logger.INS.debug("Resources<String>",
 				"&nomark&^ " + key + " : " + (string != null));
-		return string == null? "" : string;
+//		return string == null? key : string;
+		return string;
 	}
 
 	public void putString(String key, String value) {

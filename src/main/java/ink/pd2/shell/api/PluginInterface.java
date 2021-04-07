@@ -23,7 +23,7 @@ public class PluginInterface {
 	public final CoreUtils core = CoreUtils.INS;
 	public final ConsoleUtils console = ConsoleUtils.INS;
 
-	//API方法 TODO 插件API
+	//API方法
 
 	//==================
 	//| <- 资源管理 ->  |
@@ -100,10 +100,14 @@ public class PluginInterface {
 		}
 
 		public void writeException(Exception exception) {
-			Logger.INS.writeException("Plugin:" + plugin.getResourcesId(), exception);
+			writeException(exception, false);
 		}
+		public void writeException(Exception exception, boolean print) {
+			Logger.INS.writeException("Plugin:" + plugin.getResourcesId(), exception, print);
+		}
+		@Deprecated
 		public void printException(Exception exception) {
-			//TODO 输出错误
+			writeException(exception, true);
 		}
 	}
 

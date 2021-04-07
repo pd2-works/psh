@@ -27,13 +27,13 @@ public class Shell {
 	}
 	public String getVariableValue(String key) {
 		String value = variables.get(key);
-		Logger.INS.debug("Shell@" + thread.getId() + "<Variable>",
+		Logger.INS.debug(getLogLocation() + "<Variable>",
 				"&nomark&^ " + key + " : " + (value != null));
 		return value;
 	}
 	public String removeVariable(String key) {
 		String value = VariableMarkProvider.INS.getVariables().remove(key);
-		Logger.INS.debug("Shell@" + thread.getId() + "<Variable>",
+		Logger.INS.debug(getLogLocation() + "<Variable>",
 				"&nomark&- " + key + " : " + (value != null));
 		return value;
 	}
@@ -42,19 +42,19 @@ public class Shell {
 	}
 
 	//Shell信息
-	private Thread thread;
+	private Thread thread; //Shell所处线程
 	public Thread getThread() {
 		return thread;
 	}
 
 //	private String title = "Pd2 Shell";
 
-	private String user;
+	private String user; //实时用户
 	public String getUser() {
 		return user;
 	}
 
-	private File dir;
+	private File dir; //当前目录
 	public File getDirectory() {
 		return dir;
 	}
@@ -62,6 +62,8 @@ public class Shell {
 		if (file.isDirectory()) dir = file;
 		else dir = file.getParentFile();
 	}
+
+	public int returnCode = 0; //最近一次返回值
 
 	//基本输入输出
 	public void print(String s) {
@@ -133,6 +135,7 @@ public class Shell {
 			} catch (IOException e) {
 				Logger.INS.writeException(getLogLocation(), e);
 			}
+			putVariable("return", String.valueOf(returnCode));
 			//指令处理和执行
 			String c = input.getCommandLine(this, variables);
 

@@ -59,14 +59,13 @@ public class ConsoleInput extends Input {
 					mark.update(Resources.INS.getString("psh.shell-prompt-text-left")),
 					mark.update(Resources.INS.getString("psh.shell-prompt-text-right")),
 					(Character) null, null);
-		} catch (UserInterruptException e) {
-			return null;
+		} catch (UserInterruptException ignore) {
 		} catch (EndOfFileException e) {
 			Logger.INS.error("ConsoleInput.getCommandLine",
 					"Console input stream was closed forcibly.");
 			Main.exit(1, "Force stopped");
-			return null;
 		}
+		return null;
 	}
 
 	@Override
@@ -75,11 +74,12 @@ public class ConsoleInput extends Input {
 		try {
 			return reader.readLine(mark.update(lPrompt),
 					mark.update(rPrompt), (Character) null, null);
+		} catch (UserInterruptException ignore) {
 		} catch (EndOfFileException e) {
 			Logger.INS.error("ConsoleInput.nextCommandLine",
 					"Console input stream was closed forcibly.");
 			Main.exit(1, "Force stopped");
-			return null;
 		}
+		return null;
 	}
 }

@@ -47,7 +47,9 @@ public class CorePlugin extends Plugin {
 		//TODO Other functions
 
 		//加载插件
-		if (Property.mode_load_module) loadPlugins(directory + File.separator + "plugins");
+		File pluginDirectory = new File(directory + File.separator + "plugins");
+		if (Property.mode_load_module && pluginDirectory.exists())
+			loadPlugins(pluginDirectory.getPath());
 
 		//加载测试功能
 		loadTestingFunctions();
@@ -93,7 +95,6 @@ public class CorePlugin extends Plugin {
 		getApi().command.add(c1, c2, c3);
 	}
 
-	//TODO [BUG] 所有指令皆为 not found
 	private Boolean runCommandEvent(Shell shell, String command) {
 		if (command == null ||
 				command.isEmpty() ||
@@ -143,6 +144,7 @@ public class CorePlugin extends Plugin {
 			ParameterTemplate template = temp.getTemplate();
 			//处理参数
 			if (template != null) {
+
 				try {
 					ParsedParameter p = parameter.parseParameter(template);
 				} catch (ParameterException e) {
@@ -150,8 +152,9 @@ public class CorePlugin extends Plugin {
 					//TODO 处理参数错误
 				}
 				//TODO 验证参数
+
 			}
-			temp.onExecute(shell, parameter);
+			shell.returnCode = temp.onExecute(shell, parameter);
 		}
 
 		//TODO 指令执行监听器
@@ -180,14 +183,17 @@ public class CorePlugin extends Plugin {
 					//以':'结尾: 资源组存在则继续输入, 不存在则提示
 					String id = builder.substring(0, builder.length() - 1);
 					if (Resources.id.contains(id)) {
-						builder.append(api.console.inputNewLine(shell.input));
+						String temp = api.console.inputNewLine(shell.input);
+						builder.append(temp);
 					} else {
 						shell.println("&color:red.null[Resource ID '" + id + "' not found]&");
 						return null; //返回null表示结束输入
 					}
 				} else break; //检查通过则返回
 			} else {
-				builder.append('\n').append(api.console.inputNewLine(shell.input));
+				String temp = api.console.inputNewLine(shell.input);
+				if (temp == null) return null; //返回null表示结束输入
+				builder.append('\n').append(temp);
 			}
 		}
 

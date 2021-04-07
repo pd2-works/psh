@@ -62,6 +62,7 @@ public class Parameter {
 		//解析参数
 		HashMap<Option, ArrayList<String>> tempMap = parsed.getOptionMap();
 		Option tempOption = null;
+		Option tempDefaultOption = template.getDefaultOption();
 
 		for (String i : args) {
 			if (i.charAt(0) == '-') {
@@ -85,18 +86,20 @@ public class Parameter {
 			} else {
 				// 2. 字符串值
 				if (tempOption == null) {
-					// 1) 第一个参数 TODO
-
-				} else {
-					// 2) 非第一个参数
-					tempMap.get(tempOption).add(i);
+					// 1) 第一个参数
+					if (tempDefaultOption == null) continue;
+					tempOption = tempDefaultOption;
 				}
+				// 2) 非第一个参数
+				tempMap.get(tempOption).add(i);
 			}
 		}
 		for (Option i : tempMap.keySet()) {
 			ArrayList<String> list = tempMap.get(i);
 			if (list.isEmpty() && i.defaultValue != null) list.add(i.defaultValue);
 		}
+
+		//返回结果
 		parsedParameter = parsed;
 		return parsed;
 	}

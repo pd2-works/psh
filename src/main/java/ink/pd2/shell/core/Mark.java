@@ -25,8 +25,8 @@ public class Mark {
 	 * @author Maxel Black (maxelblack@outlook.com)
 	 */
 
+	@Deprecated
 	public String update(String sign, String s) {
-		//TODO
 		return null;
 	}
 

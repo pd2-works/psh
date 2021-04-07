@@ -35,10 +35,10 @@ public final class Initializer {
 		putStr("psh.plugin-no-name", "Unnamed");
 		putStr("psh.plugin-no-description", "There is no description.");
 
-		putStr("psh.shell-prompt-text-left", "&color:green.default[\\&v:user\\&]&:&color:blue.default[\\&v:current_folder\\&]&$ ");
-//		putStr("psh.shell-prompt-text-right", "...");
+		putStr("psh.shell-prompt-text-left", "&color:green.null[\\&v:user\\&]&:&color:blue.null[\\&v:current_folder\\&]&$ ");
+		putStr("psh.shell-prompt-text-right", "(&color:blue.null[\\&v:return\\&]&)");
 
-		putStr("psh.shell-greet-text", "&color:blue.default[Welcome to Pd2 Shell!\n    ____      _____      _____ __         ____   __  \n   / __ \\____/ /__ \\    / ___// /_  ___  / / /   \\ \\ \n  / /_/ / __  /__/ /    \\__ \\/ __ \\/ _ \\/ / /     \\ \\\n / ____/ /_/ // __/    ___/ / / / /  __/ / /      / /\n/_/    \\__,_//____/   /____/_/ /_/\\___/_/_/      /_/ ]&\n\n");
+		putStr("psh.shell-greet-text", "&color:blue.null[Welcome to Pd2 Shell!\n    ____      _____      _____ __         ____   __  \n   / __ \\____/ /__ \\    / ___// /_  ___  / / /   \\ \\ \n  / /_/ / __  /__/ /    \\__ \\/ __ \\/ _ \\/ / /     \\ \\\n / ____/ /_/ // __/    ___/ / / / /  __/ / /      / /\n/_/    \\__,_//____/   /____/_/ /_/\\___/_/_/      /_/ ]&\n\n");
 		/*
 		=====================================================
 		Welcome to Pd2 Shell!
