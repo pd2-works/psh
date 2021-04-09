@@ -1,10 +1,12 @@
 package ink.pd2.shell.buildin;
 
+import ink.pd2.shell.api.Extension;
 import ink.pd2.shell.core.Mark;
 import ink.pd2.shell.core.MarkProvider;
 import org.fusesource.jansi.Ansi;
 
 import java.util.HashMap;
+import java.util.Properties;
 
 public class ColorMarkProvider implements MarkProvider {
 	public final static ColorMarkProvider INS = new ColorMarkProvider();
@@ -52,4 +54,5 @@ public class ColorMarkProvider implements MarkProvider {
 		}
 		return value;
 	}
+
 }
