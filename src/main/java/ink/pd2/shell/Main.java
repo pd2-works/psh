@@ -1,5 +1,6 @@
 package ink.pd2.shell;
 
+import ink.pd2.psh.util.*;
 import ink.pd2.shell.api.*;
 import ink.pd2.shell.buildin.CorePlugin;
 import ink.pd2.shell.buildin.Initializer;

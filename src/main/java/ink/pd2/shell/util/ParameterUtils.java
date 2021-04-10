@@ -1,7 +1,7 @@
 package ink.pd2.shell.util;
 
-import ink.pd2.shell.api.ParameterTemplate;
-import ink.pd2.shell.api.ParsedParameter;
+import ink.pd2.psh.util.ParameterTemplate;
+import ink.pd2.psh.util.ParsedParameter;
 
 @Deprecated
 public final class ParameterUtils {
