@@ -9,6 +9,6 @@ public abstract class Module {
         this.versionCode = versionCode;
     }
 
-    public abstract void onInitial() throws Exception;
+    protected abstract void onInitial() throws Exception;
 
 }
