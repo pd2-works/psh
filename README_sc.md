@@ -6,7 +6,7 @@
 
 ...或许这就是一个真正的 shell? (run
 
-[Pd2 Shell 文档 (简体中文)](https://pd2-works.github.io/psh){:target="_blank"}
+[Pd2 Shell 文档 (简体中文)](https://pd2-works.github.io/psh)
 
 ## 如何使用
 

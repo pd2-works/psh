@@ -6,7 +6,7 @@ A shell-like toolbox based on Java.
 
 ...Maybe it is just a real shell? (run
 
-[Pd2 Shell Documents (Simplified Chinese)](https://pd2-works.github.io/psh){:target="_blank"}
+[Pd2 Shell Documents (Simplified Chinese)](https://pd2-works.github.io/psh)
 
 ## How to Use
 
