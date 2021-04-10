@@ -120,38 +120,42 @@ public final class Main {
 		output = new ConsoleOutput(); //设置output流
 
 		parseArgument(args); //解析参数
-		Initializer.INS.initMarks(); //初始化默认标记
-		Resources.id.add("psh"); //添加核心资源组
 
-		Logger.INS.debug("Main.PreInit", "Initialization started.");
+		if (Property.mode_new_core) ink.pd2.psh.core.Main.main(args);
+		else {
+			Initializer.INS.initMarks(); //初始化默认标记
+			Resources.id.add("psh"); //添加核心资源组
 
-		Initializer.INS.initResources(); //初始化资源
-		Initializer.INS.initTheme(); //初始化主题
+			Logger.INS.debug("Main.PreInit", "Initialization started.");
 
-		try {
-			input = new ConsoleInput(); //设置input流
-		} catch (IOException e) {
-			Logger.INS.writeException("ConsoleInput.init", e);
-			Logger.INS.error("ConsoleInput.init",
-					Resources.INS.getString("psh.log-error-init-jline"));
-			Main.exit(1, Resources.INS.getString("psh.log-error-init-jline"));
+			Initializer.INS.initResources(); //初始化资源
+			Initializer.INS.initTheme(); //初始化主题
+
+			try {
+				input = new ConsoleInput(); //设置input流
+			} catch (IOException e) {
+				Logger.INS.writeException("ConsoleInput.init", e);
+				Logger.INS.error("ConsoleInput.init",
+						Resources.INS.getString("psh.log-error-init-jline"));
+				Main.exit(1, Resources.INS.getString("psh.log-error-init-jline"));
+			}
+
+			//加载核心插件和API
+			CorePlugin core = new CorePlugin();
+			try {
+				core.onInit();
+				Resources.INS.addPlugin(core);
+			} catch (InitializationException e) {
+				Logger.INS.writeException("Main.PreInit", e);
+			}
+
+			Logger.INS.debug("Main.PreInit", "Initialization finished.");
+
+			//TODO 判断是否有另一个psh进程正在运行
+
+			//主进程
+			mainProcess();
 		}
-
-		//加载核心插件和API
-		CorePlugin core = new CorePlugin();
-		try {
-			core.onInit();
-			Resources.INS.addPlugin(core);
-		} catch (InitializationException e) {
-			Logger.INS.writeException("Main.PreInit", e);
-		}
-
-		Logger.INS.debug("Main.PreInit", "Initialization finished.");
-
-		//TODO 判断是否有另一个psh进程正在运行
-
-		//主进程
-		mainProcess();
 	}
 
 	private static void parseArgument(String[] args) {
@@ -165,6 +169,8 @@ public final class Main {
 				new Option("directory", 'd', ".");
 		Option op_disable_module =
 				new Option("disable-module", null);
+		Option op_new_core =
+				new Option("new-core", null);
 		ParameterTemplate template = new ParameterTemplate(
 				op_debug, op_log, op_directory, op_disable_module);
 
@@ -194,5 +200,6 @@ public final class Main {
 		}
 
 		if (parsed.containsOption(op_disable_module)) Property.mode_load_module = false;
+		if (parsed.containsOption(op_new_core)) Property.mode_new_core = true;
 	}
 }
