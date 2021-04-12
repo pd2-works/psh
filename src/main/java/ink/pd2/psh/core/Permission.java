@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public final class Permission {
 	public static final boolean DEFAULT_MANAGE_MODULES = false;
-	public static final boolean DEFAULT_MANAGE_MODULE_FILES = false;
+	public static final boolean DEFAULT_READ_MODULES = false;
 	public static final boolean DEFAULT_READ_PERMISSION = false;
 	public static final boolean DEFAULT_WRITE_PERMISSION = false;
 	public static final boolean DEFAULT_READ_GLOBAL_RESOURCES = true;
@@ -13,7 +13,7 @@ public final class Permission {
 
 	public static final int ALLOW_ALL = 0;
 	public static final int MANAGE_MODULES = 2;
-	public static final int MANAGE_MODULE_FILES = 3;
+	public static final int READ_MODULES = 3;
 	public static final int READ_PERMISSION = 4;
 	public static final int WRITE_PERMISSION = 5;
 	public static final int READ_GLOBAL_RESOURCES = 6;
@@ -28,15 +28,14 @@ public final class Permission {
 
 	public static Boolean check(int cid, String nid, int permission) {
 		if (!Permission.check(cid, Permission.READ_PERMISSION)) return true;
-		Module module = Main.moduleNidMap.get(nid);
+		Module module = ModuleBoard.moduleNidMap.get(nid);
 		if (module == null) return null;
 		return check(module.id, permission);
 	}
 
 	public static boolean set(int cid, String nid, int permission, boolean value) {
-		if (permission > MAX_PERMISSION_INDEX) throw new NoSuchPermissionException();
 		if (!Permission.check(cid, Permission.WRITE_PERMISSION)) return false;
-		Module module = Main.moduleNidMap.get(nid);
+		Module module = ModuleBoard.moduleNidMap.get(nid);
 		if (module == null) return false;
 		infoMap.get(module.id).set(permission, value);
 		return true;
@@ -45,7 +44,7 @@ public final class Permission {
 	protected static boolean check(Integer id, int permission) {
 		PermissionInfo info = infoMap.get(id);
 		if (info == null) return false;
-		return info.get(permission);
+		return info.get(Permission.ALLOW_ALL) || info.get(permission);
 	}
 
 	protected static PermissionInfo putInfo(Integer id, PermissionInfo info) {
@@ -53,11 +52,15 @@ public final class Permission {
 	}
 
 	private static final class PermissionInfo {
-		boolean[] items = new boolean[MAX_PERMISSION_INDEX];
-		private boolean get(int permission) {
+		Boolean[] items = new Boolean[MAX_PERMISSION_INDEX];
+		private Boolean get(int permission) {
+			if (permission > MAX_PERMISSION_INDEX || permission < 0)
+				throw new NoSuchPermissionException();
 			return items[permission];
 		}
 		synchronized private void set(int permission, boolean value) {
+			if (permission > MAX_PERMISSION_INDEX || permission < 0)
+				throw new NoSuchPermissionException();
 			items[permission] = value;
 		}
 	}
