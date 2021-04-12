@@ -9,13 +9,13 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class URLResourcesItem extends ResourceItem<URL> {
-	private final URL fileUrl;
+public class JarResourcesItem extends ResourceItem<URL> {
+	private final URL jarUrl;
 	private final URLClassLoader loader;
 
-	protected URLResourcesItem(String filePath) throws IOException {
-		fileUrl = new File(filePath).toURI().toURL();
-		loader = new URLClassLoader(new URL[]{fileUrl});
+	protected JarResourcesItem(String jarPath) throws IOException {
+		jarUrl = new File(jarPath).toURI().toURL();
+		loader = new URLClassLoader(new URL[]{jarUrl});
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class URLResourcesItem extends ResourceItem<URL> {
 	public String[] getKeys(int cid) {
 		if (isNoReadPermission(cid)) return null;
 		try {
-			JarFile file = new JarFile(fileUrl.getFile());
+			JarFile file = new JarFile(jarUrl.getFile());
 			Enumeration<JarEntry> entries = file.entries();
 			ArrayList<String> filenames = new ArrayList<>();
 			while (entries.hasMoreElements()) {
