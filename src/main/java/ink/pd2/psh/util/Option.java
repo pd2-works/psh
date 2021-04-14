@@ -5,7 +5,7 @@ public class Option {
 	public Character shortName;
 	public String description;
 
-	public boolean isEnforce;
+	public boolean required;
 	public String defaultValue;
 
 	public Option(String name, Character shortName) {
@@ -14,10 +14,10 @@ public class Option {
 	public Option(String name, Character shortName, String defaultValue) {
 		this(name, shortName, defaultValue, false);
 	}
-	public Option(String name, Character shortName, String defaultValue, boolean isEnforce) {
+	public Option(String name, Character shortName, String defaultValue, boolean required) {
 		this.name = name;
 		this.shortName = shortName;
 		this.defaultValue = defaultValue;
-		this.isEnforce = isEnforce;
+		this.required = required;
 	}
 }

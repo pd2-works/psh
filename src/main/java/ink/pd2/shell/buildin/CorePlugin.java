@@ -1,9 +1,6 @@
 package ink.pd2.shell.buildin;
 
-import ink.pd2.psh.util.Parameter;
-import ink.pd2.psh.util.ParameterException;
-import ink.pd2.psh.util.ParameterTemplate;
-import ink.pd2.psh.util.ParsedParameter;
+import ink.pd2.psh.util.*;
 import ink.pd2.shell.Main;
 import ink.pd2.shell.api.*;
 import ink.pd2.shell.core.Logger;
@@ -148,15 +145,22 @@ public class CorePlugin extends Plugin {
 			ParameterTemplate template = temp.getTemplate();
 			//处理参数
 			if (template != null) {
-
+				ParsedParameter p;
 				try {
-					ParsedParameter p = parameter.parseParameter(template);
+					p = parameter.parseParameter(template);
 				} catch (ParameterException e) {
 					int cause = e.getMessage().charAt(0) - 0x30;
 					//TODO 处理参数错误
+					return true;
 				}
 				//TODO 验证参数
-
+				Option[] opsTmp = template.getAllOptions();
+				for (Option i : opsTmp) if (i.required && !p.containsOption(i)) {
+					shell.println("The value of option '" + i.name + "' is required.");
+					shell.print("Please enter: ");
+					String s = shell.readLine();
+					p.addOption(i, s);
+				}
 			}
 			shell.returnCode = temp.onExecute(shell, parameter);
 		}
