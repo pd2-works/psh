@@ -1,27 +1,34 @@
 package ink.pd2.psh.core;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public final class ModuleBoard {
 
 	/* |<- 全局成员 ->| */
 	protected static HashMap<String, Module> moduleNidMap = new HashMap<>();
-	protected static HashMap<Integer, Module> moduleIdMap = new HashMap<>();
+	protected static HashSet<Integer> moduleIdSet = new HashSet<>();
 
-	protected static boolean initial(Module module) throws ReflectiveOperationException {
-		Field id = module.getClass().getDeclaredField("id");
-		id.set(module, 0);
-		return true;
+	protected static void initial(Module module) throws Exception {
+//		moduleIdMap.put(module.id, module);
+		module.onInitial();
+		//TODO 国际化
+	}
+
+	protected static void reload(Module module) throws Exception {
+		//TODO 热重载
+	}
+
+	public static int newRandomId(Module module) {
+		return Main.random.nextInt(module.hashCode());
 	}
 
 	public static boolean exist(int cid, String nid) {
-		if (isNoManagingPermission(cid)) return false;
+		if (isNoReadingPermission(cid)) return false;
 		return exist(nid);
 	}
 	protected static boolean exist(String nid) {
-		Module module = moduleNidMap.get(nid);
-		return module != null;
+		return moduleNidMap.containsKey(nid);
 	}
 
 	protected static boolean isNoManagingPermission(int cid) {

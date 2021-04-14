@@ -1,8 +1,7 @@
 package ink.pd2.psh.core;
 
 public abstract class Module {
-	public int id;
-	public int versionCode;
+	protected final int id = ModuleBoard.newRandomId(this);
 
 	protected abstract void onInitial() throws Exception;
 

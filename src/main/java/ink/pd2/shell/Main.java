@@ -120,10 +120,10 @@ public final class Main {
 		output = new ConsoleOutput(); //设置output流
 
 		parseArgument(args); //解析参数
+		Initializer.INS.initMarks(); //初始化默认标记
 
 		if (Property.mode_new_core) ink.pd2.psh.core.Main.main(args);
 		else {
-			Initializer.INS.initMarks(); //初始化默认标记
 			Resources.id.add("psh"); //添加核心资源组
 
 			Logger.INS.debug("Main.PreInit", "Initialization started.");
@@ -172,7 +172,7 @@ public final class Main {
 		Option op_new_core =
 				new Option("new-core", null);
 		ParameterTemplate template = new ParameterTemplate(
-				op_debug, op_log, op_directory, op_disable_module);
+				op_debug, op_log, op_directory, op_disable_module, op_new_core);
 
 		ParsedParameter parsed;
 		try {

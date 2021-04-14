@@ -51,14 +51,14 @@ public final class Permission {
 		return infoMap.put(id, info);
 	}
 
-	private static final class PermissionInfo {
-		Boolean[] items = new Boolean[MAX_PERMISSION_INDEX];
-		private Boolean get(int permission) {
+	protected static final class PermissionInfo {
+		private final Boolean[] items = new Boolean[MAX_PERMISSION_INDEX];
+		protected Boolean get(int permission) {
 			if (permission > MAX_PERMISSION_INDEX || permission < 0)
 				throw new NoSuchPermissionException();
 			return items[permission];
 		}
-		synchronized private void set(int permission, boolean value) {
+		synchronized protected void set(int permission, boolean value) {
 			if (permission > MAX_PERMISSION_INDEX || permission < 0)
 				throw new NoSuchPermissionException();
 			items[permission] = value;
