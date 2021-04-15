@@ -48,9 +48,17 @@ public class CorePlugin extends Plugin {
 		//TODO Other functions
 
 		//加载插件
-		File pluginDirectory = new File(directory + File.separator + "plugins");
-		if (Property.mode_load_module && pluginDirectory.exists())
-			loadPlugins(pluginDirectory.getPath());
+		if (Property.mode_load_module) {
+			String path;
+			if (Property.path_module_folder == null)
+				path = directory + File.separator + "plugins";
+			else
+				path = Property.path_module_folder;
+
+			File pluginDirectory = new File(path);
+			if (pluginDirectory.exists())
+				loadPlugins(pluginDirectory.getPath());
+		}
 
 		//加载测试功能
 		loadTestingFunctions();
@@ -149,6 +157,7 @@ public class CorePlugin extends Plugin {
 				try {
 					p = parameter.parseParameter(template);
 				} catch (ParameterException e) {
+					getApi().log.writeException(e);
 					int cause = e.getMessage().charAt(0) - 0x30;
 					//TODO 处理参数错误
 					return true;
@@ -162,7 +171,23 @@ public class CorePlugin extends Plugin {
 					p.addOption(i, s);
 				}
 			}
-			shell.returnCode = temp.onExecute(shell, parameter);
+			try {
+				final int[] returnCode = new int[1];
+				Command finalTemp = temp;
+				Thread thread = new Thread(() ->
+						returnCode[0] = finalTemp.onExecute(shell, parameter));
+				thread.setName(temp.getFullName() + thread.getId());
+				thread.setUncaughtExceptionHandler((t, e) -> {
+					getApi().log.writeException(new Exception(e), true);
+					t.interrupt();
+					returnCode[0] = -1;
+				});
+				thread.start();
+				thread.join();
+				shell.returnCode = returnCode[0];
+			} catch (Exception e) {
+				getApi().log.writeException(e);
+			}
 		}
 
 		//TODO 指令执行监听器

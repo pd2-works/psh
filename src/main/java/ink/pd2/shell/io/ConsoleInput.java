@@ -55,9 +55,9 @@ public class ConsoleInput extends Input {
 	public String getCommandLine(Shell shell, Mark mark) {
 		if (mark == null) mark = Mark.INS;
 		try {
+			String[] prompts = shell.getPrompts();
 			return reader.readLine(
-					mark.update(Resources.INS.getString("psh.shell-prompt-text-left")),
-					mark.update(Resources.INS.getString("psh.shell-prompt-text-right")),
+					mark.update(prompts[0]), mark.update(prompts[1]),
 					(Character) null, null);
 		} catch (UserInterruptException ignore) {
 		} catch (EndOfFileException e) {

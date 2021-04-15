@@ -18,6 +18,19 @@ public class Shell {
 	public final static int PRIORITY_LOW = 2;
 	public final static int DEFAULT_PRIORITY = PRIORITY_MEDIUM;
 
+	//命令提示
+	private String lPrompt, rPrompt;
+	public String getPrompt() {
+		return lPrompt;
+	}
+	public String[] getPrompts() {
+		return new String[]{lPrompt, rPrompt};
+	}
+	public void setPrompt(String L, String R) {
+		lPrompt = L;
+		rPrompt = R;
+	}
+
 	//环境变量标记
 	private VariableMark variables;
 	public void putVariable(String key, String value) {
@@ -106,6 +119,9 @@ public class Shell {
 			listeners.get(l.getPriority()).add(l);
 		}
 		try {
+			String lp = Resources.INS.getString("psh.shell-prompt-text-left");
+			String rp = Resources.INS.getString("psh.shell-prompt-text-right");
+			setPrompt(lp, rp);
 			setDirectory(new File(getVariableValue("current_dir")).getCanonicalFile());
 		} catch (IOException e) {
 			Logger.INS.writeException("Shell.init", e);

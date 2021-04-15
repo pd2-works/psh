@@ -2,6 +2,7 @@ package ink.pd2.shell.api;
 
 import ink.pd2.psh.util.Parameter;
 import ink.pd2.psh.util.ParameterTemplate;
+import ink.pd2.shell.Main;
 import ink.pd2.shell.core.Shell;
 
 import java.util.Arrays;
@@ -29,10 +30,14 @@ public class Command {
 
 	public int onExecute(Shell shell, Parameter parameter) {
 		int returnCode = 0;
+		Thread currentThread = Thread.currentThread();
+		boolean isDefaultShell = shell == Main.defaultShell;
+		if (isDefaultShell) Main.defaultShellRunningThread = currentThread;
 		for (CommandEvent event : events) {
 			int tmp = event.run(shell, parameter);
 			if (tmp != 0) returnCode = tmp;
 		}
+		if (isDefaultShell) Main.defaultShellRunningThread = null;
 		return returnCode;
 	}
 

@@ -10,15 +10,21 @@ public final class Permission {
 	public static final boolean DEFAULT_READ_GLOBAL_RESOURCES = true;
 	public static final boolean DEFAULT_WRITE_GLOBAL_RESOURCES = false;
 	public static final boolean DEFAULT_EXECUTE_COMMAND = false;
+	public static final boolean DEFAULT_ADD_EVENT = true;
+	public static final boolean DEFAULT_READ_EVENTS = true;
+	public static final boolean DEFAULT_MANAGE_EVENTS = false;
 
 	public static final int ALLOW_ALL = 0;
-	public static final int MANAGE_MODULES = 2;
-	public static final int READ_MODULES = 3;
-	public static final int READ_PERMISSION = 4;
-	public static final int WRITE_PERMISSION = 5;
-	public static final int READ_GLOBAL_RESOURCES = 6;
-	public static final int WRITE_GLOBAL_RESOURCES = 7;
-	public static final int EXECUTE_COMMAND = 8;
+	public static final int MANAGE_MODULES = 1;
+	public static final int READ_MODULES = 2;
+	public static final int READ_PERMISSION = 3;
+	public static final int WRITE_PERMISSION = 4;
+	public static final int READ_GLOBAL_RESOURCES = 5;
+	public static final int WRITE_GLOBAL_RESOURCES = 6;
+	public static final int EXECUTE_COMMAND = 7;
+	public static final int ADD_EVENT = 8;
+	public static final int READ_EVENTS = 9;
+	public static final int MANAGE_EVENTS = 10;
 
 	public static final int MAX_PERMISSION_INDEX = 8;
 

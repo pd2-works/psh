@@ -23,6 +23,8 @@ public final class Main {
 	public static List<Shell> getShells() {
 		return shells;
 	}
+	public static Shell defaultShell;
+	public static Thread defaultShellRunningThread = null;
 
 	//I/O流
 	public static Input input;
@@ -77,7 +79,8 @@ public final class Main {
 		try {
 			putVariable("user", System.getProperty("user.name"));
 			putVariable("host", InetAddress.getLocalHost().getHostName());
-			startShell(new Shell());
+			defaultShell = new Shell();
+			startShell(defaultShell);
 			//TODO 监听网络Shell
 		} catch (Exception e) {
 			Logger.INS.writeException("Main", e);
@@ -153,6 +156,9 @@ public final class Main {
 
 			//TODO 判断是否有另一个psh进程正在运行
 
+			//Fuck oracle : deal with 'Ctrl + C'
+//			Runtime.getRuntime().addShutdownHook(new Thread(Main::mainProcess));
+
 			//主进程
 			mainProcess();
 		}
@@ -171,8 +177,11 @@ public final class Main {
 				new Option("disable-module", null);
 		Option op_new_core =
 				new Option("new-core", null);
+		Option op_module_path =
+				new Option("module-path", null);
 		ParameterTemplate template = new ParameterTemplate(
-				op_debug, op_log, op_directory, op_disable_module, op_new_core);
+				op_debug, op_log, op_directory, op_disable_module,
+				op_new_core, op_module_path);
 
 		ParsedParameter parsed;
 		try {
@@ -186,6 +195,7 @@ public final class Main {
 		String s_debug = parsed.getOptionValue(op_debug);
 		String s_log = parsed.getOptionValue(op_log);
 		String s_directory = parsed.getOptionValue(op_directory);
+		String s_module_path = parsed.getOptionValue(op_module_path);
 
 		if (s_debug != null) Logger.INS.isDebug = Boolean.parseBoolean(s_debug);
 		if (s_log != null) switch (s_log) {
@@ -198,6 +208,8 @@ public final class Main {
 		} else {
 			VariableMarkProvider.INS.getVariables().put("current_dir", ".");
 		}
+
+		if (s_module_path != null) Property.path_module_folder = s_module_path;
 
 		if (parsed.containsOption(op_disable_module)) Property.mode_load_module = false;
 		if (parsed.containsOption(op_new_core)) Property.mode_new_core = true;

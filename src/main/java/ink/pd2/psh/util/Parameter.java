@@ -40,7 +40,7 @@ public class Parameter {
 		}
 		list.removeIf(String::isEmpty); //忽略所有多余空格(即长度为零的参数)
 
-		name = list.size() == 0 ? null : list.get(0);
+		name = list.size() == 0 ? null : list.removeFirst();
 		args = list;
 	}
 	public Parameter(String[] args) {
@@ -75,6 +75,7 @@ public class Parameter {
 					sub = i.substring(2);
 				} else {
 					// 2) -x 型
+					//TODO POSIX风格复合参数支持
 					if (length == 1) continue;
 					sub = i.substring(1);
 				}
@@ -89,6 +90,7 @@ public class Parameter {
 					// 1) 第一个参数
 					if (tempDefaultOption == null) continue;
 					tempOption = tempDefaultOption;
+					tempMap.computeIfAbsent(tempDefaultOption, k -> new ArrayList<>());
 				}
 				// 2) 非第一个参数
 				tempMap.get(tempOption).add(i);
