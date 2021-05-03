@@ -1,26 +1,34 @@
 package ink.pd2.psh.core;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public final class ModuleBoard {
 
 	/* |<- 全局成员 ->| */
 	protected static HashMap<String, Module> moduleNidMap = new HashMap<>();
-	protected static HashSet<Integer> moduleIdSet = new HashSet<>();
+
+	protected static HashMap<Integer, Module> moduleIdMap = new HashMap<>();
 
 	protected static void initial(Module module) throws Exception {
-//		moduleIdMap.put(module.id, module);
+		moduleIdMap.put(module.id, module);
 		module.onInitial();
 		//TODO 国际化
 	}
 
-	protected static void reload(Module module) throws Exception {
-		//TODO 热重载
+	public static void load(int cid, Module module) throws Exception {
+		if (isNoManagingPermission(cid)) return;
+		load(module);
+	}
+	protected static void load(Module module) throws Exception {
+		//TODO 加载模块
 	}
 
-	public static int newRandomId(Module module) {
-		return Main.random.nextInt(module.hashCode());
+	public static void reload(int cid, Module module) throws Exception {
+		if (isNoManagingPermission(cid)) return;
+		reload(module);
+	}
+	protected static void reload(Module module) throws Exception {
+		//TODO 热重载
 	}
 
 	public static boolean exist(int cid, String nid) {
@@ -29,6 +37,10 @@ public final class ModuleBoard {
 	}
 	protected static boolean exist(String nid) {
 		return moduleNidMap.containsKey(nid);
+	}
+
+	public static int newRandomId() {
+		return Main.random.nextInt();
 	}
 
 	protected static boolean isNoManagingPermission(int cid) {
