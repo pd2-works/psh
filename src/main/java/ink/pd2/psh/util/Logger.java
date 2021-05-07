@@ -1,7 +1,7 @@
 package ink.pd2.psh.util;
 
 public class Logger {
-	public final static Logger def = new Logger();
+	public final static Logger DEFAULT = new Logger();
 
 	private String defaultInfo;
 	private boolean hasTime;

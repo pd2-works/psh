@@ -12,7 +12,7 @@ public abstract class ShellConsole implements Console {
 	@Override
 	public boolean initial() throws InitialException {
 		try {
-			//TODO shell init
+			// shell init
 			currentUser = System.getProperty("user.name");
 			thread = Thread.currentThread();
 			currentThread = thread;
@@ -25,20 +25,24 @@ public abstract class ShellConsole implements Console {
 	@Override
 	public void run() {
 		//TODO shell run
+
 	}
 
 	@Override
 	public int execute(String command) {
 		currentCommandLine = command;
-		//TODO shell execute
+		// shell execute
 		AtomicInteger returnCode = new AtomicInteger();
 		Thread t = new Thread(() -> returnCode.set(onCommandExecute(command)));
+		t.setUncaughtExceptionHandler((thread, throwable) -> {
+			//TODO 未捕获的异常处理
+		});
 		t.start();
 		try {
 			t.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			//TODO 异常处理
+			//TODO 线程异常处理
 		}
 		currentCommandLine = null;
 		return returnCode.intValue();
@@ -54,7 +58,7 @@ public abstract class ShellConsole implements Console {
 		return currentUser;
 	}
 	@Override
-	public String getCurrentCommandline() {
+	public String getCurrentCommandLine() {
 		return currentCommandLine;
 	}
 	@Override

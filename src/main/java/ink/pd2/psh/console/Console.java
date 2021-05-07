@@ -11,7 +11,7 @@ public interface Console {
 	}
 
 	String getCurrentUser();
-	String getCurrentCommandline();
+	String getCurrentCommandLine();
 
 //	Map<String, String> getVariableMap();
 
@@ -37,6 +37,9 @@ public interface Console {
 	default String readPassword(String prompt) {
 		print(prompt);
 		return readPassword();
+	}
+	default void clean() throws UnsupportedConsoleOperationException {
+		throw new UnsupportedConsoleOperationException();
 	}
 
 }
