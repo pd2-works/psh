@@ -76,5 +76,4 @@ public final class Permission {
 		}
 	}
 
-	public static final class NoSuchPermissionException extends RuntimeException {}
 }
