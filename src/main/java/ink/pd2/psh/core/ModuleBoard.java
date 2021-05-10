@@ -39,7 +39,7 @@ public final class ModuleBoard {
 		return moduleNidMap.containsKey(nid);
 	}
 
-	public static int newRandomId() {
+	protected static int newRandomId() {
 		return Main.random.nextInt();
 	}
 

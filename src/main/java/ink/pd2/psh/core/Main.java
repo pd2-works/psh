@@ -4,7 +4,7 @@ import ink.pd2.shell.core.Mark;
 
 import java.util.Random;
 
-public class Main {
+public final class Main {
 	protected static final int PSH = ModuleBoard.newRandomId();
 	protected static Random random = new Random(new Random(
 					Main.class.hashCode() + new Random().nextInt()).nextLong());
