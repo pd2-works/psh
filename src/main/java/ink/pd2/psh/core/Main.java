@@ -13,7 +13,7 @@ public final class Main {
 	public static void main(String[] args) {
 		//根权限授权
 		Permission.PermissionInfo rootPermission = new Permission.PermissionInfo();
-		rootPermission.set(Permission.ALLOW_ALL, true);
+		rootPermission.set(Permission.ROOT, true);
 		Permission.putInfo(PSH, rootPermission);
 
 		//TODO 主方法
