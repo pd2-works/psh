@@ -1,7 +1,5 @@
 package ink.pd2.psh.core;
 
-import ink.pd2.shell.core.Mark;
-
 import java.util.Random;
 
 public final class Main {
@@ -17,12 +15,11 @@ public final class Main {
 		Permission.putInfo(PSH, rootPermission);
 
 		//TODO 主方法
-		System.out.println(Mark.INS.update(
+		System.out.println(ink.pd2.shell.core.Mark.INS.update(
 				"&color:red.null[Sorry, but there is no functions in the new core yet.]&"));
 		return;
 
 		//Preload
-
 	}
 
 	private static void parseParameter() {
