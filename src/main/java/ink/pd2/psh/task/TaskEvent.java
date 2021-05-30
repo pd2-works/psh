@@ -12,6 +12,9 @@ public class TaskEvent {
 	public Task getCurrentTask() {
 		return task;
 	}
+	public String getInfo() {
+		return info;
+	}
 	public void setInfo(String info) {
 		this.info = info;
 		//TODO Event Listener

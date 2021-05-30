@@ -5,4 +5,6 @@ public abstract class Module {
 
 	protected abstract void onInitial() throws Exception;
 
+	protected void onCalling(String[] signal) {}
+
 }

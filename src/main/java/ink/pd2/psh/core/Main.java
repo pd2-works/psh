@@ -19,5 +19,22 @@ public final class Main {
 		//TODO 主方法
 		System.out.println(Mark.INS.update(
 				"&color:red.null[Sorry, but there is no functions in the new core yet.]&"));
+		return;
+
+		//Preload
+
 	}
+
+	private static void parseParameter() {
+	}
+
+	private static void loadModules() {
+	}
+
+	private static void initial() {
+	}
+
+	private static void startService() {
+	}
+
 }
