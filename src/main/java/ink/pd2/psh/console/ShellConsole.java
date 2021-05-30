@@ -1,5 +1,7 @@
 package ink.pd2.psh.console;
 
+import ink.pd2.psh.core.Variables;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class ShellConsole implements Console {
@@ -8,6 +10,8 @@ public abstract class ShellConsole implements Console {
 
 	private Thread thread;
 	private Thread currentThread;
+
+	private Variables variables;
 
 	@Override
 	public boolean initial() throws InitialException {
@@ -73,5 +77,10 @@ public abstract class ShellConsole implements Console {
 	@Override public abstract void print(String str);
 	@Override public abstract String readLine();
 	protected abstract String readCommand();
+
+	//get & set
+	public Variables getVariables() {
+		return variables;
+	}
 
 }

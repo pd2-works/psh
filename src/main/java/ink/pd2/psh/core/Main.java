@@ -3,9 +3,9 @@ package ink.pd2.psh.core;
 import java.util.Random;
 
 public final class Main {
-	protected static final int PSH = ModuleBoard.newRandomId();
 	protected static Random random = new Random(new Random(
-					Main.class.hashCode() + new Random().nextInt()).nextLong());
+			Main.class.hashCode() + new Random().nextInt()).nextLong());
+	protected static final int PSH = ModuleBoard.newRandomId();
 
 	//TODO 重构项目
 	public static void main(String[] args) {
@@ -16,10 +16,11 @@ public final class Main {
 
 		//TODO 主方法
 		System.out.println(ink.pd2.shell.core.Mark.INS.update(
-				"&color:red.null[Sorry, but there is no functions in the new core yet.]&"));
+				"&color:red.null[Sorry, but there is no functions in the new core.]&"));
 		return;
 
 		//Preload
+
 	}
 
 	private static void parseParameter() {

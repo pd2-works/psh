@@ -9,13 +9,17 @@ public final class Parser {
 		this.resources = resources;
 	}
 
+	public String parse(String s) {
+		//TODO 解析完整字符串
+		return null;
+	}
+
 	public String parseSign(String s) {
 		if (s.length() < 2) return s;
 		char startChar = s.charAt(0);
 		String sub = s.substring(1);
 		switch (startChar) {
 			case '@': return parseResources(sub);
-			case '$': return parseVariable(sub);
 			case '^': return parseURL(sub);
 		}
 		return s;
@@ -26,13 +30,8 @@ public final class Parser {
 		return (result == null)? key : result;
 	}
 
-	public String parseVariable(String key) {
-		//TODO
-		return key;
-	}
-
 	public String parseURL(String key) {
-		//TODO
+		//TODO 解析 URL
 		return key;
 	}
 
