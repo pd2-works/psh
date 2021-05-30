@@ -36,7 +36,7 @@ By the way, `$PSH_HOME` is Pd2 Shell's program directory path. You can also add 
 
 ## About Contributing Code
 
-We welcome any non-malicious code contributions, but:
+We welcome any non-malicious Pull Requests, but:
 
 - Do **NOT** commit folders like `.gradle`, `.idea` and so on.
 - Please write code comments and docs by hand, **the more the better**.
