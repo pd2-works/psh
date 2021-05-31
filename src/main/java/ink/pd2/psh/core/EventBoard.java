@@ -55,4 +55,15 @@ public final class EventBoard {
 		if (set == null) return false;
 		return set.remove(event);
 	}
+
+	public static boolean activate(int cid, String key) {
+		String[] keys = key.split("\\.", 2);
+		if (keys.length != 2) return false;
+		Module module = ModuleBoard.moduleNidMap.get(keys[0]);
+		if (module == null || module.id != cid) return false;
+		Event[] events = getEvents(key);
+		if (events == null) return false;
+		for (Event i : events) module.onEventActivate(i, key);
+		return true;
+	}
 }

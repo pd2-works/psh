@@ -9,8 +9,9 @@ public final class ModuleBoard {
 
 	protected static HashMap<Integer, Module> moduleIdMap = new HashMap<>();
 
-	protected static void initial(Module module) throws Exception {
+	protected static void initial(Module module, String nid) throws Exception {
 		moduleIdMap.put(module.id, module);
+		moduleNidMap.put(nid, module);
 		module.onInitial();
 		//TODO 国际化
 	}
@@ -41,6 +42,11 @@ public final class ModuleBoard {
 
 	protected static int newRandomId() {
 		return Main.random.nextInt();
+	}
+
+	public static Object invoke(String nid, Object... args) {
+		if (exist(nid)) return moduleNidMap.get(nid).onInvoke(args);
+		return null;
 	}
 
 	protected static boolean isNoManagingPermission(int cid) {

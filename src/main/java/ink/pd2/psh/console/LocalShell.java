@@ -1,7 +1,5 @@
-package ink.pd2.psh.buildin;
+package ink.pd2.psh.console;
 
-import ink.pd2.psh.console.ShellConsole;
-import ink.pd2.psh.console.UnsupportedConsoleOperationException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;

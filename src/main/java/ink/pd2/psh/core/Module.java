@@ -5,6 +5,8 @@ public abstract class Module {
 
 	protected abstract void onInitial() throws Exception;
 
-	protected void onCalling(String[] signal) {}
+	protected abstract void onEventActivate(Event event, String key);
+
+	protected abstract Object onInvoke(Object[] args);
 
 }
