@@ -12,7 +12,13 @@ import ink.pd2.shell.util.PluginUtils;
 import ink.pd2.shell.core.Property;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class CorePlugin extends Plugin {
 	private static HashMap<String, ArrayList<Command>> commandList; //指令列表
@@ -60,6 +66,9 @@ public class CorePlugin extends Plugin {
 				loadPlugins(pluginDirectory.getPath());
 		}
 
+		//加载基本指令
+		loadBasicCommands();
+
 		//加载测试功能
 		loadTestingFunctions();
 
@@ -83,6 +92,52 @@ public class CorePlugin extends Plugin {
 			Logger.INS.error("Plugin.Init", "Plugin initialization FAILED.");
 			getApi().core.exit("Plugin initialization FAILED.");
 		}
+	}
+
+	private void loadBasicCommands() {
+		ParameterTemplate tpl_ls = new ParameterTemplate();
+		Option ls_o_dir = new Option("directory", 'd');
+		tpl_ls.addOption(ls_o_dir);
+		tpl_ls.setDefaultOption(ls_o_dir);
+
+		getApi().command.add(
+				new Command("psh", "cd", (shell, parameter) -> {
+					String path = parameter.getCommandLine();
+					if (path.length() < 4) return 2;
+					File dir;
+					try {
+						dir = new File(path.substring(3)).getCanonicalFile();
+					} catch (IOException e) {
+						Logger.INS.writeException("ChangeDirectory", e);
+						return -1;
+					}
+					if (!dir.exists()) {
+						shell.println("&color:red.null[Not found:]& " + dir.getPath());
+						return 2;
+					}
+					if (!dir.isDirectory()) {
+						shell.println("&color:red.null[Not a directory:]& " + dir.getPath());
+						return 1;
+					}
+					shell.setDirectory(dir);
+					return 0;
+				}),
+				new Command("psh", "ls", (shell, parameter) -> {
+					try {
+						ParsedParameter parsed = parameter.parseParameter(tpl_ls);
+						String dir = parsed.getOptionValue(ls_o_dir);
+						if (dir == null) dir = shell.getDirectory().getPath();
+						Stream<Path> paths = Files.list(Paths.get(dir));
+						paths.forEachOrdered(path -> {
+							shell.printlnSimple(path.toFile().getName());
+						});
+					} catch (Exception e) {
+						Logger.INS.writeException("List", e, true);
+						return -1;
+					}
+					return 0;
+				})
+		);
 	}
 
 	private void loadTestingFunctions() {

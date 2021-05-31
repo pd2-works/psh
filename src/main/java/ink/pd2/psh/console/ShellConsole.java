@@ -2,16 +2,27 @@ package ink.pd2.psh.console;
 
 import ink.pd2.psh.core.Variables;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class ShellConsole implements Console {
 	private String currentUser;
 	private String currentCommandLine = null;
+	private Path currentDirectory;
 
 	private Thread thread;
 	private Thread currentThread;
 
 	private Variables variables;
+
+	public ShellConsole() {
+	}
+
+	public ShellConsole(ShellConsole parent) {
+		currentDirectory = parent.currentDirectory;
+	}
 
 	@Override
 	public boolean initial() throws InitialException {
@@ -29,7 +40,6 @@ public abstract class ShellConsole implements Console {
 	@Override
 	public void run() {
 		//TODO shell run
-
 	}
 
 	@Override
@@ -82,5 +92,7 @@ public abstract class ShellConsole implements Console {
 	public Variables getVariables() {
 		return variables;
 	}
-
+	public Path getCurrentDirectory() {
+		return currentDirectory;
+	}
 }

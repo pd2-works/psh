@@ -177,7 +177,7 @@ public class Shell {
 		return b;
 	}
 
-	private String getLogLocation() {
+	public String getLogLocation() {
 		return "Shell@" + thread.getId();
 	}
 
